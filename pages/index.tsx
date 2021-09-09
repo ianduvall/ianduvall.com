@@ -78,6 +78,10 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
             </Link>
             .
           </Text>
+
+          <Text as="p" css={{ fontSize: '$3', mt: '$5' }}>
+            This site is still a work in progress.
+          </Text>
         </Box>
 
         <Box
