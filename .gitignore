@@ -1,0 +1,7 @@
+*.log
+.DS_Store
+.next
+.vercel
+node_modules
+public/feed.xml
+tsconfig.tsbuildinfo
