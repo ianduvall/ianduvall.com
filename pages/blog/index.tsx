@@ -1,6 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
+import { Header } from '@/components/Header';
 import { BlogCard } from '@/components/BlogCard';
 import { text } from '@/styles/text';
 import { box } from '@/styles/box';
@@ -35,6 +36,7 @@ export default function BlogPage({ posts }: TypeBlogPageProps) {
   return (
     <div>
       <TitleAndMetaTags description="Ramblings about tech and web development." />
+      <Header />
 
       <div
         className={container({
@@ -51,28 +53,6 @@ export default function BlogPage({ posts }: TypeBlogPageProps) {
           },
         })}
       >
-        <div
-          className={box({
-            mb: '$4',
-            '@bp1': {
-              mb: '$5',
-            },
-          })}
-        >
-          <HomeLink>
-            <Text
-              as={'h1'}
-              css={{
-                color: '$mint11',
-                fontSize: '$5',
-                textTransform: 'uppercase',
-              }}
-            >
-              Ian Duvall
-            </Text>
-          </HomeLink>
-        </div>
-
         <h1
           className={text({
             css: { fontSize: '$6', mb: '$5', mx: 'auto' },
