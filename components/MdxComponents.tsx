@@ -186,6 +186,7 @@ export const MDXComponents: ComponentMap = {
     return isCollapsible ? (
       <Collapsible.Root defaultOpen={isOpen} onOpenChange={(prev) => setIsOpen(!prev)}>
         <Collapsible.Trigger
+          // @ts-ignore
           as={SecondaryButton}
           css={{
             display: 'block',
