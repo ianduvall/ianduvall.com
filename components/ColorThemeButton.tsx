@@ -2,19 +2,34 @@ import React from 'react';
 import { SecondaryButton } from '@/system/Button';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
+import { Skeleton } from '@/system';
 
 export const ColorThemeButton = () => {
+  const [isClient, setIsClient] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const { theme, setTheme } = useTheme();
-  if (!theme) return null;
+
+  const ariaLabel = !isClient
+    ? ''
+    : theme === 'dark'
+    ? 'Use light color theme'
+    : 'Use dark color theme';
+  const onClick = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   return (
-    <SecondaryButton
-      aria-label={theme === 'dark' ? 'Use light color theme' : 'Use dark color theme'}
-      onClick={() => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
-      }}
-    >
-      {theme === 'dark' ? <SunIcon aria-hidden /> : <MoonIcon aria-hidden />}
+    <SecondaryButton aria-label={ariaLabel} onClick={onClick}>
+      {!isClient ? (
+        <Skeleton css={{ size: 15, br: '$1' }} aria-hidden />
+      ) : theme === 'dark' ? (
+        <SunIcon aria-hidden />
+      ) : (
+        <MoonIcon aria-hidden />
+      )}
     </SecondaryButton>
   );
 };
