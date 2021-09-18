@@ -110,9 +110,9 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
 
           <Box as="ul" css={{ listStyle: 'none', pl: 0 }}>
             {posts.map((post) => (
-              <li key={post.title}>
+              <Box as="li" key={post.title}>
                 <BlogCard post={post} />
-              </li>
+              </Box>
             ))}
           </Box>
         </Box>

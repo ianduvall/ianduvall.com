@@ -1,6 +1,6 @@
 import React from 'react';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import { getCssText } from 'stitches.config';
+import { darkTheme, getCssText } from 'stitches.config';
 
 const FONT_FIRA_MONO = 'https://fonts.googleapis.com/css?family=Fira+Mono&display=swap';
 

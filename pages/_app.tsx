@@ -1,11 +1,11 @@
 import React from 'react';
-import { AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { IdProvider } from '@radix-ui/react-id';
 import { useAnalytics } from '@/lib/analytics';
 import { Footer } from '@/components/Footer';
 import { globalStyles } from '@/styles/global';
-import { box } from '@/styles/box';
+import { Box } from '@/system';
 
 function App({ Component, pageProps }: AppProps) {
   globalStyles();
@@ -17,19 +17,19 @@ function App({ Component, pageProps }: AppProps) {
         <title>Ian Duvall</title>
       </Head>
 
-      <div
-        className={box({
+      <Box
+        css={{
           display: 'flex',
           minHeight: '100vh',
           flexDirection: 'column',
-        })}
+        }}
       >
-        <div className={box({ flex: 1 })}>
+        <Box css={{ flex: 1 }}>
           <Component {...pageProps} />
-        </div>
+        </Box>
 
         <Footer />
-      </div>
+      </Box>
     </IdProvider>
   );
 }

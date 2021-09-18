@@ -3,51 +3,29 @@ import NextLink from 'next/link';
 import NextRouter from 'next/router';
 import NextImage from 'next/image';
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { text } from '@/styles/text';
-import { box } from '@/styles/box';
-import { link } from '@/styles/link';
 import { pre } from '@/styles/pre';
-import { divider } from '@/styles/divider';
 import { code } from '@/styles/code';
 import { SecondaryButton } from '@/system';
 import type { ComponentMap } from 'mdx-bundler/client';
+import { Box, Link, Text } from '@/system';
 
 export const MDXComponents: ComponentMap = {
-  Box: ({ css, as: Comp = 'div', ...props }: any) => <Comp className={box(css)} {...props} />,
-  h1: (props) => <h1 className={text({ css: { fontSize: '$6', mb: '$5' } })} {...props} />,
+  Box,
+  h1: (props) => <Text as="h1" css={{ fontSize: '$6', mb: '$5' }} {...props} />,
   h2: (props) => (
-    <h2
-      className={text({
-        weight: 'bold',
-        css: { fontSize: '$5', mt: '$5', mb: '$4', mx: 'auto' },
-      })}
-      {...props}
-    />
+    <Text as="h2" css={{ fontSize: '$5', mt: '$5', mb: '$4', mx: 'auto' }} {...props} />
   ),
   h3: (props) => (
-    <h3
-      className={text({
-        weight: 'bold',
-        css: { fontSize: '$4', mt: '$5', mb: '$3', mx: 'auto' },
-      })}
-      {...props}
-    />
+    <Text as="h3" css={{ fontSize: '$4', mt: '$5', mb: '$3', mx: 'auto' }} {...props} />
   ),
   h4: (props) => (
-    <h4
-      className={text({
-        weight: 'bold',
-        css: { fontSize: '$3', textTransform: 'uppercase', mt: '$4', mb: '$3', mx: 'auto' },
-      })}
+    <Text
+      as="h4"
+      css={{ fontSize: '$3', textTransform: 'uppercase', mt: '$4', mb: '$3', mx: 'auto' }}
       {...props}
     />
   ),
-  p: (props) => (
-    <p
-      className={text({ weight: 'normal', css: { fontSize: '$4', mb: '$4', color: '$copy' } })}
-      {...props}
-    />
-  ),
+  p: (props) => <Text as="p" css={{ fontSize: '$4', mb: '$4' }} {...props} />,
 
   a: ({
     // @ts-ignore
@@ -55,83 +33,82 @@ export const MDXComponents: ComponentMap = {
     ...props
   }) => {
     if (href.startsWith('http')) {
-      return (
-        <a className={link()} href={href} target="_blank" rel="noopener noreferrer" {...props} />
-      );
+      return <Link href={href} target="_blank" rel="noopener noreferrer" {...props} />;
     }
 
     return (
       <NextLink href={href} passHref>
-        <a className={link()} {...props} />
+        <Link {...props} />
       </NextLink>
     );
   },
-  hr: (props) => <hr className={divider({ size: '1', css: { my: '$5' } })} {...props} />,
-  ul: (props) => <ul className={box({ mb: '$4' })} {...props} />,
-  ol: (props) => <ol className={box({ mb: '$4' })} {...props} />,
+  ul: (props) => <Box as="ul" css={{ mb: '$4' }} {...props} />,
+  ol: (props) => <Box as="ol" css={{ mb: '$4' }} {...props} />,
   li: (props) => (
-    <li
-      className={text({ css: { fontSize: '$4', color: '$copy', listStyleType: 'circle' } })}
-      {...props}
-    />
+    <Box as="li" css={{ fontSize: '$4', color: '$copy', listStyleType: 'circle' }} {...props} />
   ),
   strong: (props) => (
-    <strong
-      className={text({ weight: 'bold', css: { fontSize: 'inherit', lineHeight: 'inherit' } })}
+    <Text
+      as="strong"
+      weight="bold"
+      css={{ fontSize: 'inherit', lineHeight: 'inherit' }}
       {...props}
     />
   ),
   Image: ({ children, ...props }) => (
-    <figure className={box({ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } })}>
+    <Box as="figure" css={{ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } }}>
       <NextImage {...(props as any)} />
       {children && (
-        <figcaption
-          className={box({
+        <Box
+          as="figcaption"
+          css={{
             textAlign: 'center',
             fontSize: '$1',
             lineHeight: 1,
             fontFamily: '$mono',
             color: '$gray800',
-          })}
+          }}
         >
           {children}
-        </figcaption>
+        </Box>
       )}
-    </figure>
+    </Box>
   ),
   img: ({ children, ...props }) => (
-    <div className={box({ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } })}>
+    <Box css={{ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } }}>
       <NextImage {...(props as any)} />
-    </div>
+    </Box>
   ),
   video: (props) => (
-    <div
-      className={box({
+    <Box
+      css={{
         my: '$4',
         mx: '-$3',
-        border: '1px solid $gray',
+        border: '1px solid $gray3',
         overflow: 'hidden',
         '@bp1': { mx: '-$5' },
-      })}
+      }}
     >
-      <video
+      <Box
+        as="video"
         {...props}
         autoPlay
         playsInline
         muted
         loop
-        className={box({ width: '100%', display: 'block' })}
-      ></video>
-    </div>
+        css={{ width: '100%', display: 'block' }}
+      ></Box>
+    </Box>
   ),
   iframe: ({ ...props }) => (
-    <div className={box({ mb: '$4' })}>
+    <Box css={{ mb: '$4' }}>
       <iframe {...props} />
-    </div>
+    </Box>
   ),
   blockquote: (props) => (
-    <blockquote
-      className={box({
+    <Box
+      as="blockquote"
+      css={{
         my: '$4',
         pl: '$2',
         borderLeft: '2px solid $gray',
@@ -139,7 +116,7 @@ export const MDXComponents: ComponentMap = {
         '@bp1': {
           pl: '$4',
         },
-      })}
+      }}
       {...props}
     />
   ),

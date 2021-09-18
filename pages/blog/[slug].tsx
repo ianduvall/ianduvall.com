@@ -1,20 +1,14 @@
 import React from 'react';
 import { GetStaticProps } from 'next';
-import NextLink from 'next/link';
 import { getMDXComponent } from 'mdx-bundler/client';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import { MDXComponents } from '@/components/MdxComponents';
-import { HomeLink } from '@/components/HomeLink';
-import { text } from '@/styles/text';
-import { box } from '@/styles/box';
-import { container } from '@/styles/container';
-import { link } from '@/styles/link';
-import { badge } from '@/styles/badge';
-import { divider } from '@/styles/divider';
-import { Text } from '@/system';
+import { Header } from '@/components/Header';
+import { Badge, Link, Text } from '@/system';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import type { Post, PostWithCode } from '@/types/post';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
+import { Box } from '@/system';
 
 export const getStaticPaths = async () => {
   const posts = await getAllPosts();
@@ -56,101 +50,66 @@ export default function PostPage({ code, post }: PostWithCode) {
   const publishedDate = publishedAtFormats['MMMM dd, yyyy'];
 
   return (
-    <div className={box({ bc: '$gray100', color: '$gray900' })}>
+    <Box>
       <TitleAndMetaTags description={title} />
+      <Header />
 
-      <div
-        className={container({
-          css: {
-            mx: '$4',
-            py: '$4',
-            '@bp1': {
-              mx: '$5',
-              py: '$5',
-            },
-            '@bp2': {
-              mx: '$6',
-            },
+      <Box
+        css={{
+          mx: '$4',
+          py: '$4',
+          '@bp1': {
+            mx: '$5',
+            py: '$5',
           },
-        })}
+          '@bp2': {
+            mx: '$6',
+          },
+        }}
       >
-        <div
-          className={box({
-            mb: '$4',
-            '@bp1': {
-              mb: '$5',
-            },
-          })}
-        >
-          <HomeLink>
-            <Text
-              as={'h1'}
-              css={{
-                color: '$mint11',
-                fontSize: '$5',
-                textTransform: 'uppercase',
-              }}
-            >
-              Ian Duvall
-            </Text>
-          </HomeLink>
-        </div>
-
-        <div className={text({ css: { display: 'flex', alignItems: 'center' } })}>
-          <h1
-            className={text({
-              css: { fontSize: '$6' },
-            })}
-          >
+        <Box css={{ display: 'flex', alignItems: 'center' }}>
+          <Text as="h1" css={{ fontSize: '$6' }}>
             {title}
-          </h1>
-          {draft && <span className={badge({ variant: 'dark', css: { mx: '$2' } })}>Draft</span>}
-        </div>
+          </Text>
+          {draft ? <Badge css={{ mx: '$2' }}>Draft</Badge> : null}
+        </Box>
 
-        <time
-          className={text({
-            css: {
-              my: '$1',
-              mx: 'auto',
-              fontFamily: '$mono',
-              color: '$gray800',
-            },
-          })}
+        <Text
+          as="time"
+          css={{
+            my: '$1',
+            mx: 'auto',
+            fontFamily: '$mono',
+            color: '$gray800',
+          }}
         >
           {publishedDate}
-        </time>
+        </Text>
 
         {description ? (
-          <p
-            className={text({
-              css: { fontSize: '$2' },
-            })}
-          >
+          <Text as="p" css={{ fontSize: '$2' }}>
             {description}
-          </p>
+          </Text>
         ) : null}
 
-        <div className={box({ my: '$5' })}>
+        <Box css={{ my: '$5' }}>
           <MDXComponent components={MDXComponents} />
-        </div>
+        </Box>
 
-        <hr className={divider({ size: '1', css: { my: '$5', mb: '$5' } })} />
-
-        <div className={box({ mb: '$5' })}>
-          <p className={text({ css: { fontSize: '$4' } })}>
+        <Box css={{ mb: '$5' }}>
+          <Text as="p" css={{ fontSize: '$4' }}>
             Share this post on{' '}
-            <a
-              className={link()}
+            <Link
               href={twitterShare}
               target="_blank"
               rel="noopener noreferrer"
               title="Share this post on Twitter"
             >
               <TwitterLogoIcon />
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
+            </Link>
+          </Text>
+        </Box>
+      </Box>
+    </Box>
   );
 }

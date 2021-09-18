@@ -2,17 +2,10 @@ import React from 'react';
 import NextLink from 'next/link';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import { Header } from '@/components/Header';
-import { BlogCard } from '@/components/BlogCard';
-import { text } from '@/styles/text';
-import { box } from '@/styles/box';
-import { container } from '@/styles/container';
-import { link } from '@/styles/link';
-import { badge } from '@/styles/badge';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import type { Post } from '@/types/post';
-import { HomeLink } from '@/components/HomeLink';
 import { GetStaticProps } from 'next';
-import { Text } from '@/system';
+import { Badge, Box, Link, Text } from '@/system';
 
 export const getStaticProps: GetStaticProps<TypeBlogPageProps> = async () => {
   let posts = (await getAllPosts())
@@ -34,96 +27,66 @@ type TypeBlogPageProps = { posts: ReadonlyArray<Post> };
 
 export default function BlogPage({ posts }: TypeBlogPageProps) {
   return (
-    <div>
+    <Box>
       <TitleAndMetaTags description="Ramblings about tech and web development." />
       <Header />
 
-      <div
-        className={container({
-          css: {
-            mx: '$4',
-            py: '$4',
-            '@bp1': {
-              mx: '$5',
-              py: '$5',
-            },
-            '@bp2': {
-              mx: '$6',
-            },
+      <Box
+        css={{
+          mx: '$4',
+          py: '$4',
+          '@bp1': {
+            mx: '$5',
+            py: '$5',
           },
-        })}
+          '@bp2': {
+            mx: '$6',
+          },
+        }}
       >
-        <h1
-          className={text({
-            css: { fontSize: '$6', mb: '$5', mx: 'auto' },
-          })}
-        >
+        <Text as="h1" css={{ fontSize: '$6', mb: '$5', mx: 'auto' }}>
           Weblog
-        </h1>
+        </Text>
 
-        <ul className={box({ listStyle: 'none', pl: 0 })}>
+        <Box as="ul" css={{ listStyle: 'none', pl: 0 }}>
           {posts.map((post) => {
             const { title, description, slug, publishedAtFormats, draft } = post;
             return (
-              <div key={post.slug} className={box({ mt: '$4' })}>
+              <Box key={post.slug} css={{ mt: '$4' }}>
                 <NextLink href={`/blog/${slug}`} passHref>
-                  <a
-                    className={link({
-                      variant: 'ghost',
-                      css: {
-                        display: 'inline-block',
-                        lineHeight: '$3',
-                      },
-                    })}
-                    aria-label={`Read ${title}`}
+                  <Link
+                    css={{
+                      display: 'inline-block',
+                      lineHeight: '$3',
+                    }}
                   >
-                    <span
-                      className={text({
-                        css: { fontSize: '$5', display: 'flex', alignItems: 'center' },
-                      })}
-                    >
+                    <Text css={{ fontSize: '$5', display: 'flex', alignItems: 'center' }}>
                       {title}
-                      {draft && (
-                        <span
-                          className={badge({
-                            variant: 'dark',
-                            css: { mx: '$2' },
-                          })}
-                        >
-                          Draft
-                        </span>
-                      )}
-                    </span>
+                      {draft && <Badge css={{ mx: '$2' }}>Draft</Badge>}
+                    </Text>
                     {description ? (
-                      <span
-                        className={text({
-                          css: { fontSize: '$1', display: 'block' },
-                        })}
-                      >
-                        {description}
-                      </span>
+                      <Text css={{ fontSize: '$1', display: 'block' }}>{description}</Text>
                     ) : null}
 
                     {publishedAtFormats['MMMM dd, yyyy'] ? (
-                      <time
-                        className={text({
-                          css: {
-                            fontSize: '$1',
-                            fontFamily: '$mono',
-                            color: '$gray800',
-                          },
-                        })}
+                      <Text
+                        as="time"
+                        css={{
+                          fontSize: '$1',
+                          fontFamily: '$mono',
+                          color: '$gray800',
+                        }}
                       >
                         {publishedAtFormats['MMMM dd, yyyy']}
-                      </time>
+                      </Text>
                     ) : null}
-                  </a>
+                  </Link>
                 </NextLink>
-              </div>
+              </Box>
             );
           })}
-        </ul>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
