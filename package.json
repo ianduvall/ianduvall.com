@@ -17,7 +17,7 @@
     "@radix-ui/react-icons": "^1.0.3",
     "@radix-ui/react-id": "^0.1.0",
     "@radix-ui/react-visually-hidden": "^0.1.0",
-    "@stitches/react": "1.0.0",
+    "@stitches/react": "1.2.0",
     "date-fns": "2.23.0",
     "gray-matter": "^4.0.3",
     "lodash.merge": "^4.6.2",

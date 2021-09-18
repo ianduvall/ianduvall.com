@@ -170,7 +170,7 @@ export const { config, theme, styled, css, createTheme, globalCss, keyframes, ge
 
 export type StitchesCss = Stitches.CSS<typeof config>;
 
-export const lightTheme = createTheme('light-theme', {});
+export const lightTheme = theme;
 export const darkTheme = createTheme('dark-theme', {
   colors: darkColors,
 });
