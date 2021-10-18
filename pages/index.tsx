@@ -37,55 +37,54 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
           px: '$5',
         }}
       >
-        <Box
+        <Text
+          as="h2"
           css={{
-            py: '$5',
+            fontSize: '$4',
+            my: '$6',
           }}
         >
-          <Text
-            as="h2"
-            css={{
-              fontSize: '$4',
-            }}
-          >
-            {"I'm a software engineer with a focus on web tech."}
-          </Text>
+          {"👋 I'm a software engineer working in web tech."}
+        </Text>
 
-          <Text as="p" css={{ fontSize: '$3', mt: '$5' }}>
-            I work at{' '}
-            <Link href="https://www.sproutsocial.com" target="_blank" rel="noopener noreferrer">
-              Sprout Social
-            </Link>{' '}
-            {
-              "as a Web Engineer on the Analytics team. If you've used Sprout Social's Reporting tools you've likely used software I wrote."
-            }
-          </Text>
+        <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
+          I work at{' '}
+          <Link href="https://www.sproutsocial.com" target="_blank" rel="noopener noreferrer">
+            Sprout Social
+          </Link>{' '}
+          {'as a Web Engineer on the Analytics team.'}
+        </Text>
 
-          <Text as="p" css={{ fontSize: '$3', mt: '$5' }}>
-            Currently based in Chicago.
-          </Text>
+        <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
+          {"If you've used Sprout's Reporting tools you've likely used software I wrote."}
+        </Text>
 
-          <Text as="p" css={{ fontSize: '$3', mt: '$5' }}>
-            You can find me on{' '}
-            <Link href="https://twitter.com/ianwmduvall" target="_blank" rel="noopener noreferrer">
-              <VisuallyHidden>Twitter</VisuallyHidden>
-              <TwitterLogoIcon aria-hidden />
-            </Link>{' '}
-            and{' '}
-            <Link href="https://github.com/ianduvall" target="_blank" rel="noopener noreferrer">
-              <VisuallyHidden>Github</VisuallyHidden>
-              <GitHubLogoIcon aria-hidden />
-            </Link>
-            .
-          </Text>
+        <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
+          Currently based in Chicago.
+        </Text>
 
-          <Text as="p" css={{ fontSize: '$3', mt: '$5' }}>
-            This site is still a work in progress.
-          </Text>
-        </Box>
+        <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
+          You can find me on{' '}
+          <Link href="https://twitter.com/ianwmduvall" target="_blank" rel="noopener noreferrer">
+            <VisuallyHidden>Twitter</VisuallyHidden>
+            <TwitterLogoIcon aria-hidden />
+          </Link>{' '}
+          and{' '}
+          <Link href="https://github.com/ianduvall" target="_blank" rel="noopener noreferrer">
+            <VisuallyHidden>Github</VisuallyHidden>
+            <GitHubLogoIcon aria-hidden />
+          </Link>
+          .
+        </Text>
+
+        <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
+          This site is still a work in progress.
+        </Text>
 
         <Box
           css={{
+            mt: '$8',
+            mb: '$6',
             p: '$4',
             border: '1px solid $gray11',
             borderRadius: '$3',

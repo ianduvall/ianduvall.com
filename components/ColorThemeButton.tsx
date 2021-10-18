@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondaryButton } from '@/system/Button';
+import { Button } from '@/system/Button';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
 import { Skeleton } from '@/system';
@@ -22,7 +22,7 @@ export const ColorThemeButton = () => {
   };
 
   return (
-    <SecondaryButton aria-label={ariaLabel} onClick={onClick}>
+    <Button variant="secondary" aria-label={ariaLabel} onClick={onClick}>
       {!isClient ? (
         <Skeleton css={{ size: 15, br: '$1' }} aria-hidden />
       ) : theme === 'dark' ? (
@@ -30,6 +30,6 @@ export const ColorThemeButton = () => {
       ) : (
         <MoonIcon aria-hidden />
       )}
-    </SecondaryButton>
+    </Button>
   );
 };

@@ -5,7 +5,7 @@ import NextImage from 'next/image';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { pre } from '@/styles/pre';
 import { code } from '@/styles/code';
-import { SecondaryButton } from '@/system';
+import { Button } from '@/system';
 import type { ComponentMap } from 'mdx-bundler/client';
 import { Box, Link, Text } from '@/system';
 
@@ -164,7 +164,7 @@ export const MDXComponents: ComponentMap = {
       <Collapsible.Root defaultOpen={isOpen} onOpenChange={(prev) => setIsOpen(!prev)}>
         <Collapsible.Trigger
           // @ts-ignore
-          as={SecondaryButton}
+          as={Button}
           css={{
             display: 'block',
             ml: 'auto',
