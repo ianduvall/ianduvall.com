@@ -5,7 +5,7 @@ import { BlogCard } from '@/components/BlogCard';
 import { getAllPosts } from '@/lib/posts';
 import type { Post } from '@/types/post';
 import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import { Box, Link, Text } from '@/system';
+import { Box, Link, Text, SystemProvider } from '@/system';
 import { Header } from '@/components/Header';
 
 export const getStaticProps = async () => {

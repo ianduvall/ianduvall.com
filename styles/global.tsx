@@ -10,7 +10,10 @@ export const globalStyles = globalCss({
     color: '$hiContrast',
     fontFamily: '$system',
     margin: 0,
-    fontSize: '$1',
+    fontSize: '17px',
+    '@bp1': {
+      fontSize: '14px',
+    },
     lineHeight: '$2',
   },
 

@@ -4,6 +4,12 @@
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
+  experimental: {
+    concurrentFeatures: true,
+  },
+
+  swcMinify: true,
+
   webpack: (config, options) => {
     if (options.isServer) {
       require('./lib/rss');

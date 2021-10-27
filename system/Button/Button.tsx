@@ -1,4 +1,6 @@
-import { styled } from 'stitches.config';
+import React from 'react';
+import { styled, StitchesCss } from 'stitches.config';
+import { useSystem } from '@/system';
 
 const DEFAULT_TAG = 'button';
 
@@ -82,4 +84,15 @@ export const buttonStyles = {
   },
 };
 
-export const Button = styled(DEFAULT_TAG, buttonStyles);
+const StyledButton = styled(DEFAULT_TAG, buttonStyles);
+
+type ButtonProps = React.ComponentPropsWithRef<typeof StyledButton> & { css?: StitchesCss };
+
+export const Button = React.forwardRef<React.ElementRef<typeof StyledButton>, ButtonProps>(
+  function Button(props, forwardedRef) {
+    const { isDisabled } = useSystem();
+    const disabled = props.disabled === undefined ? isDisabled : props.disabled;
+
+    return <StyledButton {...props} ref={forwardedRef} disabled={disabled} />;
+  }
+);

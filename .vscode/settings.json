@@ -10,7 +10,7 @@
     "btlr",
     "btrr",
     "esbuild",
-    "Fira",
     "Frontmatter"
-  ]
+  ],
+  "editor.tabSize": 2
 }

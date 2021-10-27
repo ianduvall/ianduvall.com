@@ -2,7 +2,7 @@ import { createStitches } from '@stitches/react';
 import type * as Stitches from '@stitches/react';
 import { lightColors } from 'system/tokens/colors/lightColors';
 import { darkColors } from 'system/tokens/colors/darkColors';
-import { fontSizes } from 'system/tokens/fontSizes';
+import { desktopFontSizes } from 'system/tokens/fontSizes';
 
 const stitchesConfig = createStitches({
   prefix: 'iD',
@@ -10,9 +10,8 @@ const stitchesConfig = createStitches({
     colors: lightColors,
     fonts: {
       system: 'system-ui',
-      mono: 'Fira Mono, monospace',
     },
-    fontSizes,
+    fontSizes: desktopFontSizes,
     lineHeights: {
       '0': '1',
       '1': '1',
