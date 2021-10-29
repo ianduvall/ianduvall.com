@@ -2,9 +2,9 @@ import React from 'react';
 import { styled, StitchesCss } from 'stitches.config';
 import { useSystem } from '@/system';
 
-const DEFAULT_TAG = 'button';
+const tag = 'button';
 
-export const buttonStyles = {
+export const buttonStyles: StitchesCss = {
   alignItems: 'center',
   all: 'unset',
   boxSizing: 'border-box',
@@ -44,19 +44,19 @@ export const buttonStyles = {
       },
       secondary: {
         backgroundColor: '$gray2',
-        boxShadow: 'inset 0 0 0 1px $colors$gray7',
+        boxShadow: '$border',
         color: '$gray11',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$gray8',
+            boxShadow: '$borderHover',
           },
         },
         '&:active': {
           backgroundColor: '$gray3',
-          boxShadow: 'inset 0 0 0 1px $colors$gray8',
+          boxShadow: '$borderActive',
         },
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$gray8, 0 0 0 1px $colors$gray8',
+          boxShadow: '$borderFocus',
         },
       },
     },
@@ -84,7 +84,7 @@ export const buttonStyles = {
   },
 };
 
-const StyledButton = styled(DEFAULT_TAG, buttonStyles);
+const StyledButton = styled(tag, buttonStyles);
 
 type ButtonProps = React.ComponentPropsWithRef<typeof StyledButton> & { css?: StitchesCss };
 

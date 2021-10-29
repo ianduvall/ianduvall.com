@@ -12,5 +12,9 @@
     "esbuild",
     "Frontmatter"
   ],
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "*.next": true,
+    "*.tsbuildinfo": true
+  },
 }

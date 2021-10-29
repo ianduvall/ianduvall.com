@@ -1,6 +1,6 @@
 import { styled } from 'stitches.config';
 
-const linkTag = 'a';
+const tag = 'a';
 
 export const linkStyles = {
   alignItems: 'center',
@@ -67,4 +67,4 @@ export const linkStyles = {
   },
 };
 
-export const Link = styled(linkTag, linkStyles);
+export const Link = styled(tag, linkStyles);

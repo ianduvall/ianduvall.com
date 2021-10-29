@@ -12,12 +12,14 @@ const stitchesConfig = createStitches({
       system: 'system-ui',
     },
     fontSizes: desktopFontSizes,
+    fontWeights: {},
     lineHeights: {
       '0': '1',
       '1': '1',
       '2': '1.3',
       '3': '1.5',
     },
+    letterSpacings: {},
     space: {
       0: '0',
       1: '2px',
@@ -51,6 +53,16 @@ const stitchesConfig = createStitches({
       round: '50%',
       pill: '9999px',
     },
+    shadows: {
+      border: 'inset 0 0 0 1px $colors$gray7',
+      borderHover: 'inset 0 0 0 1px $colors$gray8',
+      borderActive: '$shadows$borderHover',
+      borderFocus: 'inset 0 0 0 1px $colors$gray8, 0 0 0 1px $colors$gray8',
+    },
+    borderWidths: {},
+    borderStyles: {},
+    zIndices: {},
+    transitions: {},
   },
   media: {
     bp1: '(min-width: 520px)',

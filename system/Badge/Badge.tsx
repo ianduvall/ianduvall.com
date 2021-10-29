@@ -1,6 +1,6 @@
 import { styled } from 'stitches.config';
 
-const badgeTag = 'span';
+const tag = 'span';
 
 export const badgeStyles = {
   alignItems: 'center',
@@ -43,4 +43,4 @@ export const badgeStyles = {
   },
 };
 
-export const Badge = styled(badgeTag, badgeStyles);
+export const Badge = styled(tag, badgeStyles);
