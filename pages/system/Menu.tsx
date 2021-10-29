@@ -18,7 +18,19 @@ export default function MenuPage() {
 
   return (
     <Box css={{ overflowX: 'hidden' }}>
-      <Box>
+      <Box
+        css={{
+          display: 'flex',
+          gap: '$4',
+          p: '$4',
+          '@bp1': {
+            p: '$5',
+          },
+          '@bp2': {
+            p: '$6',
+          },
+        }}
+      >
         <label>
           <Text>x axis</Text>
           <input
