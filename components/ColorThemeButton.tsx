@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from '@/system/Button';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
-import { Skeleton } from '@/system';
+import { Button, Skeleton, StyledButton } from '@/system';
 
 export const ColorThemeButton = () => {
   const [isClient, setIsClient] = React.useState<boolean>(false);
@@ -22,7 +21,7 @@ export const ColorThemeButton = () => {
   };
 
   return (
-    <Button aria-label={ariaLabel} onClick={onClick}>
+    <Button size="md" aria-label={ariaLabel} onClick={onClick}>
       {!isClient ? (
         <Skeleton css={{ size: 15, br: '$1' }} aria-hidden />
       ) : theme === 'dark' ? (

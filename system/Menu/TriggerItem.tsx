@@ -2,7 +2,7 @@ import { styled, StitchesCss } from 'stitches.config';
 import { TriggerItem as MenuTriggerItem } from '@radix-ui/react-dropdown-menu';
 import { itemStyles } from './itemStyles';
 
-const triggerItemStyles: StitchesCss = {
+const triggerItemStyles = {
   ...itemStyles,
   '&[data-state="open"]': {
     backgroundColor: '$teal4',

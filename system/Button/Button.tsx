@@ -4,7 +4,7 @@ import { useSystem } from '@/system';
 
 const tag = 'button';
 
-export const buttonStyles: StitchesCss = {
+export const buttonStyles = {
   alignItems: 'center',
   all: 'unset',
   boxSizing: 'border-box',
@@ -84,15 +84,19 @@ export const buttonStyles: StitchesCss = {
   },
 };
 
-const StyledButton = styled(tag, buttonStyles);
+export const StyledButton = styled(tag, buttonStyles);
 
+type ButtonElement = React.ElementRef<typeof StyledButton>;
 type ButtonProps = React.ComponentPropsWithRef<typeof StyledButton> & { css?: StitchesCss };
 
-export const Button = React.forwardRef<React.ElementRef<typeof StyledButton>, ButtonProps>(
-  function Button(props, forwardedRef) {
-    const { isDisabled } = useSystem();
-    const disabled = props.disabled === undefined ? isDisabled : props.disabled;
+export const Button = React.forwardRef<ButtonElement, ButtonProps>(function Button(
+  props: ButtonProps,
+  forwardedRef: React.ForwardedRef<HTMLButtonElement>
+) {
+  const { isDisabled } = useSystem();
+  const disabled = props.disabled ?? isDisabled;
 
-    return <StyledButton {...props} ref={forwardedRef} disabled={disabled} />;
-  }
-);
+  return <StyledButton {...props} ref={forwardedRef} disabled={disabled} />;
+}) as typeof StyledButton;
+
+Button.toString = () => `.${StyledButton.className}`;

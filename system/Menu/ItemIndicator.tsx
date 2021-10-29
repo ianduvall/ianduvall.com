@@ -1,7 +1,7 @@
 import { styled, StitchesCss } from 'stitches.config';
 import { ItemIndicator as MenuItemIndicator } from '@radix-ui/react-dropdown-menu';
 
-const itemIndicatorStyles: StitchesCss = {
+const itemIndicatorStyles = {
   position: 'absolute',
   left: 0,
   width: 25,

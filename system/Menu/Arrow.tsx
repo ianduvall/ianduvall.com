@@ -1,7 +1,7 @@
 import { styled, StitchesCss } from 'stitches.config';
 import { Arrow as MenuArrow } from '@radix-ui/react-dropdown-menu';
 
-const arrowStyles: StitchesCss = {
+const arrowStyles = {
   fill: '$gray7',
 };
 

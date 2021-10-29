@@ -1,6 +1,6 @@
 import { StitchesCss } from 'stitches.config';
 
-export const itemStyles: StitchesCss = {
+export const itemStyles = {
   all: 'unset',
   color: '$teal11',
   borderRadius: '$1',

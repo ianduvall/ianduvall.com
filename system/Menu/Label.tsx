@@ -1,7 +1,7 @@
 import { styled, StitchesCss } from 'stitches.config';
 import { Label as MenuLabel } from '@radix-ui/react-dropdown-menu';
 
-const labelStyles: StitchesCss = {
+const labelStyles = {
   fontSize: '$-1',
   py: '$1',
   pr: '$2',

@@ -21,7 +21,7 @@ const slideLeftAndFade = keyframes({
   '100%': { opacity: 1, transform: 'translateX(0)' },
 });
 
-const contentStyles: StitchesCss = {
+const contentStyles = {
   minWidth: 250,
   borderRadius: '$2',
   padding: '$3',
