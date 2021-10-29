@@ -39,6 +39,7 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
       >
         <Text
           as="h2"
+          h={2}
           css={{
             fontSize: '$4',
             my: '$6',
@@ -95,10 +96,9 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
         >
           <Text
             as="h2"
+            h={2}
             css={{
-              fontSize: '$2',
               mb: '$4',
-              mx: 'auto',
               '@bp1': {
                 mb: '$5',
               },
@@ -113,6 +113,19 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
                 <BlogCard post={post} />
               </Box>
             ))}
+            {posts.length === 0 ? (
+              <Text
+                css={{
+                  fontSize: '$1',
+                  mb: '$4',
+                  '@bp1': {
+                    mb: '$5',
+                  },
+                }}
+              >
+                Coming soon!
+              </Text>
+            ) : null}
           </Box>
         </Box>
       </Box>

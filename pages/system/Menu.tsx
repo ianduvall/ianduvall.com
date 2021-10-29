@@ -10,9 +10,9 @@ import { Header } from '@/components/Header';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 
 export default function MenuPage() {
-  const [{ x, y }, setPosition] = React.useState<{ x: number; y: number }>({ x: 50, y: 50 });
+  const [{ x, y }, setPosition] = React.useState<{ x: number; y: number }>({ x: 50, y: 80 });
 
-  const menuRootRef = React.useRef<null | HTMLDivElement>(null);
+  const menuAnchorRef = React.useRef<null | HTMLDivElement>(null);
 
   const min = 0;
   const max = 100;
@@ -43,6 +43,7 @@ export default function MenuPage() {
               name="x"
               min={min}
               max={max}
+              defaultValue={50}
               onChange={(e) => {
                 e.preventDefault();
                 const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
@@ -57,6 +58,7 @@ export default function MenuPage() {
               name="y"
               min={min}
               max={max}
+              defaultValue={80}
               onChange={(e) => {
                 e.preventDefault();
                 const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
@@ -65,15 +67,27 @@ export default function MenuPage() {
             />
           </label>
         </Box>
-        <Box ref={menuRootRef} css={{ position: 'relative', height: '75vh' }}>
+
+        <Box css={{ m: '100px' }}>
+          <Text css={{ lineHeight: '$0' }}>Container</Text>
+
           <Box
+            ref={menuAnchorRef}
             css={{
-              position: 'absolute',
-              left: `calc(${x}% - ${(buttonSize * x) / 100}px)`,
-              top: `calc(${y}% - ${(buttonSize * y) / 100}px)`,
+              position: 'relative',
+              height: '50vh',
+              border: '1px solid $gray5',
             }}
           >
-            <DropdownMenu menuRootRef={menuRootRef} />
+            <Box
+              css={{
+                position: 'absolute',
+                left: `calc(${x}% - ${(buttonSize * x) / 100}px)`,
+                top: `calc(${y}% - ${(buttonSize * y) / 100}px)`,
+              }}
+            >
+              <DropdownMenu menuAnchorRef={menuAnchorRef} />
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -81,15 +95,16 @@ export default function MenuPage() {
   );
 }
 
-const DropdownMenu = ({ menuRootRef }: { menuRootRef: any }) => {
+const DropdownMenu = ({ menuAnchorRef }: { menuAnchorRef: any }) => {
   const [bookmarksChecked, setBookmarksChecked] = React.useState(true);
   const [urlsChecked, setUrlsChecked] = React.useState<boolean>(false);
   const [person, setPerson] = React.useState<'bill' | 'steve'>('steve');
 
   return (
     <Menu.Root>
+      {/* TODO - how to set Popper collision boundary as menuAnchorRef.current */}
       <Menu.Trigger asChild>
-        <Button aria-label="Customize options" ref={menuRootRef}>
+        <Button aria-label="Customize options">
           <HamburgerMenuIcon />
         </Button>
       </Menu.Trigger>
