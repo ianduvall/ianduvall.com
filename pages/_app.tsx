@@ -1,7 +1,7 @@
 import React from 'react';
-import { IdProvider } from '@radix-ui/react-id';
-import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import type { AppProps } from 'next/app';
+import { IdProvider } from '@radix-ui/react-id';
 
 import { Footer } from '@/components/Footer';
 import { globalStyles } from '@/styles/global';

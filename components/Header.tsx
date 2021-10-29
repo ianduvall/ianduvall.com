@@ -16,13 +16,19 @@ export const Header = () => {
         top: 0,
         left: 0,
         right: 0,
-        p: '$5',
+        p: '$4',
+
+        '@bp1': {
+          p: '$5',
+        },
+        '@bp2': {
+          p: '$6',
+        },
       }}
     >
       <NextLink href="/" passHref>
         <Link variant="primary">
           <Text
-            as={'h1'}
             css={{
               color: '$mint11',
               fontSize: '$5',

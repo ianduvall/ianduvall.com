@@ -9,22 +9,17 @@ export const Footer = (): JSX.Element => {
         py: '$4',
         bc: '$gray100',
         color: '$gray900',
-        '@bp1': {
-          py: '$5',
-        },
       }}
     >
       <Box
         css={{
           maxWidth: '720px',
-          mx: '$4',
-          py: '$4',
+          p: '$4',
           '@bp1': {
-            mx: '$5',
-            py: '$5',
+            p: '$5',
           },
           '@bp2': {
-            mx: '$6',
+            p: '$6',
           },
         }}
       >
@@ -36,7 +31,7 @@ export const Footer = (): JSX.Element => {
           }}
         >
           <Text
-            as="h3"
+            as="p"
             css={{
               css: {
                 mb: '$4',
@@ -86,7 +81,7 @@ export const Footer = (): JSX.Element => {
               },
             }}
           >
-            <Link href="https://github.com/ianduvall" target="_blank" rel="noopener noreferrer">
+            <Link href="/github" target="_blank" rel="noopener noreferrer">
               GitHub
             </Link>
           </Text>
@@ -100,7 +95,7 @@ export const Footer = (): JSX.Element => {
               },
             }}
           >
-            <Link href="https://twitter.com/ianwmduvall" target="_blank" rel="noopener noreferrer">
+            <Link href="/twitter" target="_blank" rel="noopener noreferrer">
               Twitter
             </Link>
           </Text>

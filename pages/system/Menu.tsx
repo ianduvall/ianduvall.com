@@ -6,6 +6,8 @@ import {
   ChevronRightIcon,
 } from '@radix-ui/react-icons';
 import { Box, Button, Menu, Text } from '@/system';
+import { Header } from '@/components/Header';
+import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 
 export default function MenuPage() {
   const [{ x, y }, setPosition] = React.useState<{ x: number; y: number }>({ x: 50, y: 50 });
@@ -17,61 +19,65 @@ export default function MenuPage() {
   const buttonSize = 40;
 
   return (
-    <Box css={{ overflowX: 'hidden' }}>
-      <Box
-        css={{
-          display: 'flex',
-          gap: '$4',
-          p: '$4',
-          '@bp1': {
-            p: '$5',
-          },
-          '@bp2': {
-            p: '$6',
-          },
-        }}
-      >
-        <label>
-          <Text>x axis</Text>
-          <input
-            type="range"
-            name="x"
-            min={min}
-            max={max}
-            onChange={(e) => {
-              e.preventDefault();
-              const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
-              setPosition((prev) => ({ ...prev, x: value }));
-            }}
-          />
-        </label>
-        <label>
-          <Text>y axis</Text>
-          <input
-            type="range"
-            name="y"
-            min={min}
-            max={max}
-            onChange={(e) => {
-              e.preventDefault();
-              const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
-              setPosition((prev) => ({ ...prev, y: value }));
-            }}
-          />
-        </label>
-      </Box>
-      <Box ref={menuRootRef} css={{ position: 'relative', height: '75vh' }}>
+    <>
+      <TitleAndMetaTags />
+      <Header />
+      <Box css={{ overflowX: 'hidden' }}>
         <Box
           css={{
-            position: 'absolute',
-            left: `calc(${x}% - ${(buttonSize * x) / 100}px)`,
-            top: `calc(${y}% - ${(buttonSize * y) / 100}px)`,
+            display: 'flex',
+            gap: '$4',
+            p: '$4',
+            '@bp1': {
+              p: '$5',
+            },
+            '@bp2': {
+              p: '$6',
+            },
           }}
         >
-          <DropdownMenu menuRootRef={menuRootRef} />
+          <label>
+            <Text>x axis</Text>
+            <input
+              type="range"
+              name="x"
+              min={min}
+              max={max}
+              onChange={(e) => {
+                e.preventDefault();
+                const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
+                setPosition((prev) => ({ ...prev, x: value }));
+              }}
+            />
+          </label>
+          <label>
+            <Text>y axis</Text>
+            <input
+              type="range"
+              name="y"
+              min={min}
+              max={max}
+              onChange={(e) => {
+                e.preventDefault();
+                const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
+                setPosition((prev) => ({ ...prev, y: value }));
+              }}
+            />
+          </label>
+        </Box>
+        <Box ref={menuRootRef} css={{ position: 'relative', height: '75vh' }}>
+          <Box
+            css={{
+              position: 'absolute',
+              left: `calc(${x}% - ${(buttonSize * x) / 100}px)`,
+              top: `calc(${y}% - ${(buttonSize * y) / 100}px)`,
+            }}
+          >
+            <DropdownMenu menuRootRef={menuRootRef} />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 
