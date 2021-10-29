@@ -22,7 +22,7 @@ export const ColorThemeButton = () => {
   };
 
   return (
-    <Button variant="secondary" aria-label={ariaLabel} onClick={onClick}>
+    <Button aria-label={ariaLabel} onClick={onClick}>
       {!isClient ? (
         <Skeleton css={{ size: 15, br: '$1' }} aria-hidden />
       ) : theme === 'dark' ? (
