@@ -4,9 +4,8 @@ import {
   DotFilledIcon,
   CheckIcon,
   ChevronRightIcon,
-  IconJarLogoIcon,
 } from '@radix-ui/react-icons';
-import { Box, Button, Menu } from '@/system';
+import { Box, Button, Menu, Text } from '@/system';
 
 export default function MenuPage() {
   const [{ x, y }, setPosition] = React.useState<{ x: number; y: number }>({ x: 50, y: 50 });
@@ -20,32 +19,36 @@ export default function MenuPage() {
   return (
     <Box css={{ overflowX: 'hidden' }}>
       <Box>
-        <input
-          type="range"
-          name="x"
-          min={min}
-          max={max}
-          onChange={(e) => {
-            e.preventDefault();
-            const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
-            console.log({ x: value });
-            setPosition((prev) => ({ ...prev, x: value }));
-          }}
-        />
-        <input
-          type="range"
-          name="y"
-          min={min}
-          max={max}
-          onChange={(e) => {
-            e.preventDefault();
-            const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
-            console.log({ y: value });
-            setPosition((prev) => ({ ...prev, y: value }));
-          }}
-        />
+        <label>
+          <Text>x axis</Text>
+          <input
+            type="range"
+            name="x"
+            min={min}
+            max={max}
+            onChange={(e) => {
+              e.preventDefault();
+              const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
+              setPosition((prev) => ({ ...prev, x: value }));
+            }}
+          />
+        </label>
+        <label>
+          <Text>y axis</Text>
+          <input
+            type="range"
+            name="y"
+            min={min}
+            max={max}
+            onChange={(e) => {
+              e.preventDefault();
+              const value = Math.min(Math.max(e.currentTarget.valueAsNumber, min), max);
+              setPosition((prev) => ({ ...prev, y: value }));
+            }}
+          />
+        </label>
       </Box>
-      <Box ref={menuRootRef} css={{ position: 'relative', height: '80vh', boxShadow: '$border' }}>
+      <Box ref={menuRootRef} css={{ position: 'relative', height: '75vh' }}>
         <Box
           css={{
             position: 'absolute',
@@ -68,31 +71,31 @@ const DropdownMenu = ({ menuRootRef }: { menuRootRef: any }) => {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-        <Button aria-label="Customize options">
+        <Button aria-label="Customize options" ref={menuRootRef}>
           <HamburgerMenuIcon />
         </Button>
       </Menu.Trigger>
 
       <Menu.Content>
         <Menu.Item>
-          New Tab <Box css={{ marginLeft: 'auto' }}>⌘+T</Box>
+          New Tab <Box css={{ ml: 'auto' }}>⌘+T</Box>
         </Menu.Item>
         <Menu.Item>
-          New Window <Box css={{ marginLeft: 'auto' }}>⌘+N</Box>
+          New Window <Box css={{ ml: 'auto' }}>⌘+N</Box>
         </Menu.Item>
         <Menu.Item disabled>
-          New Private Window <Box css={{ marginLeft: 'auto' }}>⇧+⌘+N</Box>
+          New Private Window <Box css={{ ml: 'auto' }}>⇧+⌘+N</Box>
         </Menu.Item>
         <Menu.Root>
           <Menu.TriggerItem>
             More Tools
-            <Box css={{ marginLeft: 'auto' }}>
+            <Box css={{ ml: 'auto' }}>
               <ChevronRightIcon />
             </Box>
           </Menu.TriggerItem>
-          <Menu.Content sideOffset={2} alignOffset={-5}>
+          <Menu.Content>
             <Menu.Item>
-              Save Page As… <Box css={{ marginLeft: 'auto' }}>⌘+S</Box>
+              Save Page As… <Box css={{ ml: 'auto' }}>⌘+S</Box>
             </Menu.Item>
             <Menu.Item>Create Shortcut…</Menu.Item>
             <Menu.Item>Name Window…</Menu.Item>
@@ -105,7 +108,7 @@ const DropdownMenu = ({ menuRootRef }: { menuRootRef: any }) => {
           <Menu.ItemIndicator>
             <CheckIcon />
           </Menu.ItemIndicator>
-          Show Bookmarks <Box css={{ marginLeft: 'auto' }}>⌘+B</Box>
+          Show Bookmarks <Box css={{ ml: 'auto' }}>⌘+B</Box>
         </Menu.CheckboxItem>
         <Menu.CheckboxItem checked={urlsChecked} onCheckedChange={setUrlsChecked}>
           <Menu.ItemIndicator>

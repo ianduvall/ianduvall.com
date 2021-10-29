@@ -3,6 +3,7 @@ import matter from 'gray-matter';
 export interface Frontmatter {
   title: string;
   description?: string;
+  published?: boolean;
   publishedAt?: string;
   draft?: boolean;
   readingTime?: { text: string; minutes: number; time: number; words: number };

@@ -50,5 +50,5 @@ export const getAllPosts = async (): Promise<PostWithCode[]> => {
   const slugs = fs.readdirSync(getPostsDirectory()).filter((slug) => slug.endsWith('.mdx'));
   const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
 
-  return posts;
+  return posts.filter((post) => post.frontmatter.published);
 };
