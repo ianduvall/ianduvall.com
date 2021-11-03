@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, StitchesCss } from 'stitches.config';
+import { styled, StitchesCss } from '@/styles';
 import { useSystem } from '@/system';
 
 const tag = 'button';
@@ -7,7 +7,6 @@ const tag = 'button';
 export const buttonStyles = {
   alignItems: 'center',
   all: 'unset',
-  boxSizing: 'border-box',
   cursor: 'pointer',
   display: 'inline-flex',
   flexShrink: 0,

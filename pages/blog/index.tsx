@@ -35,11 +35,11 @@ export default function BlogPage({ posts }: TypeBlogPageProps) {
         css={{
           mx: '$4',
           py: '$4',
-          '@bp1': {
+          '@tablet-portrait-and-up': {
             mx: '$5',
             py: '$5',
           },
-          '@bp2': {
+          '@tablet-landscape-and-up': {
             mx: '$6',
           },
         }}
@@ -48,6 +48,7 @@ export default function BlogPage({ posts }: TypeBlogPageProps) {
           Weblog
         </Text>
 
+        {posts.length > 0 ? null : <Text>Coming Soon!</Text>}
         <Box as="ul" css={{ listStyle: 'none', pl: 0 }}>
           {posts.map((post) => {
             const { title, description, slug, publishedAtFormats, draft } = post;

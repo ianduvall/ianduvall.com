@@ -1,5 +1,6 @@
-import { Content as MenuContent } from '@radix-ui/react-dropdown-menu';
+import React from 'react';
 import { styled, keyframes } from '@/styles';
+import * as PopoverPrimitive from '@radix-ui/react-popover';
 
 const slideUpAndFade = keyframes({
   '0%': { opacity: 0, transform: 'translateY(2px)' },
@@ -21,15 +22,12 @@ const slideLeftAndFade = keyframes({
   '100%': { opacity: 1, transform: 'translateX(0)' },
 });
 
-const contentStyles = {
-  minWidth: 250,
-  borderRadius: '$2',
-  padding: '$3',
-  backgroundColor: '$gray2',
-  boxShadow: '$border',
-  color: '$gray11',
-  fontSize: '$0',
-
+export const Content = styled(PopoverPrimitive.Content, {
+  borderRadius: 4,
+  padding: 20,
+  width: 260,
+  backgroundColor: 'white',
+  boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   '@motion': {
     animationDuration: '400ms',
     animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
@@ -41,8 +39,28 @@ const contentStyles = {
       '&[data-side="left"]': { animationName: slideRightAndFade },
     },
   },
-};
+  '&:focus': {
+    boxShadow: `hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px ${'$green7'}`,
+  },
+});
 
-export const Content = styled(MenuContent, contentStyles);
+export const Close = styled(PopoverPrimitive.Close, {
+  all: 'unset',
+  fontFamily: 'inherit',
+  borderRadius: '100%',
+  height: 25,
+  width: 25,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '$green11',
+  position: 'absolute',
+  top: 5,
+  right: 5,
 
-Content.defaultProps = { sideOffset: 6 };
+  '&:hover': { backgroundColor: '$green4' },
+  '&:focus': { boxShadow: `0 0 0 2px ${'$green7'}` },
+});
+
+export const Root = styled(PopoverPrimitive.Root, {});
+export const Trigger = styled(PopoverPrimitive.Trigger, {});

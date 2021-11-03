@@ -1,9 +1,8 @@
-import { styled } from 'stitches.config';
+import { styled } from '@/styles';
 
 const textTag = 'span';
 
 export const textStyles = {
-  boxSizing: 'border-box',
   display: 'block',
   fontFamily: '$system',
   fontVariantNumeric: 'tabular-nums',

@@ -58,11 +58,11 @@ export default function PostPage({ code, post }: PostWithCode) {
         css={{
           mx: '$4',
           py: '$4',
-          '@bp1': {
+          '@tablet-portrait-and-up': {
             mx: '$5',
             py: '$5',
           },
-          '@bp2': {
+          '@tablet-landscape-and-up': {
             mx: '$6',
           },
         }}

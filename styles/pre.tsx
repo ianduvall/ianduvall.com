@@ -1,4 +1,4 @@
-import { css } from 'stitches.config';
+import { css } from '@/styles';
 
 export const pre = css({
   $$background: 'hsla(206 12% 89.5% / 85%)',
@@ -22,7 +22,6 @@ export const pre = css({
   $$addedWordBgActive: 'hsl(206deg 22% 64% / 30%)',
   $$addedWordText: '$colors$orange400',
 
-  boxSizing: 'border-box',
   padding: '$3',
   overflow: 'auto',
   fontFamily: '$mono',

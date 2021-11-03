@@ -56,7 +56,7 @@ export const MDXComponents: ComponentMap = {
     />
   ),
   Image: ({ children, ...props }) => (
-    <Box as="figure" css={{ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } }}>
+    <Box as="figure" css={{ my: '$5', mx: '-$3', '@tablet-portrait-and-up': { mx: '-$5' } }}>
       <NextImage {...(props as any)} />
       {children && (
         <Box
@@ -75,7 +75,7 @@ export const MDXComponents: ComponentMap = {
     </Box>
   ),
   img: ({ children, ...props }) => (
-    <Box css={{ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } }}>
+    <Box css={{ my: '$5', mx: '-$3', '@tablet-portrait-and-up': { mx: '-$5' } }}>
       <NextImage {...(props as any)} />
     </Box>
   ),
@@ -86,7 +86,7 @@ export const MDXComponents: ComponentMap = {
         mx: '-$3',
         border: '1px solid $gray3',
         overflow: 'hidden',
-        '@bp1': { mx: '-$5' },
+        '@tablet-portrait-and-up': { mx: '-$5' },
       }}
     >
       <Box
@@ -113,7 +113,7 @@ export const MDXComponents: ComponentMap = {
         pl: '$2',
         borderLeft: '2px solid $gray',
         color: '$gray800',
-        '@bp1': {
+        '@tablet-portrait-and-up': {
           pl: '$4',
         },
       }}
@@ -138,7 +138,7 @@ export const MDXComponents: ComponentMap = {
               borderTopRightRadius: 0,
             },
 
-            '@bp1': {
+            '@tablet-portrait-and-up': {
               mx: 0,
               borderRadius: '$3',
             },

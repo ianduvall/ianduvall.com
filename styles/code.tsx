@@ -1,7 +1,6 @@
-import { css } from 'stitches.config';
+import { css } from '@/styles';
 
 export const code = css({
-  boxSizing: 'border-box',
   bc: 'hsla(206 12% 89.5% / 10%)',
   borderRadius: '$1',
   color: '$gray1',

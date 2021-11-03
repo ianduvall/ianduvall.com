@@ -17,10 +17,10 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
       <Box
         css={{
           p: '$4',
-          '@bp1': {
+          '@tablet-portrait-and-up': {
             p: '$5',
           },
-          '@bp2': {
+          '@tablet-landscape-and-up': {
             p: '$6',
           },
         }}

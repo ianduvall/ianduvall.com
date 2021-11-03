@@ -1,11 +1,10 @@
 import React from 'react';
-import { styled } from 'stitches.config';
+import { styled } from '@/styles';
 
 const boxTag = 'div';
 
 export const boxStyles = {
   // reset
-  boxSizing: 'border-box',
 };
 
 export const Box = styled(boxTag, boxStyles);

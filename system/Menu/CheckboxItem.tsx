@@ -1,4 +1,4 @@
-import { styled, StitchesCss } from 'stitches.config';
+import { styled, StitchesCss } from '@/styles';
 import { CheckboxItem as MenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import { itemStyles } from './itemStyles';
 

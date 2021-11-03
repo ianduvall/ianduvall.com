@@ -1,14 +1,41 @@
 import React from 'react';
 import Head from 'next/head';
+import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { IdProvider } from '@radix-ui/react-id';
 
 import { Footer } from '@/components/Footer';
 import { globalStyles } from '@/styles/global';
-import { SystemProvider, ThemeProvider, Box } from '@/system';
+import { Box, SystemProvider, ThemeProvider } from '@/system';
 
-function App({ Component, pageProps }: AppProps) {
+const getDefaultLayout = (page: React.ReactElement): React.ReactNode => (
+  <Box
+    css={{
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column',
+    }}
+  >
+    <Box css={{ flex: 1 }}>{page}</Box>
+
+    <Footer />
+  </Box>
+);
+
+type NextPageWithGetLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithGetLayout = AppProps & {
+  Component: NextPageWithGetLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithGetLayout) {
   globalStyles();
+
+  const getLayout = Component.getLayout || getDefaultLayout;
+
+  const page = getLayout(<Component {...pageProps} />);
 
   return (
     <SystemProvider>
@@ -18,23 +45,9 @@ function App({ Component, pageProps }: AppProps) {
             <title>Ian Duvall</title>
           </Head>
 
-          <Box
-            css={{
-              display: 'flex',
-              minHeight: '100vh',
-              flexDirection: 'column',
-            }}
-          >
-            <Box css={{ flex: 1 }}>
-              <Component {...pageProps} />
-            </Box>
-
-            <Footer />
-          </Box>
+          {page}
         </IdProvider>
       </ThemeProvider>
     </SystemProvider>
   );
 }
-
-export default App;

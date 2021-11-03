@@ -1,4 +1,4 @@
-import { styled } from 'stitches.config';
+import { styled } from '@/styles';
 
 const tag = 'span';
 
@@ -8,7 +8,6 @@ export const badgeStyles = {
   backgroundColor: '$gray3',
   borderRadius: '$pill',
   borderWidth: '0',
-  boxSizing: 'border-box',
   color: '$gray11',
   display: 'inline-flex',
   flexShrink: 0,
@@ -26,11 +25,9 @@ export const badgeStyles = {
   whiteSpace: 'nowrap',
 
   '&::before': {
-    boxSizing: 'border-box',
     content: '""',
   },
   '&::after': {
-    boxSizing: 'border-box',
     content: '""',
   },
   '&:disabled': {

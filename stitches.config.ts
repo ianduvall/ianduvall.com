@@ -1,8 +1,17 @@
 import { createStitches } from '@stitches/react';
 import type * as Stitches from '@stitches/react';
-import { lightColors } from 'system/tokens/colors/lightColors';
-import { darkColors } from 'system/tokens/colors/darkColors';
-import { desktopFontSizes } from 'system/tokens/fontSizes';
+import { lightColors } from '@/system/tokens/colors/lightColors';
+import { darkColors } from '@/system/tokens/colors/darkColors';
+import { majorSecondTypeScaleFontSizes } from '@/system/tokens/fontSizes';
+
+const mobileMax = '599px';
+const tabletPortraitMin = '600px';
+const tabletPortraitMax = '899px';
+const tabletLandscapeMin = '900px';
+const tabletLandscapeMax = '1199px';
+const desktopMin = '1200px';
+const desktopMax = '1799px';
+const widescreenMin = '1800px';
 
 const stitchesConfig = createStitches({
   prefix: 'iD',
@@ -11,7 +20,7 @@ const stitchesConfig = createStitches({
     fonts: {
       system: 'system-ui',
     },
-    fontSizes: desktopFontSizes,
+    fontSizes: majorSecondTypeScaleFontSizes,
     fontWeights: {},
     lineHeights: {
       '0': '1',
@@ -31,6 +40,14 @@ const stitchesConfig = createStitches({
       7: '32px',
       8: '64px',
       9: '128px',
+      'mobile-max': mobileMax,
+      'tablet-portrait-min': tabletPortraitMin,
+      'tablet-portrait-max': tabletPortraitMax,
+      'tablet-landscape-min': tabletLandscapeMin,
+      'tablet-landscape-max': tabletLandscapeMax,
+      'desktop-min': desktopMin,
+      'desktop-max': desktopMax,
+      'widescreen-min': widescreenMin,
     },
     sizes: {
       0: '0',
@@ -59,18 +76,37 @@ const stitchesConfig = createStitches({
       borderActive: '$shadows$borderHover',
       borderFocus: 'inset 0 0 0 1px $colors$gray8, 0 0 0 1px $colors$gray8',
     },
-    borderWidths: {},
+    borderWidths: {
+      0: '0',
+      1: '1px',
+      2: '2px',
+      3: '4px',
+      4: '8px',
+    },
     borderStyles: {},
     zIndices: {},
     transitions: {},
   },
   media: {
-    bp1: '(min-width: 520px)',
-    bp2: '(min-width: 900px)',
-    bp3: '(min-width: 1200px)',
-    bp4: '(min-width: 1800px)',
-    motion: '(prefers-reduced-motion)',
+    // default styles will apply to mobile and up
+
+    'tablet-portrait-and-up': `(min-width: ${tabletPortraitMin})`,
+    'tablet-landscape-and-up': `(min-width: ${tabletLandscapeMin})`,
+    'desktop-and-up': `(min-width: ${desktopMin})`,
+    'widescreen-and-up': `(min-width: ${widescreenMin})`,
+
+    'mobile-only': `(max-width: ${mobileMax})`,
+    'tablet-portrait-only': `(min-width: ${tabletPortraitMin}) and (max-width: ${tabletPortraitMax})`,
+    'tablet-landscape-only': `(min-width: ${tabletLandscapeMin}) and (max-width: ${tabletLandscapeMax})`,
+    'desktop-only': `(min-width: ${desktopMin}) and (max-width: ${desktopMax})`,
+    'widescreen-only': `$widescreen-and-up`,
+
+    motion: '(prefers-reduced-motion: no-preference)',
+    reduceMotion: '(prefers-reduced-motion: reduce)',
+
     hover: '(any-hover: hover)',
+    noHover: '(any-hover: none)',
+
     dark: '(prefers-color-scheme: dark)',
     light: '(prefers-color-scheme: light)',
   },

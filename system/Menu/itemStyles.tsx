@@ -1,4 +1,4 @@
-import { StitchesCss } from 'stitches.config';
+import { StitchesCss } from '@/styles';
 
 export const itemStyles = {
   all: 'unset',

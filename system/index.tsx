@@ -1,7 +1,9 @@
+export * as Menu from './Menu';
+export * as Popover from './Popover';
+export * as Tray from './Tray';
 export * from './Badge';
 export * from './Box';
 export * from './Button';
-export * as Menu from './Menu';
 export * from './Link';
 export * from './Skeleton';
 export * from './SystemProvider';

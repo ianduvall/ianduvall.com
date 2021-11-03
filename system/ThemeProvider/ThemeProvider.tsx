@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes';
 
-import { lightTheme, darkTheme } from 'stitches.config';
+import { lightTheme, darkTheme } from '@/styles';
 
 const colorThemeProviderValue = {
   dark: darkTheme.className,

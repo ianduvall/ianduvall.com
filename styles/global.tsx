@@ -1,17 +1,27 @@
-import { globalCss } from 'stitches.config';
+import { globalCss } from '@/styles';
+
+const boxSizingInherit = { boxSizing: 'inherit' };
 
 export const globalStyles = globalCss({
-  '*, &::before, &::after': {
+  html: {
     boxSizing: 'border-box',
+  },
+
+  '*': {
+    ...boxSizingInherit,
+    margin: 0,
+    padding: 0,
+
+    '&::before': boxSizingInherit,
+    '&::after': boxSizingInherit,
   },
 
   body: {
     backgroundColor: '$gray1',
     color: '$hiContrast',
     fontFamily: '$system',
-    margin: 0,
     fontSize: '17px',
-    '@bp1': {
+    '@tablet-portrait-and-up': {
       fontSize: '14px',
     },
     lineHeight: '$2',
@@ -19,17 +29,35 @@ export const globalStyles = globalCss({
 
   'h1, h2, h3, h4, h5, h6': {
     lineHeight: '$3',
+    fontWeight: '$bold',
   },
 
   ul: {
-    paddingLeft: '$4',
+    listStyle: 'none',
   },
 
-  figure: { margin: 0 },
+  'pre,code': { fontFamily: '$mono' },
 
-  'pre, code': { margin: 0, fontFamily: '$mono' },
+  svg: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+  },
 
-  svg: { display: 'inline-block', verticalAlign: 'middle' },
+  'img,video': {
+    height: 'auto',
+    'max-width': '100%',
+  },
+
+  iframe: { border: '0' },
+
+  table: {
+    'border-collapse': 'collapse',
+    'border-spacing': '0',
+  },
+
+  'td,th': {
+    padding: '0',
+  },
 
   '::selection': {
     backgroundColor: '$mint11',

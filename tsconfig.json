@@ -1,28 +1,31 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/system": ["system/index.tsx"],
-      "@/system/*": ["system/*"],
-      "@/components/*": ["components/*"],
-      "@/styles/*": ["styles/*"],
-      "@/lib/*": ["lib/*"],
-      "@/types/*": ["types/*"]
-    },
-    "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "paths": {
+      "@/atoms": ["atoms/index.ts"],
+      "@/components": ["components/index.tsx"],
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles": ["stitches.config.ts"],
+      "@/styles/*": ["styles/*"],
+      "@/system": ["system/index.tsx"],
+      "@/system/*": ["system/*"],
+      "@/types/*": ["types/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es6"
   },
   "exclude": ["node_modules"],
   "include": [

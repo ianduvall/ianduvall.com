@@ -15,10 +15,10 @@ export const Footer = (): JSX.Element => {
         css={{
           maxWidth: '720px',
           p: '$4',
-          '@bp1': {
+          '@tablet-portrait-and-up': {
             p: '$5',
           },
-          '@bp2': {
+          '@tablet-landscape-and-up': {
             p: '$6',
           },
         }}
@@ -27,7 +27,7 @@ export const Footer = (): JSX.Element => {
           css={{
             display: 'flex',
             flexDirection: 'column',
-            '@bp1': { flexDirection: 'row' },
+            '@tablet-portrait-and-up': { flexDirection: 'row' },
           }}
         >
           <Text
@@ -36,7 +36,7 @@ export const Footer = (): JSX.Element => {
               css: {
                 mb: '$4',
                 color: '$gray800',
-                '@bp1': {
+                '@tablet-portrait-and-up': {
                   mr: '$4',
                   mb: 0,
                 },
@@ -50,7 +50,7 @@ export const Footer = (): JSX.Element => {
             as="p"
             css={{
               mb: '$1',
-              '@bp1': {
+              '@tablet-portrait-and-up': {
                 mx: '$4',
               },
             }}
@@ -64,7 +64,7 @@ export const Footer = (): JSX.Element => {
             as="p"
             css={{
               mb: '$1',
-              '@bp1': {
+              '@tablet-portrait-and-up': {
                 mx: '$4',
               },
             }}
@@ -76,7 +76,7 @@ export const Footer = (): JSX.Element => {
             as="p"
             css={{
               mb: '$1',
-              '@bp1': {
+              '@tablet-portrait-and-up': {
                 mx: '$4',
               },
             }}
@@ -90,7 +90,7 @@ export const Footer = (): JSX.Element => {
             as="p"
             css={{
               mb: '$1',
-              '@bp1': {
+              '@tablet-portrait-and-up': {
                 mx: '$4',
               },
             }}

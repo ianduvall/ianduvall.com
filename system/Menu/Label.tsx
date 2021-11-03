@@ -1,4 +1,4 @@
-import { styled, StitchesCss } from 'stitches.config';
+import { styled, StitchesCss } from '@/styles';
 import { Label as MenuLabel } from '@radix-ui/react-dropdown-menu';
 
 const labelStyles = {

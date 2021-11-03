@@ -1,4 +1,4 @@
-import { styled, StitchesCss } from 'stitches.config';
+import { styled, StitchesCss } from '@/styles';
 import { Arrow as MenuArrow } from '@radix-ui/react-dropdown-menu';
 
 const arrowStyles = {

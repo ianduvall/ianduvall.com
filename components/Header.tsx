@@ -18,10 +18,10 @@ export const Header = () => {
         right: 0,
         p: '$4',
 
-        '@bp1': {
+        '@tablet-portrait-and-up': {
           p: '$5',
         },
-        '@bp2': {
+        '@tablet-landscape-and-up': {
           p: '$6',
         },
       }}
@@ -47,10 +47,10 @@ export const Header = () => {
           alignItems: 'center',
           [`& ${Link}`]: {
             mr: '$5',
-            '@bp1': {
+            '@tablet-portrait-and-up': {
               mr: '$6',
             },
-            '@bp2': {
+            '@tablet-landscape-and-up': {
               mr: '$7',
             },
           },

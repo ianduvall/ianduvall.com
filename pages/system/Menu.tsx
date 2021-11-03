@@ -28,10 +28,10 @@ export default function MenuPage() {
             display: 'flex',
             gap: '$4',
             p: '$4',
-            '@bp1': {
+            '@tablet-portrait-and-up': {
               p: '$5',
             },
-            '@bp2': {
+            '@tablet-landscape-and-up': {
               p: '$6',
             },
           }}

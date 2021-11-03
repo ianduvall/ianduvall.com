@@ -1,31 +1,30 @@
 export const desktopBaseFontSize = 14;
-const majorSecondTypeScale = 1.125; // major second type scale
 
-const scaleFontSize = (baseFontSize: number, step: number, multiple: number) =>
-  Math.round(baseFontSize * Math.pow(multiple, step));
+const majorSecondTypeScale = 1.125;
 
-const toRem = (scaledFontSize: number, baseFontSize: number) =>
-  `${(scaledFontSize / baseFontSize).toFixed(2)}rem`;
+const scaleFontSize = (step: number, multiple: number) => Math.pow(multiple, step);
 
-const scaleFontSizeToRem = (fontSize: number, scaleMultiple: number) => (step: number) =>
-  toRem(scaleFontSize(fontSize, step, scaleMultiple), fontSize);
+const toRem = (fontSize: number) => `${fontSize.toFixed(3)}rem`;
 
-const scaleDesktopFontSizeToRem = scaleFontSizeToRem(desktopBaseFontSize, majorSecondTypeScale);
+const createScaleFontSizeToRem = (scaleMultiple: number) => (step: number) =>
+  toRem(scaleFontSize(step, scaleMultiple));
 
-export const desktopFontSizes = {
-  '-2': scaleDesktopFontSizeToRem(-2),
-  '-1': scaleDesktopFontSizeToRem(-1),
-  0: scaleDesktopFontSizeToRem(0),
-  1: scaleDesktopFontSizeToRem(1),
-  2: scaleDesktopFontSizeToRem(2),
-  3: scaleDesktopFontSizeToRem(3),
-  4: scaleDesktopFontSizeToRem(4),
-  5: scaleDesktopFontSizeToRem(5),
-  6: scaleDesktopFontSizeToRem(6),
-  7: scaleDesktopFontSizeToRem(7),
-  8: scaleDesktopFontSizeToRem(8),
-  9: scaleDesktopFontSizeToRem(9),
-  10: scaleDesktopFontSizeToRem(10),
-  11: scaleDesktopFontSizeToRem(11),
-  12: scaleDesktopFontSizeToRem(12),
+const scaleFontSizeToRem = createScaleFontSizeToRem(majorSecondTypeScale);
+
+export const majorSecondTypeScaleFontSizes = {
+  '-2': scaleFontSizeToRem(-2),
+  '-1': scaleFontSizeToRem(-1),
+  0: scaleFontSizeToRem(0),
+  1: scaleFontSizeToRem(1),
+  2: scaleFontSizeToRem(2),
+  3: scaleFontSizeToRem(3),
+  4: scaleFontSizeToRem(4),
+  5: scaleFontSizeToRem(5),
+  6: scaleFontSizeToRem(6),
+  7: scaleFontSizeToRem(7),
+  8: scaleFontSizeToRem(8),
+  9: scaleFontSizeToRem(9),
+  10: scaleFontSizeToRem(10),
+  11: scaleFontSizeToRem(11),
+  12: scaleFontSizeToRem(12),
 };

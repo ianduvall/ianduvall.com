@@ -89,7 +89,7 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
             p: '$4',
             border: '1px solid $gray11',
             borderRadius: '$3',
-            '@bp1': {
+            '@tablet-portrait-and-up': {
               p: '$6',
             },
           }}
@@ -99,7 +99,7 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
             h={2}
             css={{
               mb: '$4',
-              '@bp1': {
+              '@tablet-portrait-and-up': {
                 mb: '$5',
               },
             }}
@@ -118,7 +118,7 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
                 css={{
                   fontSize: '$1',
                   mb: '$4',
-                  '@bp1': {
+                  '@tablet-portrait-and-up': {
                     mb: '$5',
                   },
                 }}
