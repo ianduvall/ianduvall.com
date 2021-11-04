@@ -1,6 +1,8 @@
 export * as Menu from './Menu';
 export * as Popover from './Popover';
 export * as Tray from './Tray';
+export * as SideNav from './SideNav';
+export * as ScrollArea from './ScrollArea';
 export * from './Badge';
 export * from './Box';
 export * from './Button';

@@ -10,13 +10,11 @@ export const buttonStyles = {
   cursor: 'pointer',
   display: 'inline-flex',
   flexShrink: 0,
-  fontFamily: '$untitled',
   fontSize: '$2',
   fontVariantNumeric: 'tabular-nums',
   fontWeight: 500,
   justifyContent: 'center',
   lineHeight: '1',
-  margin: 0,
   overflow: 'visible',
   textTransform: 'none',
   userSelect: 'none',
@@ -38,7 +36,7 @@ export const buttonStyles = {
           boxShadow: 'inset 0 0 0 1px $colors$teal8',
         },
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$teal8, 0 0 0 1px $colors$teal8',
+          boxShadow: 'inset 0 0 0 1px $colors$teal8',
         },
       },
       secondary: {

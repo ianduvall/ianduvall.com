@@ -5,7 +5,7 @@ import { Box, Button, Text } from '@/system';
 import { navAtom } from '@/atoms';
 import { Tray } from '@/system';
 
-export const MobileNavTray = () => {
+export const NavTray = () => {
   const [nav, setNav] = useAtom(navAtom);
 
   return (

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Button, Link, Text } from '@/system';
-import { MobileNavTray } from '@/components';
+import { Link, Text, SideNav, ScrollArea } from '@/system';
+import { NavTray } from '@/components';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import * as Layout from '@/components/Layout';
+import NextLink from 'next/link';
 
 export default function LayoutPage() {
   return (
@@ -18,15 +19,20 @@ export default function LayoutPage() {
 
 LayoutPage.getLayout = (page: React.ReactElement): React.ReactNode => (
   <Layout.Container>
-    <Layout.Header>
-      <MobileNavTray />
-      <ScreenSize />
-    </Layout.Header>
-
     <Layout.Nav>
-      {new Array(100).fill(0).map((_, i) => (
-        <Text key={i}>Nav item {i}</Text>
-      ))}
+      <Layout.Header>
+        <NavTray />
+      </Layout.Header>
+      <SideNav.Container>
+        <NextLink passHref href="/blog">
+          <Link as={SideNav.Item}>Blog</Link>
+        </NextLink>
+        {new Array(25).fill(0).map((_, i) => (
+          <SideNav.Item key={i} tabIndex={0}>
+            <Text>Nav item {i}</Text>
+          </SideNav.Item>
+        ))}
+      </SideNav.Container>
     </Layout.Nav>
 
     <Layout.Nav2>
@@ -35,7 +41,12 @@ LayoutPage.getLayout = (page: React.ReactElement): React.ReactNode => (
       ))}
     </Layout.Nav2>
 
-    <Layout.Content>{page}</Layout.Content>
+    <Layout.Content>
+      <Layout.ContentHeader>
+        <ScreenSize />
+      </Layout.ContentHeader>
+      {page}
+    </Layout.Content>
 
     <Layout.Footer>
       <Text>Footer content goes here</Text>
@@ -88,7 +99,7 @@ const ScreenSize = () => (
     <Text
       css={{
         display: 'none',
-        '@desktop-only': {
+        '@widescreen-only': {
           display: 'block',
         },
       }}

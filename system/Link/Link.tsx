@@ -1,7 +1,5 @@
 import { styled } from '@/styles';
 
-const tag = 'a';
-
 export const linkStyles = {
   alignItems: 'center',
   gap: '$1',
@@ -67,4 +65,4 @@ export const linkStyles = {
   },
 };
 
-export const Link = styled(tag, linkStyles);
+export const Link = styled('a', linkStyles);

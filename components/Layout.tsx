@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { styled, keyframes } from '@/styles';
-import { Box, Link, Text } from '@/system';
+import { Box, ScrollArea } from '@/system';
 
 const headerHeight = '4rem';
 const footerHeight = '4rem';
@@ -10,53 +10,31 @@ const navWidth = '16rem';
 const nav2Width = '16rem';
 
 export const Container = styled(Box, {
-  width: '100%',
+  width: '100vw',
   height: '100vh',
   position: 'relative',
+  overflow: 'auto',
 
-  display: 'grid',
-  gridTemplateAreas: `
-    "header"
-    "content"
-    "footer"
-  `,
-  gridTemplateRows: `${headerHeight} auto ${footerHeight}`,
-  gridTemplateColumns: `auto`,
-
-  '@tablet-portrait-and-up': {
-    gridTemplateAreas: `
-      "header header"
-      "nav2 content"
-      "footer footer"
-    `,
-    gridTemplateColumns: `${nav2Width} auto`,
-  },
-  '@tablet-landscape-and-up': {},
-  '@desktop-and-up': {
-    gridTemplateAreas: `
-      "header header header"
-      "nav nav2 content"
-      "footer footer footer"
-    `,
-    gridTemplateColumns: `${navWidth} ${nav2Width} auto`,
-  },
+  display: 'flex',
 });
 
 export const Header = styled(Box, {
-  gridArea: 'header',
+  position: 'sticky',
+  top: 0,
 
+  height: headerHeight,
   display: 'flex',
   alignItems: 'center',
+  gap: '$4',
+  px: '$4',
 
   bg: '$gray2',
-  borderWidth: '$2',
-  borderBottomStyle: 'solid',
-  borderColor: '$gray7',
 });
 
 export const Nav = styled(Box, {
   display: 'none',
 
+  width: navWidth,
   overflowY: 'scroll',
 
   bg: '$gray2',
@@ -66,7 +44,6 @@ export const Nav = styled(Box, {
 
   '@desktop-and-up': {
     display: 'block',
-    gridArea: 'nav',
   },
 });
 
@@ -79,22 +56,23 @@ export const Nav2 = styled(Box, {
   borderRightWidth: '$2',
   borderRightStyle: 'solid',
   borderColor: '$gray7',
-
-  '@tablet-portrait-and-up': {
-    display: 'block',
-    gridArea: 'nav2',
-  },
 });
 
-export const Content = styled(Box, {
-  gridArea: 'content',
+export const Content = ({ children }: { children: React.ReactNode }) => (
+  <ScrollArea.Root css={{ flex: 1 }}>
+    <ScrollArea.Viewport>{children}</ScrollArea.Viewport>
+    <ScrollArea.Scrollbar orientation="vertical">
+      <ScrollArea.Thumb />
+    </ScrollArea.Scrollbar>
+  </ScrollArea.Root>
+);
 
-  overflowY: 'scroll',
+export const ContentHeader = styled(Header, {
+  position: 'sticky',
+  top: 0,
 });
 
 export const Footer = styled(Box, {
-  gridArea: 'footer',
-
   display: 'flex',
   alignItems: 'center',
 
@@ -102,6 +80,10 @@ export const Footer = styled(Box, {
   borderWidth: '$2',
   borderTopStyle: 'solid',
   borderColor: '$gray7',
+
+  '@tablet-landscape-and-up': {
+    display: 'none',
+  },
 });
 
 Container.toString = () => 'Layout.Container';
