@@ -1,6 +1,6 @@
 import { styled } from '@/styles';
 
-export const linkStyles = {
+export const Link = styled('a', {
   alignItems: 'center',
   gap: '$1',
   flexShrink: 0,
@@ -10,6 +10,7 @@ export const linkStyles = {
   textDecorationColor: '$gray4',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   lineHeight: 'inherit',
+  cursor: 'pointer',
 
   '@hover': {
     '&:hover': {
@@ -63,6 +64,4 @@ export const linkStyles = {
   defaultVariants: {
     variant: 'contrast',
   },
-};
-
-export const Link = styled('a', linkStyles);
+});

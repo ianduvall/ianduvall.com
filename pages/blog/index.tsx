@@ -1,11 +1,12 @@
 import React from 'react';
 import NextLink from 'next/link';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
-import { Header } from '@/components/Header';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import type { Post } from '@/types/post';
 import { GetStaticProps } from 'next';
 import { Badge, Box, Link, Text } from '@/system';
+import { NavTray } from '@/components';
+import * as Layout from '@/components/Layout';
 
 export const getStaticProps: GetStaticProps<TypeBlogPageProps> = async () => {
   let posts = (await getAllPosts())
@@ -27,67 +28,31 @@ type TypeBlogPageProps = { posts: ReadonlyArray<Post> };
 
 export default function BlogPage({ posts }: TypeBlogPageProps) {
   return (
-    <Box>
-      <TitleAndMetaTags description="Ramblings about tech and web development." />
-      <Header />
+    <>
+      <TitleAndMetaTags />
 
-      <Box
-        css={{
-          mx: '$4',
-          py: '$4',
-          '@tablet-portrait-and-up': {
-            mx: '$5',
-            py: '$5',
-          },
-          '@tablet-landscape-and-up': {
-            mx: '$6',
-          },
-        }}
-      >
-        <Text as="h1" css={{ fontSize: '$6', mb: '$5', mx: 'auto' }}>
-          Weblog
-        </Text>
+      <Layout.Content>
+        <Layout.ContentHeader>
+          <Box css={{ flex: 1 }} aria-hidden />
+          <NavTray />
+        </Layout.ContentHeader>
 
-        {posts.length > 0 ? null : <Text>Coming Soon!</Text>}
-        <Box as="ul" css={{ listStyle: 'none', pl: 0 }}>
-          {posts.map((post) => {
-            const { title, description, slug, publishedAtFormats, draft } = post;
+        <Box css={{ p: '$4' }}>
+          {!posts.length ? (
+            <Text as="h2" h={2}>
+              Coming soon!
+            </Text>
+          ) : null}
+          {posts.map(({ slug, title, excerpt, publishedAt }) => {
             return (
-              <Box key={post.slug} css={{ mt: '$4' }}>
-                <NextLink href={`/blog/${slug}`} passHref>
-                  <Link
-                    css={{
-                      display: 'inline-block',
-                      lineHeight: '$3',
-                    }}
-                  >
-                    <Text css={{ fontSize: '$5', display: 'flex', alignItems: 'center' }}>
-                      {title}
-                      {draft && <Badge css={{ mx: '$2' }}>Draft</Badge>}
-                    </Text>
-                    {description ? (
-                      <Text css={{ fontSize: '$1', display: 'block' }}>{description}</Text>
-                    ) : null}
-
-                    {publishedAtFormats['MMMM dd, yyyy'] ? (
-                      <Text
-                        as="time"
-                        css={{
-                          fontSize: '$1',
-                          fontFamily: '$mono',
-                          color: '$gray800',
-                        }}
-                      >
-                        {publishedAtFormats['MMMM dd, yyyy']}
-                      </Text>
-                    ) : null}
-                  </Link>
-                </NextLink>
+              <Box key={slug}>
+                <Text>{title}</Text>
+                <Text>{excerpt}</Text>
               </Box>
             );
           })}
         </Box>
-      </Box>
-    </Box>
+      </Layout.Content>
+    </>
   );
 }

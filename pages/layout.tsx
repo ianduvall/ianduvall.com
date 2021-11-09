@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Text, SideNav, ScrollArea } from '@/system';
+import { Box, Link, Text } from '@/system';
 import { NavTray } from '@/components';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import * as Layout from '@/components/Layout';
@@ -10,49 +10,41 @@ export default function LayoutPage() {
     <>
       <TitleAndMetaTags />
 
-      {new Array(200).fill(0).map((_, i) => (
-        <Text key={i}>Content item {i}</Text>
-      ))}
+      <Layout.ContentNav>
+        <Layout.NavHeader>
+          <Text as="p" h="2">
+            Layout
+          </Text>
+        </Layout.NavHeader>
+        <Layout.NavContent>
+          <NextLink passHref href="/blog">
+            <Layout.NavItem as={Link}>Blog</Layout.NavItem>
+          </NextLink>
+          <NextLink passHref href="/layout">
+            <Layout.NavItem as={Link}>Layout</Layout.NavItem>
+          </NextLink>
+          {new Array(25).fill(0).map((_, i) => (
+            <Layout.NavItem key={i} tabIndex={0}>
+              <Text>Nav item {i}</Text>
+            </Layout.NavItem>
+          ))}
+        </Layout.NavContent>
+      </Layout.ContentNav>
+
+      <Layout.Content>
+        <Layout.ContentHeader>
+          <ScreenSize />
+          <Box css={{ flex: 1 }} />
+          <NavTray />
+        </Layout.ContentHeader>
+
+        {new Array(200).fill(0).map((_, i) => (
+          <Text key={i}>Content item {i}</Text>
+        ))}
+      </Layout.Content>
     </>
   );
 }
-
-LayoutPage.getLayout = (page: React.ReactElement): React.ReactNode => (
-  <Layout.Container>
-    <Layout.Nav>
-      <Layout.Header>
-        <NavTray />
-      </Layout.Header>
-      <SideNav.Container>
-        <NextLink passHref href="/blog">
-          <Link as={SideNav.Item}>Blog</Link>
-        </NextLink>
-        {new Array(25).fill(0).map((_, i) => (
-          <SideNav.Item key={i} tabIndex={0}>
-            <Text>Nav item {i}</Text>
-          </SideNav.Item>
-        ))}
-      </SideNav.Container>
-    </Layout.Nav>
-
-    <Layout.Nav2>
-      {new Array(100).fill(0).map((_, i) => (
-        <Text key={i}>Nav2 item {i}</Text>
-      ))}
-    </Layout.Nav2>
-
-    <Layout.Content>
-      <Layout.ContentHeader>
-        <ScreenSize />
-      </Layout.ContentHeader>
-      {page}
-    </Layout.Content>
-
-    <Layout.Footer>
-      <Text>Footer content goes here</Text>
-    </Layout.Footer>
-  </Layout.Container>
-);
 
 const ScreenSize = () => (
   <>

@@ -1,11 +1,11 @@
 export * as Menu from './Menu';
 export * as Popover from './Popover';
-export * as Tray from './Tray';
-export * as SideNav from './SideNav';
 export * as ScrollArea from './ScrollArea';
+export * as Tray from './Tray';
 export * from './Badge';
 export * from './Box';
 export * from './Button';
+export * from './Icon';
 export * from './Link';
 export * from './Skeleton';
 export * from './SystemProvider';

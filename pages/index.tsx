@@ -7,6 +7,7 @@ import type { Post } from '@/types/post';
 import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
 import { Box, Link, Text, SystemProvider } from '@/system';
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 export const getStaticProps = async () => {
   const posts = (await getAllPosts())
@@ -24,7 +25,7 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
+export default function HomePage({ posts }: { posts: ReadonlyArray<Post> }) {
   return (
     <>
       <TitleAndMetaTags />
@@ -132,3 +133,17 @@ export default function Home({ posts }: { posts: ReadonlyArray<Post> }) {
     </>
   );
 }
+
+HomePage.getLayout = (page: React.ReactElement): React.ReactNode => (
+  <Box
+    css={{
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column',
+    }}
+  >
+    <Box css={{ flex: 1 }}>{page}</Box>
+
+    <Footer />
+  </Box>
+);

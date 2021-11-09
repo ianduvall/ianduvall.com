@@ -2,7 +2,8 @@ import React from 'react';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { styled } from '@/styles';
 
-const SCROLLBAR_SIZE = 11;
+const SCROLLBAR_SIZE = 9;
+const EXPANDED_SCROLLBAR_SIZE = 15;
 
 export const Root = styled(ScrollAreaPrimitive.Root, {
   overflow: 'hidden',
@@ -31,7 +32,7 @@ export const Thumb = styled(ScrollAreaPrimitive.Thumb, {
     minHeight: 44,
   },
 
-  bg: '$gray8',
+  bg: '$gray7',
 
   '@motion': {
     transition: 'background 150ms ease-out',
@@ -45,19 +46,28 @@ export const Scrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
   // disable browser handling of all panning and zooming gestures on touch devices
   touchAction: 'none',
   p: 2,
+  bg: 'transparent',
 
-  '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
+  '&[data-orientation="vertical"]': {
+    width: SCROLLBAR_SIZE,
+  },
   '&[data-orientation="horizontal"]': {
     flexDirection: 'column',
     height: SCROLLBAR_SIZE,
   },
 
-  bg: '$gray5',
   '@hover': {
     '&:hover': {
-      bg: '$gray6',
+      bg: '$gray5',
+      '&[data-orientation="vertical"]': {
+        width: EXPANDED_SCROLLBAR_SIZE,
+      },
+      '&[data-orientation="horizontal"]': {
+        height: EXPANDED_SCROLLBAR_SIZE,
+      },
+
       [`& ${Thumb}`]: {
-        bg: '$gray9',
+        bg: '$gray8',
       },
     },
   },

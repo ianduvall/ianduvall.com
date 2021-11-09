@@ -78,7 +78,6 @@ export const Content = styled(Dialog.Content, {
 
   bg: '$gray2',
   color: '$hiContrast',
-  p: '$5',
 
   '&[data-state=open]': {
     opacity: 1,
@@ -102,18 +101,8 @@ export const Content = styled(Dialog.Content, {
   '&:focus': { outline: 'none' },
 });
 
-export const Title = styled(Dialog.Title, {
-  margin: 0,
-  fontWeight: 500,
-  color: 'green12',
-  fontSize: 17,
-});
+export const Title = styled(Dialog.Title, {});
 
-export const Description = styled(Dialog.Description, {
-  margin: '10px 0 20px',
-  color: 'green11',
-  fontSize: 15,
-  lineHeight: 1.5,
-});
+export const Description = styled(Dialog.Description, {});
 
 export const Close = styled(Dialog.Close, {});

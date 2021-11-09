@@ -11,7 +11,7 @@ export const getPostBySlug = async (slug: string): Promise<PostWithCode> => {
   const cleanSlug = slug.replace(/\.mdx$/, '');
   const fullPath = join(getPostsDirectory(), `${cleanSlug}.mdx`);
   const mdxSource = fs.readFileSync(fullPath, 'utf8');
-  const { code, frontmatter } = await bundleMDX(mdxSource, {
+  const mdx = await bundleMDX(mdxSource, {
     xdmOptions(options) {
       // this is the recommended way to add custom remark/rehype plugins:
       // The syntax might look weird, but it protects you in case we add/remove
@@ -30,14 +30,19 @@ export const getPostBySlug = async (slug: string): Promise<PostWithCode> => {
     },
   });
 
+  const code = mdx.code;
+  const frontmatter = mdx.frontmatter as Frontmatter;
+
   const publishedAtFormats = ['MMMM dd, yyyy'].reduce<Record<string, string>>((acc, dateFormat) => {
-    acc[dateFormat] = format(parseISO(frontmatter.publishedAt), dateFormat) || '';
+    acc[dateFormat] = frontmatter.publishedAt
+      ? format(parseISO(frontmatter.publishedAt), dateFormat)
+      : '';
     return acc;
   }, {});
 
   return {
     code,
-    frontmatter: frontmatter as Frontmatter,
+    frontmatter,
     post: {
       ...frontmatter,
       slug: cleanSlug,
@@ -50,5 +55,5 @@ export const getAllPosts = async (): Promise<PostWithCode[]> => {
   const slugs = fs.readdirSync(getPostsDirectory()).filter((slug) => slug.endsWith('.mdx'));
   const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
 
-  return posts.filter((post) => post.frontmatter.published);
+  return posts.filter((post) => post.frontmatter.publishedAt);
 };

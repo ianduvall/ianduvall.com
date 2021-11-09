@@ -2,25 +2,13 @@ import React from 'react';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import NextLink from 'next/link';
 import { IdProvider } from '@radix-ui/react-id';
 
-import { Footer } from '@/components/Footer';
+import { Box, Text, Link, SystemProvider, ThemeProvider } from '@/system';
 import { globalStyles } from '@/styles/global';
-import { Box, SystemProvider, ThemeProvider } from '@/system';
-
-const getDefaultLayout = (page: React.ReactElement): React.ReactNode => (
-  <Box
-    css={{
-      display: 'flex',
-      minHeight: '100vh',
-      flexDirection: 'column',
-    }}
-  >
-    <Box css={{ flex: 1 }}>{page}</Box>
-
-    <Footer />
-  </Box>
-);
+import * as Layout from '@/components/Layout';
+import { NavLinks } from '@/components/NavLinks';
 
 type NextPageWithGetLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -51,3 +39,27 @@ export default function App({ Component, pageProps }: AppPropsWithGetLayout) {
     </SystemProvider>
   );
 }
+
+const getDefaultLayout = (page: React.ReactElement): React.ReactNode => (
+  <Layout.Container>
+    <Layout.Nav>
+      <Layout.NavHeader>
+        <NextLink href="/" passHref>
+          <Link
+            variant="primary"
+            css={{
+              color: '$mint11',
+              fontSize: '$5',
+            }}
+          >
+            Ian Duvall
+          </Link>
+        </NextLink>
+      </Layout.NavHeader>
+
+      <NavLinks />
+    </Layout.Nav>
+
+    {page}
+  </Layout.Container>
+);

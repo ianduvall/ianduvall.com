@@ -6,9 +6,6 @@ export const textStyles = {
   display: 'block',
   fontFamily: '$system',
   fontVariantNumeric: 'tabular-nums',
-  fontSize: '$0',
-  lineHeight: '$2',
-  margin: 0,
 
   variants: {
     h: {
