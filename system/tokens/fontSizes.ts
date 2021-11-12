@@ -1,5 +1,3 @@
-export const desktopBaseFontSize = 14;
-
 const majorSecondTypeScale = 1.125;
 
 const scaleFontSize = (step: number, multiple: number) => Math.pow(multiple, step);

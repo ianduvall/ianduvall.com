@@ -20,10 +20,7 @@ export const globalStyles = globalCss({
     backgroundColor: '$gray1',
     color: '$hiContrast',
     fontFamily: '$system',
-    fontSize: '17px',
-    '@tablet-portrait-and-up': {
-      fontSize: '14px',
-    },
+    fontSize: '1rem', // 16px
     lineHeight: '$2',
   },
 
