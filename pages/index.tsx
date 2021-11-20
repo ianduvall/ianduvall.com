@@ -2,21 +2,15 @@ import React from 'react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import { BlogCard } from '@/components/BlogCard';
-import { getAllPosts } from '@/lib/posts';
-import type { Post } from '@/types/post';
+import { publishedPosts } from '@/lib/posts';
+import type { Post } from '.contentlayer/types';
 import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import { Box, Link, Text, SystemProvider } from '@/system';
+import { Box, Heading, Link, Text } from '@/system';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
 export const getStaticProps = async () => {
-  const posts = (await getAllPosts())
-    .sort(
-      ({ post: a }, { post: b }) =>
-        Number(new Date(b.publishedAt || 0)) - Number(new Date(a.publishedAt || 0))
-    )
-    .slice(0, 5)
-    .map(({ post }) => post);
+  const posts = publishedPosts.slice(0, 5);
 
   return {
     props: {
@@ -38,16 +32,14 @@ export default function HomePage({ posts }: { posts: ReadonlyArray<Post> }) {
           px: '$5',
         }}
       >
-        <Text
-          as="h2"
-          h={2}
+        <Heading
+          level="2"
           css={{
-            fontSize: '$4',
             my: '$6',
           }}
         >
           {"👋 I'm a software engineer working in web tech."}
-        </Text>
+        </Heading>
 
         <Text as="p" css={{ fontSize: '$3', my: '$6' }}>
           I work at{' '}
@@ -95,9 +87,8 @@ export default function HomePage({ posts }: { posts: ReadonlyArray<Post> }) {
             },
           }}
         >
-          <Text
-            as="h2"
-            h={2}
+          <Heading
+            level="2"
             css={{
               mb: '$4',
               '@tablet-portrait-and-up': {
@@ -106,7 +97,7 @@ export default function HomePage({ posts }: { posts: ReadonlyArray<Post> }) {
             }}
           >
             Recent Blog Posts
-          </Text>
+          </Heading>
 
           <Box as="ul" css={{ listStyle: 'none', pl: 0 }}>
             {posts.map((post) => (

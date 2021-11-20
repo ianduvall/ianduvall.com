@@ -28,12 +28,5 @@
     "target": "es6"
   },
   "exclude": ["node_modules"],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "lib/mdx.js",
-    "next.config.js",
-    "public/determineColorMode.js"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/mdx.js", "next.config.js"]
 }

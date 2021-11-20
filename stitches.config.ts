@@ -16,9 +16,10 @@ const widescreenMin = '1800px';
 const stitchesConfig = createStitches({
   prefix: 'iD',
   theme: {
-    colors: lightColors,
+    colors: { ...lightColors },
     fonts: {
       system: 'system-ui',
+      mono: 'monospace',
     },
     fontSizes: majorSecondTypeScaleFontSizes,
     fontWeights: {},
@@ -83,7 +84,9 @@ const stitchesConfig = createStitches({
       3: '4px',
       4: '8px',
     },
-    borderStyles: {},
+    borderStyles: {
+      border: 'solid',
+    },
     zIndices: {},
     transitions: {},
   },

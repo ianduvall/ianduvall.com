@@ -24,11 +24,6 @@ export const globalStyles = globalCss({
     lineHeight: '$2',
   },
 
-  'h1, h2, h3, h4, h5, h6': {
-    lineHeight: '$3',
-    fontWeight: '$bold',
-  },
-
   ul: {
     listStyle: 'none',
   },

@@ -5,6 +5,7 @@ import { Box, Button } from '@/system';
 import { navAtom } from '@/atoms';
 import { Tray } from '@/system';
 import { NavLinks } from './NavLinks';
+import { ColorThemeButton } from './ColorThemeButton';
 
 export const NavTray = () => {
   const [nav, setNav] = useAtom(navAtom);
@@ -16,17 +17,13 @@ export const NavTray = () => {
         <Button
           aria-label={nav === 'closed' ? 'Open Navigation' : 'Close Navigation'}
           onClick={() => setNav((prev) => (prev === 'closed' ? 'open' : 'closed'))}
-          css={{
-            '@desktop-and-up': {
-              display: 'none',
-            },
-          }}
+          css={{}}
         >
           {nav === 'closed' ? <HamburgerMenuIcon /> : <Cross1Icon />}
         </Button>
       </Tray.Trigger>
       <Tray.Content>
-        <Box css={{ p: '$4' }}>
+        <Box css={{ p: '$5' }}>
           <Box css={{ display: 'flex', alignItems: 'center' }}>
             <Tray.Title>Navigation</Tray.Title>
             <Box css={{ flex: 1 }} />
@@ -37,6 +34,9 @@ export const NavTray = () => {
             </Tray.Close>
           </Box>
           <Tray.Description>Navigate to other pages of the site.</Tray.Description>
+          <Box css={{ my: '$3' }}>
+            <ColorThemeButton />
+          </Box>
         </Box>
 
         <NavLinks />

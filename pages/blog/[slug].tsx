@@ -1,115 +1,89 @@
 import React from 'react';
 import { GetStaticProps } from 'next';
-import { getMDXComponent } from 'mdx-bundler/client';
+import { useMDXComponent } from 'next-contentlayer/hooks';
+
 import TitleAndMetaTags from '@/components/TitleAndMetaTags';
 import { MDXComponents } from '@/components/MdxComponents';
-import { Header } from '@/components/Header';
-import { Badge, Link, Text } from '@/system';
-import { getAllPosts, getPostBySlug } from '@/lib/posts';
-import type { Post, PostWithCode } from '@/types/post';
-import { TwitterLogoIcon } from '@radix-ui/react-icons';
-import { Box } from '@/system';
+import { Box, Badge, Heading, Link, Text } from '@/system';
+import * as Layout from '@/components/Layout';
+import { Content } from '@/components';
+import NextHead from 'next/head';
+
+import type { Post } from '.contentlayer/types';
+import { allPosts } from '.contentlayer/data';
 
 export const getStaticPaths = async () => {
-  const posts = await getAllPosts();
-
   return {
     fallback: false,
-    paths: posts.map(({ post }) => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      };
-    }),
+    paths: allPosts.map(({ slug }) => ({ params: { slug } })),
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+type PageProps = {
+  post: Post;
+};
+
+export const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
   const slug: string = (typeof params?.slug === 'string' ? params?.slug : params?.slug?.[0]) || '';
-  const { code, frontmatter, post } = await getPostBySlug(slug);
+  const post = allPosts.find((post) => post.slug === slug);
 
-  return {
-    props: {
-      code,
-      post,
-    },
-  };
+  if (!post || (post.draft && process.env.NODE_ENV !== 'development')) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return { props: { post } };
 };
 
-export default function PostPage({ code, post }: PostWithCode) {
-  const { draft, publishedAtFormats, slug, title, description } = post;
-  const MDXComponent = React.useMemo(() => getMDXComponent(code), [code]);
-
-  const twitterShare = `
-	https://twitter.com/intent/tweet?
-	text="${title}" by @ianwmduvall
-	&url=https://ianduvall.com/blog/${slug}
-	`;
-
-  const publishedDate = publishedAtFormats['MMMM dd, yyyy'];
+export default function PostPage({ post }: PageProps) {
+  const { title, description, publishedDate, draft, body } = post;
+  const RootMDXComponent = useMDXComponent(body.code);
 
   return (
-    <Box>
+    <>
       <TitleAndMetaTags description={title} />
-      <Header />
+      <NextHead>
+        <link href="/prism.css" rel="stylesheet" />
+      </NextHead>
 
-      <Box
-        css={{
-          mx: '$4',
-          py: '$4',
-          '@tablet-portrait-and-up': {
-            mx: '$5',
-            py: '$5',
-          },
-          '@tablet-landscape-and-up': {
-            mx: '$6',
-          },
-        }}
-      >
-        <Box css={{ display: 'flex', alignItems: 'center' }}>
-          <Text as="h1" css={{ fontSize: '$6' }}>
-            {title}
-          </Text>
-          {draft ? <Badge css={{ mx: '$2' }}>Draft</Badge> : null}
-        </Box>
+      <Layout.Main>
+        <Content.Root as="article">
+          <Content.Header>
+            <Heading level="1">{title}</Heading>
 
-        <Text
-          as="time"
-          css={{
-            my: '$1',
-            mx: 'auto',
-            fontFamily: '$mono',
-            color: '$gray800',
-          }}
-        >
-          {publishedDate}
-        </Text>
+            {publishedDate ? (
+              <Text
+                as="time"
+                css={{
+                  my: '$1',
+                  mx: 'auto',
+                }}
+              >
+                {publishedDate}
+              </Text>
+            ) : null}
 
-        {description ? (
-          <Text as="p" css={{ fontSize: '$2' }}>
-            {description}
-          </Text>
-        ) : null}
+            {description ? (
+              <Text as="p" css={{ fontSize: '$2' }}>
+                {description}
+              </Text>
+            ) : null}
 
-        <Box css={{ my: '$5' }}>
-          <MDXComponent components={MDXComponents} />
-        </Box>
+            {draft ? <Badge css={{}}>Draft</Badge> : null}
+          </Content.Header>
 
-        <Box css={{ mb: '$5' }}>
-          <Text as="p" css={{ fontSize: '$4' }}>
-            Share this post on{' '}
-            <Link
-              href={twitterShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Share this post on Twitter"
-            >
-              <TwitterLogoIcon />
-            </Link>
-          </Text>
-        </Box>
-      </Box>
-    </Box>
+          <Content.Section
+            css={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '$6',
+            }}
+          >
+            <RootMDXComponent components={MDXComponents as any} />
+          </Content.Section>
+        </Content.Root>
+      </Layout.Main>
+    </>
   );
 }

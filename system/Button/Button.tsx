@@ -10,7 +10,6 @@ export const buttonStyles = {
   cursor: 'pointer',
   display: 'inline-flex',
   flexShrink: 0,
-  fontSize: '$2',
   fontVariantNumeric: 'tabular-nums',
   fontWeight: 500,
   justifyContent: 'center',
@@ -60,17 +59,14 @@ export const buttonStyles = {
     size: {
       sm: {
         borderRadius: '$1',
-        fontSize: '$1',
         p: '$3',
       },
       md: {
         borderRadius: '$2',
-        fontSize: '$3',
         p: '$4',
       },
       lg: {
         borderRadius: '$2',
-        fontSize: '$4',
         p: '$5',
       },
     },

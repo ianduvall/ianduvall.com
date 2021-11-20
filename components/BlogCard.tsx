@@ -1,32 +1,28 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Badge, Box, Link, Text } from '@/system';
-import type { Post } from '@/types/post';
+import type { Post } from '.contentlayer/types';
 
 export const BlogCard = ({ post }: { post: Post }): JSX.Element => {
   return (
     <Box css={{ mt: '$4' }}>
       <NextLink href={`/blog/${post.slug}`} passHref>
-        <Link
-          css={{
-            display: 'inline-block',
-            lineHeight: '$3',
-          }}
-        >
-          <Text css={{ fontSize: '$5', display: 'flex', alignItems: 'center' }}>
-            {post.title} {post.draft && <Badge css={{ ml: '$2' }}>Draft</Badge>}
-          </Text>
+        <Link>
+          <Box css={{ display: 'flex' }}>
+            <Text css={{ fontSize: '$4' }}>{post.title}</Text>
+            {post.draft ? <Badge css={{ mx: '$2' }}>Draft</Badge> : null}
+          </Box>
 
-          {post.publishedAtFormats ? (
+          {post.publishedDate ? (
             <Text
               as="time"
               css={{
                 fontSize: '$1',
                 fontFamily: '$mono',
-                color: '$gray200',
+                color: '$gray10',
               }}
             >
-              {post.publishedAtFormats['MMMM dd, yyyy']}
+              {post.publishedDate}
             </Text>
           ) : null}
         </Link>

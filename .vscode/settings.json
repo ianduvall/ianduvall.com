@@ -9,13 +9,19 @@
     "bbrr",
     "btlr",
     "btrr",
+    "contentlayer",
     "esbuild",
     "Frontmatter",
-    "jotai"
+    "jotai",
+    "rehype"
   ],
   "editor.tabSize": 2,
   "files.exclude": {
     "*.next": true,
     "*.tsbuildinfo": true
   },
+  "markdown.preview.fontSize": 16,
+  "markdown.preview.lineHeight": 1.2,
+  "prettier.proseWrap": "always",
+  "editor.wordWrap": "on",
 }

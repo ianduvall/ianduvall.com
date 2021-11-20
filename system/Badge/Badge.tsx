@@ -4,6 +4,7 @@ const tag = 'span';
 
 export const badgeStyles = {
   alignItems: 'center',
+  alignSelf: 'flex-start',
   appearance: 'none',
   backgroundColor: '$gray3',
   borderRadius: '$pill',
@@ -13,23 +14,17 @@ export const badgeStyles = {
   flexShrink: 0,
   fontFamily: 'inherit',
   fontVariantNumeric: 'tabular-nums',
-  fontSize: '$1',
   justifyContent: 'center',
   lineHeight: '1',
   outline: 'none',
-  p: '$2',
+  py: '$3',
+  px: '$4',
   textDecoration: 'none',
   userSelect: 'none',
   verticalAlign: 'middle',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   whiteSpace: 'nowrap',
 
-  '&::before': {
-    content: '""',
-  },
-  '&::after': {
-    content: '""',
-  },
   '&:disabled': {
     backgroundColor: '$gray3',
     pointerEvents: 'none',

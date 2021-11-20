@@ -1,23 +1,24 @@
 import matter from 'gray-matter';
 
-export interface Frontmatter {
-  title: string;
-  description?: string;
-  excerpt?: string;
-  publishedAt?: string;
-  draft?: boolean;
-  readingTime?: { text: string; minutes: number; time: number; words: number };
+interface PublishedPostFrontmatter {
+  publishedDate: string;
+  draft?: false;
 }
 
-export interface Post extends Frontmatter {
-  publishedAtFormats: {
-    'MMMM dd, yyyy': string;
-  };
+interface DraftPostFrontmatter {
+  publishedDate?: '';
+  draft: boolean;
+}
+interface BaseFrontmatter {
+  title: string;
+  description?: string;
   slug: string;
 }
 
-export type PostWithCode = {
+export type PostFrontmatter = BaseFrontmatter & (PublishedPostFrontmatter | DraftPostFrontmatter);
+
+export interface Post {
   code: string;
-  frontmatter: Frontmatter;
-  post: Post;
-};
+  frontmatter: PostFrontmatter;
+  slug: string;
+}

@@ -36,8 +36,7 @@ export const darkColors = {
 
   ...semanticColors,
 
-  // inverting hi and lo contrast tokens in dark mode
-  hiContrast: '$gray11',
-  loContrast: '$gray12',
+  hiContrast: '$gray12',
+  loContrast: '$gray11',
   highlight: 'hsla(200, 100%, 75%, .95)',
 };
