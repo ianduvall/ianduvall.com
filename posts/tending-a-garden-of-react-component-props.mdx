@@ -2,14 +2,15 @@
 title: 'Monolithic components: how they form and what to do about them'
 description: 'A look at how React components can grow into unweildy beasts'
 draft: true
-publishedDate: ''
+publishedDate: '2021-11-20'
 tags: [react, component-design]
 ---
 
-In my time working with React I've noticed a pattern of how React components tend to grow over time. First, a developer is tasked with building a UI for a particular use case. For instance, let's say we are asked to build a UI that displays a group of selectable options. Seems pretty simple. Let's see what we can come up with.
+<link rel="stylesheet" href="/prism.css" />
 
-import { Box, Checkbox, Label } from '@/system';
 import { CheckboxGroupAttempt1, CheckboxGroupAttempt2 } from '@/components/posts/CheckboxGroup';
+
+In my time working with React I've noticed a pattern of how React components tend to grow over time. First, a developer is tasked with building a UI for a particular use case. For instance, let's say we are asked to build a UI that displays a group of selectable options. Seems pretty simple. Let's see what we can come up with.
 
 ```tsx
 interface CheckboxGroupProps {

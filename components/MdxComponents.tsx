@@ -1,10 +1,8 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Box, Code, Heading, Link, Pre, Text } from '@/system';
-import { IdProvider } from '@radix-ui/react-id';
 
 export const MDXComponents = {
-  // wrapper: ({ components, ...props }: any) => <IdProvider {...props} />,
   Box,
   h1: (props: any) => <Heading level="1" {...props} />,
   h2: (props: any) => <Heading level="2" {...props} />,

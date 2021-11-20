@@ -1,8 +1,7 @@
 import { styled } from '@/styles';
+import { Button } from '../Button';
 
-const tag = 'span';
-
-export const badgeStyles = {
+export const Badge = styled('span', {
   alignItems: 'center',
   alignSelf: 'flex-start',
   appearance: 'none',
@@ -33,6 +32,4 @@ export const badgeStyles = {
   '&:focus': {
     boxShadow: 'inset 0 0 0 1px $colors$gray8, 0 0 0 1px $colors$gray8',
   },
-};
-
-export const Badge = styled(tag, badgeStyles);
+});

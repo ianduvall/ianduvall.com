@@ -26,7 +26,11 @@ export const Post = defineDocumentType(() => ({
     },
     draft: {
       type: 'boolean',
-      required: false,
+    },
+    tags: {
+      type: 'list',
+      default: [],
+      of: { type: 'string' },
     },
   },
   computedFields: {
@@ -35,11 +39,9 @@ export const Post = defineDocumentType(() => ({
       type: 'json',
       resolve: (post) => readingTime(post.body.raw, { wordsPerMinute: 300 }),
     },
-    /**
-     * UTC value
-     */
     publishedAt: {
       type: 'number',
+      description: 'UTC time the post was published',
       resolve: (post) =>
         post.publishedDate ? parseISO(post.publishedDate).valueOf() : Number.MAX_SAFE_INTEGER,
     },

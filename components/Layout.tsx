@@ -12,8 +12,7 @@ export const Root = ({ children }: { children: React.ReactNode }) => (
       px: '$5',
 
       '@tablet-landscape-and-up': {
-        pr: headerWidth,
-        pl: '$5',
+        px: headerWidth,
       },
     }}
   >
@@ -64,7 +63,7 @@ export const Header = styled('header', {
 });
 
 export const Main = styled('main', {
-  flex: 1,
+  flex: '1 1 0',
 
   position: 'relative',
 });

@@ -6,10 +6,6 @@ const { withContentlayer } = require('next-contentlayer');
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
-  experimental: {
-    concurrentFeatures: true,
-  },
-
   swcMinify: true,
 
   webpack: (config, options) => {

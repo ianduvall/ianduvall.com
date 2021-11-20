@@ -70,6 +70,13 @@ export const buttonStyles = {
         p: '$5',
       },
     },
+    badge: {
+      true: {
+        py: '$3',
+        px: '$4',
+        borderRadius: '$pill',
+      },
+    },
   },
   defaultVariants: {
     variant: 'secondary',
