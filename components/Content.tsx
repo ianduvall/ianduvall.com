@@ -19,7 +19,7 @@ export const Header = styled('header', {
   flexDirection: 'column',
   gap: '$5',
 
-  my: '$5',
+  mb: '$5',
 });
 Header.toString = () => 'Content.Header';
 

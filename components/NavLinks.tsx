@@ -5,11 +5,18 @@ import { Box, Icon, Link, Text } from '@/system';
 import * as Nav from '@/components/Nav';
 import { useCloseNav } from 'atoms/navAtom';
 
+const padding = {
+  p: '$7',
+  '@tablet-landscape-and-up': {
+    p: '$5',
+  },
+};
+
 export const NavLinks = () => {
   const closeNav = useCloseNav();
 
   return (
-    <Nav.NavContent css={{ gap: '$5', pb: '$5' }}>
+    <Nav.NavContent>
       <Nav.NavGroup>
         <NextLink passHref href="/">
           <Nav.NavItem as={Link} onClick={closeNav}>

@@ -1,8 +1,6 @@
 import { styled } from '@/styles';
 
-const textTag = 'span';
-
-export const textStyles = {
+export const Text = styled('span', {
   display: 'block',
   fontFamily: '$system',
   fontVariantNumeric: 'tabular-nums',
@@ -22,6 +20,4 @@ export const textStyles = {
   defaultVariants: {
     weight: 'normal',
   },
-};
-
-export const Text = styled(textTag, textStyles);
+});

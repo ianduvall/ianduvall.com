@@ -5,7 +5,6 @@ import { Box, Button } from '@/system';
 import { navAtom } from '@/atoms';
 import { Tray } from '@/system';
 import { NavLinks } from './NavLinks';
-import { ColorThemeButton } from './ColorThemeButton';
 
 export const NavTray = () => {
   const [nav, setNav] = useAtom(navAtom);
@@ -23,7 +22,16 @@ export const NavTray = () => {
         </Button>
       </Tray.Trigger>
       <Tray.Content>
-        <Box css={{ p: '$5' }}>
+        <Box
+          css={{
+            p: '$5',
+            pb: '0',
+            '@tablet-portrait-and-up': {
+              p: '$7',
+              pb: '0',
+            },
+          }}
+        >
           <Box css={{ display: 'flex', alignItems: 'center' }}>
             <Tray.Title>Navigation</Tray.Title>
             <Box css={{ flex: 1 }} />
@@ -34,9 +42,6 @@ export const NavTray = () => {
             </Tray.Close>
           </Box>
           <Tray.Description>Navigate to other pages of the site.</Tray.Description>
-          <Box css={{ my: '$3' }}>
-            <ColorThemeButton />
-          </Box>
         </Box>
 
         <NavLinks />

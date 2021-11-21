@@ -3,12 +3,10 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import NextLink from 'next/link';
-import { IdProvider } from '@radix-ui/react-id';
 
-import { Box, Link, SystemProvider, ThemeProvider } from '@/system';
+import { Box, Link } from '@/system';
 import { globalStyles } from '@/styles/global';
-import * as Layout from '@/components/Layout';
-import { NavTray, ScreenSize, Providers } from '@/components';
+import { ColorThemeButton, Layout, NavTray, Providers, ScreenSize } from '@/components';
 
 type NextPageWithGetLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -52,6 +50,7 @@ const getDefaultLayout = (page: React.ReactElement): React.ReactNode => (
 
       <Box css={{ m: 'auto' }}></Box>
 
+      <ColorThemeButton />
       <NavTray />
     </Layout.Header>
 

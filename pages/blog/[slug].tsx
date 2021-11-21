@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
 };
 
 export default function PostPage({ post }: PageProps) {
-  const { title, description, publishedDate, draft, body, tags, readingTime } = post;
+  const { title, description, publishedDate, draft, body, tags, readingTimeText } = post;
   const RootMDXComponent = useMDXComponent(body.code);
 
   return (
@@ -54,9 +54,16 @@ export default function PostPage({ post }: PageProps) {
                 {description}
               </Text>
             ) : null}
-            <Box css={{ display: 'flex', alignItems: 'center', gap: '$5' }}>
-              {publishedDate ? <Text as="time">{publishedDate}</Text> : null}
+            <Box css={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '$5' }}>
+              {publishedDate ? (
+                <Text as="time" dateTime={publishedDate}>
+                  {publishedDate}
+                </Text>
+              ) : null}
+              {readingTimeText ? <Text>{readingTimeText}</Text> : null}
               {draft ? <Badge>Draft</Badge> : null}
+            </Box>
+            <Box css={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '$5' }}>
               {tags?.map((tag) => (
                 <NextLink key={tag} href={`/blog?tag=${tag}`} passHref prefetch={false}>
                   <Button as={Link} badge>
@@ -74,7 +81,7 @@ export default function PostPage({ post }: PageProps) {
               },
             }}
           >
-            <RootMDXComponent components={MDXComponents as any} />
+            <RootMDXComponent components={MDXComponents} />
           </Content.Section>
         </Content.Root>
       </Layout.Main>

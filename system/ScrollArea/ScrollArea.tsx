@@ -2,11 +2,13 @@ import React from 'react';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { styled } from '@/styles';
 
-const SCROLLBAR_SIZE = 9;
+const SCROLLBAR_SIZE = 11;
 const EXPANDED_SCROLLBAR_SIZE = 15;
 
 export const Root = styled(ScrollAreaPrimitive.Root, {
   overflow: 'hidden',
+  width: '100vw',
+  height: '100vh',
 });
 
 export const Viewport = styled(ScrollAreaPrimitive.Viewport, {
@@ -32,7 +34,7 @@ export const Thumb = styled(ScrollAreaPrimitive.Thumb, {
     minHeight: 44,
   },
 
-  bg: '$gray7',
+  bg: '$teal7',
 
   '@motion': {
     transition: 'background 150ms ease-out',
@@ -58,7 +60,7 @@ export const Scrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
 
   '@hover': {
     '&:hover': {
-      bg: '$gray5',
+      bg: '$teal5',
       '&[data-orientation="vertical"]': {
         width: EXPANDED_SCROLLBAR_SIZE,
       },
@@ -67,7 +69,7 @@ export const Scrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
       },
 
       [`& ${Thumb}`]: {
-        bg: '$gray8',
+        bg: '$teal8',
       },
     },
   },

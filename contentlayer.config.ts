@@ -35,9 +35,10 @@ export const Post = defineDocumentType(() => ({
   },
   computedFields: {
     slug: { type: 'string', resolve: (post) => post._raw.flattenedPath },
-    readingTime: {
-      type: 'json',
-      resolve: (post) => readingTime(post.body.raw, { wordsPerMinute: 300 }),
+    readingTimeText: {
+      type: 'string',
+      description: 'A description of the length of the post. format: `${mins} min read`',
+      resolve: (post) => readingTime(post.body.raw, { wordsPerMinute: 250 }).text,
     },
     publishedAt: {
       type: 'number',

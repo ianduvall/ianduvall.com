@@ -4,31 +4,13 @@ import { styled, keyframes } from '@/styles';
 import { Box, Link, ScrollArea, Text } from '@/system';
 
 const headerHeight = '6rem';
-const headerWidth = 'calc($5 + $5 + 40px)';
+const headerPadding = '$5';
+const headerWidth = `calc(${headerPadding} + ${headerPadding} + 40px)`;
 
 export const Root = ({ children }: { children: React.ReactNode }) => (
-  <ScrollArea.Root
-    css={{
-      px: '$5',
-
-      '@tablet-landscape-and-up': {
-        px: headerWidth,
-      },
-    }}
-  >
-    <ScrollArea.Viewport asChild>
-      <Box
-        css={{
-          gap: '$5',
-
-          '@tablet-landscape-and-up': {
-            display: 'flex',
-            minHeight: '100vh',
-          },
-        }}
-      >
-        {children}
-      </Box>
+  <ScrollArea.Root>
+    <ScrollArea.Viewport>
+      <Box css={{ px: '$7', maxWidth: '100vw' }}>{children}</Box>
     </ScrollArea.Viewport>
     <ScrollArea.Scrollbar orientation="vertical">
       <ScrollArea.Thumb />
@@ -37,6 +19,7 @@ export const Root = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const Header = styled('header', {
+  zIndex: '1',
   height: headerHeight,
   minHeight: 0,
 
@@ -50,14 +33,14 @@ export const Header = styled('header', {
   '@tablet-landscape-and-up': {
     position: 'fixed',
     top: 0,
-    right: 0,
+    left: 0,
     bottom: 0,
     width: headerWidth,
     minWidth: headerWidth,
     height: '100vh',
     minHeight: '100vh',
     flexDirection: 'column',
-    p: '$5',
+    p: headerPadding,
     m: '0',
   },
 });
