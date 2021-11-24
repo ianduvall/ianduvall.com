@@ -12,8 +12,10 @@
     "contentlayer",
     "esbuild",
     "Frontmatter",
+    "gtag",
     "jotai",
-    "rehype"
+    "rehype",
+    "vercel"
   ],
   "editor.tabSize": 2,
   "files.exclude": {

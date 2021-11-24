@@ -1,8 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
+import NextLink from 'next/link';
+import NextScript from 'next/script';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import NextLink from 'next/link';
 
 import { Box, Link } from '@/system';
 import { globalStyles } from '@/styles/global';
@@ -22,13 +23,29 @@ export default function App({ Component, pageProps }: AppPropsWithGetLayout) {
   const getLayout = Component.getLayout || getDefaultLayout;
 
   return (
-    <Providers>
-      <Head>
-        <title>Ian Duvall</title>
-      </Head>
+    <>
+      {/* Global site tag (gtag.js) - Google Analytics */}
+      <NextScript
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        strategy="lazyOnload"
+      ></NextScript>
+      <NextScript id="ga-analytics">
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+        `}
+      </NextScript>
+      <Providers>
+        <Head>
+          <title>Ian Duvall</title>
+        </Head>
 
-      {getLayout(<Component {...pageProps} />)}
-    </Providers>
+        {getLayout(<Component {...pageProps} />)}
+      </Providers>
+    </>
   );
 }
 
