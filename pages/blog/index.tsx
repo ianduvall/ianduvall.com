@@ -6,6 +6,7 @@ import { GetStaticProps } from 'next';
 import { Badge, Box, Button, Heading, Link, Text } from '@/system';
 import { Layout, Content } from '@/components';
 import type { Post } from '.contentlayer/types';
+import { useSession } from 'next-auth/react';
 
 export const getStaticProps: GetStaticProps<TypeBlogPageProps> = async () => {
   return {
@@ -18,12 +19,25 @@ export const getStaticProps: GetStaticProps<TypeBlogPageProps> = async () => {
 type TypeBlogPageProps = { posts: ReadonlyArray<Post> };
 
 export default function BlogPage({ posts }: TypeBlogPageProps) {
+  const session = useSession();
+
+  console.log(session);
+
+  let user = null;
+  if (session.status === 'loading') {
+    user = <Text>Loading... </Text>;
+  } else if (session.status === 'authenticated') {
+    user = <Text>{session.data.user?.name}</Text>;
+  }
+
   return (
     <>
       <TitleAndMetaTags />
 
       <Layout.Main>
         <Content.Root>
+          {user}
+
           <Content.Header>
             <Heading level="1">Blog Posts</Heading>
           </Content.Header>

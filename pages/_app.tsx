@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import NextScript from 'next/script';
+import { SessionProvider } from 'next-auth/react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 
@@ -17,7 +18,10 @@ type AppPropsWithGetLayout = AppProps & {
   Component: NextPageWithGetLayout;
 };
 
-export default function App({ Component, pageProps }: AppPropsWithGetLayout) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithGetLayout) {
   globalStyles();
 
   const getLayout = Component.getLayout || getDefaultLayout;
@@ -38,13 +42,16 @@ export default function App({ Component, pageProps }: AppPropsWithGetLayout) {
         gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
         `}
       </NextScript>
-      <Providers>
-        <Head>
-          <title>Ian Duvall</title>
-        </Head>
 
-        {getLayout(<Component {...pageProps} />)}
-      </Providers>
+      <SessionProvider session={session}>
+        <Providers>
+          <Head>
+            <title>Ian Duvall</title>
+          </Head>
+
+          {getLayout(<Component {...pageProps} />)}
+        </Providers>
+      </SessionProvider>
     </>
   );
 }
