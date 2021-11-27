@@ -27,6 +27,6 @@
     "strict": true,
     "target": "es6"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "prisma"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/mdx.js", "next.config.js"]
 }
