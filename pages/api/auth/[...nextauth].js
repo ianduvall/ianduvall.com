@@ -11,6 +11,6 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV !== 'production',
-  useSecureCookies: process.env.NODE_ENV === 'production',
 });

@@ -17,6 +17,7 @@
     "Frontmatter",
     "gtag",
     "jotai",
+    "NEXTAUTH",
     "rehype",
     "vercel"
   ],
