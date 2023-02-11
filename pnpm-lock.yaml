@@ -5,6 +5,7 @@ specifiers:
   '@astrojs/mdx': ^0.16.0
   '@astrojs/rss': ^2.1.0
   '@astrojs/sitemap': ^1.0.1
+  '@cloudflare/workers-types': ^4.20230115.0
   astro: ^2.0.10
   prettier: ^2.8.4
   wrangler: ^2.9.1
@@ -17,6 +18,7 @@ dependencies:
   astro: 2.0.10
 
 devDependencies:
+  '@cloudflare/workers-types': 4.20230115.0
   prettier: 2.8.4
   wrangler: 2.9.1
 
@@ -393,6 +395,10 @@ packages:
     resolution: {integrity: sha512-MVbXLbTcAotOPUj0pAMhVtJ+3/kFkwJqc5qNOleOZTv6QkZZABDMS21dSrSlVswEHwrpWC03e4fWytjqKvuE2A==}
     dependencies:
       mime: 3.0.0
+    dev: true
+
+  /@cloudflare/workers-types/4.20230115.0:
+    resolution: {integrity: sha512-GPJEiO8AFN+jUpA+DHJ1qdVmk4s/hq8JYKjOV/+U7avGquQbVnj905+Kg6uAEfrq16muwmRKl+XJGqsvlBlDNg==}
     dev: true
 
   /@emmetio/abbreviation/2.2.3:

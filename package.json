@@ -6,10 +6,11 @@
 	"scripts": {
 		"astro": "astro",
 		"build": "astro build",
+		"release": "wrangler pages publish dist",
 		"dev": "astro dev",
+		"format": "prettier --write .",
 		"preview": "wrangler pages dev dist",
-		"start": "astro dev",
-		"format": "prettier --write ."
+		"start": "astro dev"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^6.1.2",
@@ -19,6 +20,7 @@
 		"astro": "^2.0.10"
 	},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20230115.0",
 		"prettier": "^2.8.4",
 		"wrangler": "^2.9.1"
 	},

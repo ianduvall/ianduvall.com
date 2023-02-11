@@ -1,0 +1,4 @@
+name = "ianduvall"
+compatibility_date = "2023-02-11"
+compatibility_flags = ["streams_enable_constructors"]
+
