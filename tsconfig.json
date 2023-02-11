@@ -2,6 +2,11 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "astro/tsconfigs/strictest",
 	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["src/*"]
+		},
+		"importsNotUsedAsValues": "error",
 		"types": ["@cloudflare/workers-types"]
 	}
 }

@@ -6,10 +6,11 @@
 	"scripts": {
 		"astro": "astro",
 		"build": "astro build",
-		"release": "wrangler pages publish dist",
 		"dev": "astro dev",
 		"format": "prettier --write --plugin-search-dir=. .",
+		"lint": "eslint 'src/**/*.{astro,js,ts,tsx}'",
 		"preview": "wrangler pages dev dist",
+		"release": "wrangler pages publish dist",
 		"start": "astro dev"
 	},
 	"dependencies": {
@@ -21,8 +22,14 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230115.0",
+		"@typescript-eslint/eslint-plugin": "^5.51.0",
+		"@typescript-eslint/parser": "^5.51.0",
+		"eslint": "^8.34.0",
+		"eslint-plugin-astro": "^0.23.0",
+		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"prettier": "^2.8.4",
 		"prettier-plugin-astro": "^0.8.0",
+		"typescript": "^4.9.5",
 		"wrangler": "^2.9.1"
 	}
 }
