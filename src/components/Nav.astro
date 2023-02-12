@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import Dialog from "./Dialog.astro";
 import Link from "./Link.astro";
 
-export interface Props {}
+export interface Props extends HTMLAttributes<"nav"> {}
 ---
 
 <button type="button" id="open-nav" aria-label="Navigation"> Navigation</button>

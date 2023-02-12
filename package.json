@@ -6,13 +6,14 @@
 	"scripts": {
 		"astro": "astro",
 		"build": "astro build",
+		"check": "astro check && pnpm typecheck && pnpm lint",
 		"dev": "astro dev",
 		"format": "prettier --cache --plugin-search-dir=. --write .",
 		"lint": "eslint 'src/**/*.{astro,js,ts,tsx}'",
 		"preview": "wrangler pages dev dist",
 		"release": "wrangler pages publish dist",
 		"start": "astro dev",
-		"typecheck": "astro check && tsc"
+		"typecheck": "tsc"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^6.1.2",
