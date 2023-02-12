@@ -7,11 +7,12 @@
 		"astro": "astro",
 		"build": "astro build",
 		"dev": "astro dev",
-		"format": "prettier --write --plugin-search-dir=. .",
+		"format": "prettier --cache --plugin-search-dir=. --write .",
 		"lint": "eslint 'src/**/*.{astro,js,ts,tsx}'",
 		"preview": "wrangler pages dev dist",
 		"release": "wrangler pages publish dist",
-		"start": "astro dev"
+		"start": "astro dev",
+		"typecheck": "astro check && tsc"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^6.1.2",

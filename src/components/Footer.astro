@@ -1,13 +1,41 @@
 ---
+import { GITHUB_USERNAME, TWITTER_USERNAME } from "~/constants";
+import Link from "./Link.astro";
+
 const today = new Date();
+const currentYear = today.getFullYear();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} YOUR NAME HERE. All rights reserved.
+	<ul class="links">
+		<li>
+			<Link href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</Link>
+		</li>
+		<li><Link href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</Link></li>
+	</ul>
+	<p class="copyright">
+		<span aria-label="Copyright">&copy;</span>
+		<time datetime={currentYear.toString()}>{currentYear}</time> Ian Duvall. All
+		rights reserved.
+	</p>
 </footer>
 <style>
 	footer {
-		padding: 25px;
-		text-align: center;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding-inline-start: 0;
+	}
+	li {
+		list-style: none;
+	}
+
+	.links {
+		display: flex;
+		gap: 1rem;
+	}
+	.copyright {
+		font-size: 0.75rem;
 	}
 </style>

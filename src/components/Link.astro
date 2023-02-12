@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"a"> {}
+
+const { href, class: className, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const active = href === pathname || href === pathname.replace(/\/$/, "");
+const external =
+	typeof href === "string"
+		? href.startsWith("http")
+		: href instanceof URL
+		? href.protocol.startsWith("http")
+		: false;
+const classList = [className, { active, external }];
+const internalProps: Props = {};
+if (active) {
+	internalProps["aria-current"] = "page";
+}
+if (external) {
+	internalProps.target = "_blank";
+	internalProps.rel = "noopener noreferrer";
+}
+---
+
+<a href={href} class:list={classList} {...internalProps} {...props}><slot /></a>
+<style>
+	a {
+		display: inline-block;
+		text-decoration: none;
+	}
+	a.active {
+		text-decoration: underline;
+	}
+	a.external {
+	}
+	a.external::after {
+		content: "↗";
+		font-size: 0.75em;
+	}
+</style>
