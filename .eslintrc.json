@@ -8,7 +8,7 @@
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": { "project": ["./tsconfig.json"] },
 	"plugins": ["@typescript-eslint"],
-	"ignorePatterns": ["src/env.d.ts"],
+	"ignorePatterns": ["**/*.cjs", "src/env.d.ts"],
 	"overrides": [
 		{
 			"files": ["*.astro"],

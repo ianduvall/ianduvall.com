@@ -3,5 +3,16 @@
 	"typescript.inlayHints.parameterNames.enabled": "all",
 	"editor.tabSize": 2,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"prettier.documentSelectors": ["**/*.astro"]
+	"prettier.documentSelectors": ["**/*.astro"],
+	"cssvar.files": [
+		"./src/styles/global.css",
+		"./node_modules/open-props/open-props.min.css",
+		"./node_modules/open-props/normalize.min.css"
+		// if you have an alternative path to where your styles are located
+		// you can add it in this array of files
+	],
+	// Do not ignore node_modules css files, which is ignored by default
+	"cssvar.ignore": [],
+	// add support for autocomplete in JS or JS like files
+	"cssvar.extensions": ["css", "postcss", "astro"]
 }

@@ -6,7 +6,7 @@ const today = new Date();
 const currentYear = today.getFullYear();
 ---
 
-<footer>
+<footer class="container">
 	<ul class="links">
 		<li>
 			<Link href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</Link>
@@ -21,6 +21,8 @@ const currentYear = today.getFullYear();
 </footer>
 <style>
 	footer {
+		margin-block: var(--size-4);
+		padding-block-end: var(--size-8);
 	}
 	ul {
 		list-style-type: none;
@@ -29,11 +31,12 @@ const currentYear = today.getFullYear();
 	}
 	li {
 		list-style: none;
+		padding: 0;
 	}
 
 	.links {
 		display: flex;
-		gap: 1rem;
+		gap: var(--size-2);
 	}
 	.copyright {
 		font-size: 0.75rem;

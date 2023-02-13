@@ -1,51 +1,23 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import Dialog from "./Dialog.astro";
 import Link from "./Link.astro";
 
 export interface Props extends HTMLAttributes<"nav"> {}
+
+const props = Astro.props;
 ---
 
-<button type="button" id="open-nav" aria-label="Navigation"> Navigation</button>
-
-<Dialog>
-	<nav id="nav">
-		<Link href="/">Home</Link>
-		<Link href="/blog">Blog</Link>
-		<Link href="/about">About</Link>
-	</nav>
-	<p>
-		<!-- lorem ipsum -->
-		`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies, nisl
-		nec ultricies aliquet, nisl nisl aliquet nisl, nec ultricies nisl nisl sit amet
-		nisl. Sed ultricies, nisl nec ultricies aliquet, nisl nisl aliquet nisl, nec
-		ultricies nisl nisl sit amet `
-	</p>
-</Dialog>
+<nav {...props}>
+	<Link href="/">Home</Link>
+	<Link href="/blog">Blog</Link>
+	<Link href="/about">About</Link>
+</nav>
 
 <style>
-	@media (max-width: 450px) {
-		nav {
-		}
-		nav.active {
-			transition: transform 0.3s ease-in-out;
-			transform: translateX(-100%);
-		}
+	nav {
+		display: flex;
+		gap: var(--size-2);
 	}
 </style>
 
-<script>
-	const navToggle = document.getElementById(
-		"open-nav"
-	) as HTMLButtonElement | null;
-
-	navToggle?.addEventListener("click", () => {
-		const navDialog = document.getElementById(
-			"nav-dialog"
-		) as HTMLDialogElement | null;
-
-		if (!navDialog) return;
-
-		navDialog.showModal();
-	});
-</script>
+<script></script>

@@ -4,21 +4,26 @@ import Nav from "./Nav.astro";
 ---
 
 <header>
-	<h2>
-		{SITE_TITLE}
-	</h2>
-	<Nav />
+	<div class="container header-container">
+		<h2>
+			{SITE_TITLE}
+		</h2>
+		<Nav />
+	</div>
 </header>
 
 <style>
 	header {
 		position: sticky;
 		top: 0;
+		background-color: var(--surface-1);
+		padding-block: var(--size-3);
+	}
+	h2 {
+	}
+	.header-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-	}
-	h2 {
-		margin: 1rem 0;
 	}
 </style>

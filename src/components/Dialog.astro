@@ -1,36 +1,19 @@
-<dialog id="nav-dialog">
-	<slot name="header" />
+---
+import type { HTMLAttributes } from "astro/types";
+
+export interface Props extends HTMLAttributes<"dialog"> {}
+
+const props = Astro.props;
+console.log("dialog props", props);
+---
+
+<dialog {...props}>
 	<slot />
-	<slot name="footer">
-		<form method="dialog">
-			<button id="close-button">Close</button>
-		</form>
-	</slot>
 </dialog>
 
 <style>
-	html {
-		--border-width: 1px;
-		--transition-duration: 2s;
-		--animation-in-settings: 100ms ease-out normal;
-		--animation-out-settings: 100ms ease-in normal;
-	}
 	html:has(dialog:modal) {
 		overflow: hidden;
-	}
-</style>
-<style>
-	dialog {
-		padding: 0;
-	}
-	dialog[open] {
-		animation: enter var(--animation-in-settings);
-		--overflow-bottom: 500px;
-		margin-block-end: calc(-1 * var(--overflow-bottom));
-		padding-block-end: calc(var(--overflow-bottom));
-	}
-	dialog.exit {
-		animation: exit var(--animation-out-settings);
 	}
 	dialog::backdrop {
 		position: fixed;
@@ -39,58 +22,4 @@
 		backdrop-filter: blur(2px);
 		animation: none;
 	}
-	dialog[open]::backdrop {
-	}
-	form {
-		margin-inline-start: auto;
-	}
-
-	@keyframes enter {
-		from {
-			opacity: 0;
-			transform: translateY(100%);
-		}
-
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-	@keyframes exit {
-		to {
-			opacity: 0;
-			transform: scale(0);
-		}
-	}
 </style>
-
-<script>
-	const dialog = document.getElementById("nav-dialog") as HTMLDialogElement;
-	const closeButton = document.getElementById(
-		"close-button"
-	) as HTMLButtonElement;
-
-	const animateClose = (e: Event) => {
-		// prevent form from closing dialog and skipping animation
-		if (e.target === closeButton) {
-			e.preventDefault();
-		}
-
-		dialog.classList.add("exit");
-
-		const animationEnd = () => {
-			dialog.classList.remove("exit");
-			dialog.removeEventListener("webkitAnimationEnd", animationEnd);
-			dialog.close();
-		};
-		dialog.addEventListener("webkitAnimationEnd", animationEnd);
-		dialog.querySelectorAll("a").forEach((a) => {
-			a.removeEventListener("click", animateClose);
-		});
-	};
-
-	closeButton.addEventListener("click", animateClose);
-	dialog.querySelectorAll("a").forEach((a) => {
-		a.addEventListener("click", animateClose);
-	});
-</script>
