@@ -1,11 +1,11 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import Dialog from "./Dialog.astro";
+import Dialog, { Props as DialogProps } from "./Dialog.astro";
 
-export interface Props extends HTMLAttributes<"dialog"> {}
+export interface Props extends DialogProps {
+	slot?: string;
+}
 
 const props = Astro.props;
-console.log("nav dialog props", props);
 ---
 
 <Dialog {...props} id="nav-dialog">
