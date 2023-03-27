@@ -1,6 +1,6 @@
 ---
 import { SITE_TITLE } from "~/constants";
-import Nav from "./Nav.astro";
+import Link from "./Link.astro";
 ---
 
 <header>
@@ -8,7 +8,13 @@ import Nav from "./Nav.astro";
 		<h2>
 			{SITE_TITLE}
 		</h2>
-		<Nav />
+		<div>
+			<nav>
+				<Link href="/">Home</Link>
+				<Link href="/blog">Blog</Link>
+				<Link href="/about">About</Link>
+			</nav>
+		</div>
 	</div>
 </header>
 

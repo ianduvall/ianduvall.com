@@ -7,6 +7,9 @@ import Footer from "../components/Footer.astro";
 type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const dateTimeFormat = Intl.DateTimeFormat();
+const publishedDate = dateTimeFormat.format(pubDate);
+const updatedAt = updatedDate ? dateTimeFormat.format(updatedDate) : null;
 ---
 
 <html lang="en">
@@ -30,11 +33,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			<article>
 				{heroImage && <img width={720} height={360} src={heroImage} alt="" />}
 				<h1 class="title">{title}</h1>
-				{pubDate && <time>{pubDate}</time>}
+				{pubDate && <time datetime={publishedDate}>{publishedDate}</time>}
 				{
-					updatedDate && (
+					updatedAt && (
 						<div>
-							Last updated on <time>{updatedDate}</time>
+							Last updated on <time>{updatedAt}</time>
 						</div>
 					)
 				}

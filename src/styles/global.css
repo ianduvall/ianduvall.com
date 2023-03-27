@@ -4,6 +4,10 @@
 
 html {
 	--max-width-content: 70ch;
+	--theme-navbar-height: 3rem;
+	--theme-left-sidebar-width: 20rem;
+
+	--min-space-inline: 1rem;
 	background-color: var(--surface-1);
 }
 
@@ -23,7 +27,6 @@ body {
 header {
 }
 main {
-	margin-block: var(--size-4);
 }
 footer {
 }

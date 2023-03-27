@@ -6,6 +6,11 @@ heroImage: "/placeholder-hero.jpg"
 draft: true
 ---
 
+import Link from "~/components/Link.astro";
+export const components = { a: Link };
+
+# Using MDX (h1)
+
 This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
 
 ## Why MDX?
@@ -18,8 +23,6 @@ If you have existing content authored in MDX, this integration will hopefully ma
 
 Here is how you import and use a UI component inside of MDX.  
 When you open this page in the browser, you should see the clickable button below.
-
-import Link from "~/components/Link.astro";
 
 <Link href="#" onclick="alert('clicked!')">
 	Embedded component in MDX
