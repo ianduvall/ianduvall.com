@@ -91,6 +91,9 @@ const baseComponents = {
 	Image: RoundedImage,
 	a: CustomLink,
 	code: Code,
+	blockquote: (props: React.ComponentPropsWithoutRef<"blockquote">) => (
+		<blockquote className="border-l-4 border-gray-300 pl-4 my-4" {...props} />
+	),
 } as const satisfies MDXRemoteProps["components"];
 
 type MDXRemoteProps = React.ComponentPropsWithoutRef<typeof MDXRemote>;

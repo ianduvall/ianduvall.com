@@ -1,0 +1,145 @@
+---
+title: "Exploring React's `use` hook"
+publishedAt: "2024-04-29"
+summary: "A look at the `use` hook in React 19 and how it can be used for client-side data fetching."
+---
+
+A new feature coming in React 19 is the [use function](https://react.dev/blog/2024/04/25/react-19#new-feature-use). The `use` function allows a component to read from a "resource" in render. The stated use cases of a resource (for now) are: reading from context (a replacement for `useContext`) and reading the value from a `Promise`. The benefit of using `use` instead of `useContext` is `use` can be called conditionally whereas `useContext` cannot as it must follow the rules of hooks. While reading from context conditionally seems useful, reading from a promise in render is what _really_ caught my attention. As a heavy user of Tanstack Query, I was curious if this could replace client-side data fetching libraries. Unfortunately, there's a note that reads:
+
+> use does not support promises created in render ... you need to pass a promise from a suspense powered library or framework that supports caching for promises.
+
+The docs don't mention what "suspense powered" means but how hard could it be to cache a `Promise`? Let's find out.
+
+## Working with use
+
+First, let's dig into the types of `use`.
+
+```ts
+function use<T>(usable: Usable<T>): T;
+```
+
+Now what's a `Usable`?
+
+```ts
+type Usable<T> = Thenable<T> | Context<T>;
+```
+
+Okay, so a `Usable` is a `Thenable` or a `Context`. We are familiar with `Context` but what's a `Thenable`?
+
+```ts
+type Thenable<T> =
+	| UntrackedThenable<T>
+	| PendingThenable<T>
+	| FulfilledThenable<T>
+	| RejectedThenable<T>;
+
+interface ThenableImpl<T> {
+	then(
+		onFulfill: (value: T) => unknown,
+		onReject: (error: unknown) => unknown,
+	): void | PromiseLike<unknown>;
+}
+interface UntrackedThenable<T> extends ThenableImpl<T> {
+	status?: void;
+}
+
+interface PendingThenable<T> extends ThenableImpl<T> {
+	status: "pending";
+}
+
+interface FulfilledThenable<T> extends ThenableImpl<T> {
+	status: "fulfilled";
+	value: T;
+}
+
+interface RejectedThenable<T> extends ThenableImpl<T> {
+	status: "rejected";
+	reason: unknown;
+}
+```
+
+A `Thenable` looks much like a `Promise` but with added properties to make the status of the promise observable. Like a `Promise`, a `Thenable` can be in one of three states: `pending`, `fulfilled`, or `rejected` with the additional "untracked" type for a `Promise` that hasn't been converted to a `Thenable`.
+
+## Implementing a Thenable
+
+At first I thought we would have to implement `Thenable` ourselves. The implementation is relatively simple:
+
+```ts
+const createThenable = <T>(promise: Promise<T>): Thenable<T> => {
+	const pendingThenable: PendingThenable<T> = {
+		then: promise.then.bind(promise),
+		status: "pending",
+	};
+
+	promise
+		.then((value) => {
+			const fulfilled = pendingThenable as unknown as FulfilledThenable<T>;
+			fulfilled.then = () => {};
+			fulfilled.status = "fulfilled";
+			fulfilled.value = value;
+		})
+		.catch((reason) => {
+			const rejected = pendingThenable as unknown as RejectedThenable<T>;
+			rejected.then = () => {};
+			rejected.status = "rejected";
+			rejected.reason = reason;
+		});
+
+	return pendingThenable as Thenable<T>;
+};
+```
+
+But it turns out React already implements [Thenable](https://github.com/facebook/react/blob/main/packages/react-server/src/ReactFlightThenable.js). We can pass `use` a `Promise` and `use` will track the `Promise` by converting it into a `Thenable` (which you see see in the [source code](https://github.com/facebook/react/blob/main/packages/react-server/src/ReactFlightHooks.js#L117)).
+
+This function takes a `Promise` and returns a `Thenable`. The `Thenable` starts in the `pending` state and when the `Promise` resolves, the `Thenable` transitions to the `fulfilled` state with the resolved value. If the `Promise` rejects, the `Thenable` transitions to the `rejected` state with the rejection reason.
+
+Using the `Thenable` is as simple as passing it to `use`.
+
+```tsx
+const promise = Promise.resolves("Hello world!");
+
+const MyComponent = () => {
+	const data = use(promise);
+
+	return <div>{data}</div>;
+};
+```
+
+## Caching a Promise
+
+In the previous example the `Promise` is getting created outside of the component. This is important because the `Thenable` must be created once and reused across renders. If the `Thenable` is created inside the component, a new `Thenable` will be created on every render which will cause the component to suspend infinitely.
+
+```tsx
+const MyComponent = () => {
+	// recreates the Promise on every render
+	const promise = Promise.resolves("Hello world!");
+	const data = use(promise);
+
+	return <div>{data}</div>;
+};
+```
+
+To cache the `Promise` created in render, we have a few options. The simplest is the `useMemo` hook.
+
+```tsx
+const MyComponent = () => {
+	const promise = useMemo(() => Promise.resolves("Hello world!"), []);
+	const data = use(promise);
+
+	return <div>{data}</div>;
+};
+```
+
+For demonstration purposes this works but caching the `Promise` with `useMemo` caches the `Promise` at the component level. If your component unmounts or you have multiple components that need to read the same `Promise`, you'll need to lift the `Promise` up to a common ancestor component and pass it down as a prop or via context to prevent redundantly recreating the `Promise`. This is the typical pattern for lifting up state in React but has a downside of leaking implementation details to the ancestor component. This downside is one of the motivations for Server Components and colocated data fetching.
+
+## Moving the cache outside of React
+
+As your use cases get more sophisticated you'll likely want to share your cache outside of React in which case you'll need to move the cache outside of React. This is what a client-side data fetching library like Tanstack Query does with its [QueryCache](https://tanstack.com/query/latest/docs/reference/QueryCache) which can be shared across the application. Maybe I'll open that can of worms in a future post. If that topic sounds interesting to you or you have any questions, reach out to me on [X (Twitter)](https://twitter.com/ianduvall_) and let me know.
+
+## Caveats
+
+It's worth mentioning that React discourages this pattern of creating Promises in render in the [use function documentation](https://react.dev/reference/react/use#caveats).
+
+> Prefer creating Promises in Server Components and passing them to Client Components over creating Promises in Client Components. Promises created in Client Components are recreated on every render. Promises passed from a Server Component to a Client Component are stable across re-renders.
+
+While passing a `Promise` from the server would resolve much of the issues we have discussed in the post it would be helpful if React provided an opinion on client-side data fetching patterns since it's a prominent use case in the ecosystem. Especially for apps built before Server Components existed.
