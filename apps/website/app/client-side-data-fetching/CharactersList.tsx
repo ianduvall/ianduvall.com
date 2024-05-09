@@ -5,15 +5,20 @@ import { Button } from "./Button";
 import { characterResource, charactersResource } from "./resource";
 
 export const CharactersList = () => {
-	const [page, setPage] = useState(1);
 	const [isPending, startTransition] = useTransition();
-	const prevPageDisabled = page < 2;
+	const [page, _setPage] = useState(1);
+	const setPage: typeof _setPage = (updater) => {
+		startTransition(() => {
+			_setPage(updater);
+		});
+	};
 	const [characterId, _setCharacterId] = useState<number>(1);
 	const setCharacterId: typeof _setCharacterId = (updater) => {
 		startTransition(() => {
 			_setCharacterId(updater);
 		});
 	};
+	const prevPageDisabled = page < 2;
 
 	return (
 		<>

@@ -1,54 +1,80 @@
 import { getCharacters, getCharacter } from "rickmortyapi";
 
-type CacheEntryStatus = "fresh" | "stale";
+type CacheEntryStatus = "fresh" | "stale" | "revalidating";
 type StatusUpdater =
 	| CacheEntryStatus
 	| ((previous: CacheEntryStatus) => CacheEntryStatus);
 interface ResourceCacheEntry<TPromise> {
 	promise: TPromise;
+	revalidatingPromise: TPromise | undefined;
 	status: CacheEntryStatus;
-	setStatus: (updater: StatusUpdater) => void;
 }
 type Cache<TData> = Map<string, ResourceCacheEntry<TData>>;
-interface Resource<Key extends string, TFetcher extends (input: any) => any> {
-	key: Key;
+interface Resource<TFetcher extends (input: any) => any> {
 	read: TFetcher;
 	preload: (input: Parameters<TFetcher>[0]) => void;
 	get: (
 		input: Parameters<TFetcher>[0],
 	) => ResourceCacheEntry<Promise<any>> | undefined;
+	expire: (input: Parameters<TFetcher>[0]) => void;
+	expireAll: () => void;
 }
 
-export const resourcesCache = new Map<string, Resource<string, any>>();
-
-function createResource<
-	const Key extends string,
-	const TFetcher extends (input: any) => any,
->({ key, fetcher }: { key: Key; fetcher: TFetcher }): Resource<Key, TFetcher> {
+function createResource<const TFetcher extends (input: any) => any>({
+	fetcher,
+}: {
+	fetcher: TFetcher;
+}): Resource<TFetcher> {
 	const cache: Cache<any> = new Map();
 
-	const readAndCache = (
-		input: Parameters<TFetcher>[0],
-	): ReturnType<TFetcher> => {
-		const cacheKey = stableStringify(input);
+	const setStatus = (
+		cacheEntry: ResourceCacheEntry<any>,
+		updater: StatusUpdater,
+	): void => {
+		const previous = cacheEntry.status;
+		const next = typeof updater === "string" ? updater : updater(previous);
+		if (Object.is(previous, next)) {
+			return;
+		}
 
+		cacheEntry.status = next;
+	};
+
+	const fetchAndCache = (
+		input: Parameters<TFetcher>[0],
+		cacheKey: string = stableStringify(input),
+	): ReturnType<TFetcher> => {
 		const promise = fetcher(input);
 		const cacheEntry: ResourceCacheEntry<Promise<any>> = {
 			promise,
+			revalidatingPromise: undefined,
 			status: "fresh",
-			setStatus: (updater: StatusUpdater): void => {
-				const previous = cacheEntry.status;
-				const next = typeof updater === "string" ? updater : updater(previous);
-				if (Object.is(previous, next)) {
-					return;
-				}
-
-				cacheEntry.status = next;
-			},
 		};
 		cache.set(cacheKey, cacheEntry);
 
 		return promise;
+	};
+
+	const revalidate = (
+		input: Parameters<TFetcher>[0],
+		cacheKey: string = stableStringify(input),
+	): void => {
+		const cacheEntry = cache.get(cacheKey);
+		if (!cacheEntry) {
+			return;
+		}
+		const revalidatingPromise = fetcher(input);
+		setStatus(cacheEntry, "revalidating");
+		cacheEntry.revalidatingPromise = revalidatingPromise;
+		revalidatingPromise
+			.then(() => {
+				cacheEntry.promise = revalidatingPromise;
+				setStatus(cacheEntry, "fresh");
+			})
+			.catch(() => {
+				setStatus(cacheEntry, "stale");
+				cacheEntry.revalidatingPromise = undefined;
+			});
 	};
 
 	// @ts-expect-error
@@ -57,37 +83,40 @@ function createResource<
 
 		const cachedEntry = cache.get(cacheKey);
 		if (cachedEntry) {
+			if (cachedEntry.status === "stale") {
+				// stale while revalidate
+				revalidate(input, cacheKey);
+			}
 			return cachedEntry.promise;
 		}
 
-		return readAndCache(input);
+		return fetchAndCache(input, cacheKey);
 	};
 	const preload = (input: Parameters<TFetcher>[0]): void => void read(input);
 	const get = (input: Parameters<TFetcher>[0]) =>
 		cache.get(stableStringify(input));
-	const invalidate = (input: Parameters<TFetcher>[0]): void => {
+	const expire = (input: Parameters<TFetcher>[0]): void => {
 		const cacheKey = stableStringify(input);
 		const cacheEntry = cache.get(cacheKey);
 		if (cacheEntry) {
-			cacheEntry.setStatus("stale");
+			setStatus(cacheEntry, "stale");
 		}
 	};
-	const invalidateAll = (): void => {
+	const expireAll = (): void => {
 		cache.forEach((cacheEntry) => {
-			cacheEntry.setStatus("stale");
+			setStatus(cacheEntry, "stale");
 		});
 	};
 
 	const resource = {
-		key,
 		read,
 		preload,
 		get,
-		invalidateAll,
+		expire,
+		expireAll,
 		// internals are prefixed with an underscore
 		_cache: cache,
 	};
-	resourcesCache.set(key, resource);
 
 	return resource;
 }
@@ -108,11 +137,9 @@ const stableStringify = (value: unknown): string => {
 };
 
 export const charactersResource = createResource({
-	key: "characters",
 	fetcher: getCharacters,
 });
 
 export const characterResource = createResource({
-	key: "character",
 	fetcher: getCharacter,
 });
