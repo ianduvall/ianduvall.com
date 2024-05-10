@@ -1,0 +1,43 @@
+---
+title: "Zero downtime migrations w/ the Expand and Contract Pattern"
+publishedAt: "2024-05-10"
+summary: "A guide to making breaking changes without downtime"
+---
+
+TLDR: expand, migrate, contract.
+
+A common scenario in Reporting is the need to update or remove something that's stored in a database, for example renaming or deprecating a metric. This guide explains how to run such a migration while achieving zero downtime with the Expand and Contract Pattern (also known as Parallel Change). This scenario comes up often enough that it seemed valuable to document the process for future reference.
+
+## Expand, Migrate, Contract
+
+A zero downtime migration involves three phases: expand, migrate, and contract.
+
+### Expand
+
+In the first phase we need to add the new schema or service without removing the old one. Both old and new schemas or services need to coexist to achieve zero downtime while performing the next phase.
+Examples:
+
+- Change API of a Tireswing endpoint
+  - Add new version of the endpoint while leaving the existing endpoint around
+- Rename the value of a property on a Block
+  _ Expand the Block's schema to accept the old and new values at the same time
+  _ You can either support both values simultaneously or collapse both values down to one.
+
+### Migrate
+
+In the second phase we need to migrate usages from the old schema or service to the new. Use a monitoring tool like Datadog to confirm the migration process is complete before moving on to the next phase.
+Examples:
+
+- Change the API of a Tireswing endpoint
+  - Migrate all consumers from the old endpoint version to the new endpoint version
+- Rename the value of a property on a Block \* Migrate all writes of the property value from the old value to the new value. Migrate persisted values in the database from the old value to the new value.
+
+### Contract
+
+In the third and last phase we need to remove the old schema or service now that it is unused to complete the migration process.
+Examples:
+
+- Change the API of a Tireswing endpoint
+  - Decommission the old endpoint
+- Rename the value of a property on a Block
+  - Remove the old value from the Block's schema
