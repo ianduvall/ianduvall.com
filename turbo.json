@@ -13,6 +13,11 @@
 			"cache": false,
 			"persistent": true
 		},
+		"start": {
+			"cache": false,
+			"dependsOn": ["build"],
+			"persistent": true
+		},
 		"typecheck": {
 			"dependsOn": ["topo"]
 		}

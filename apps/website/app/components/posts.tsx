@@ -1,33 +1,28 @@
 import Link from "next/link";
-import { formatDate, getBlogPosts } from "app/blog/utils";
+import { getAllBlogPostData, formatDate } from "app/blog/helpers";
 
 export async function BlogPosts() {
-	let allPosts = await getBlogPosts();
+	const blogPosts = await getAllBlogPostData();
 
 	return (
 		<div>
-			{allPosts
+			{blogPosts
 				.sort((a, b) => {
-					if (
-						new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-					) {
-						return -1;
-					}
-					return 1;
+					return a.frontmatter.publishedAt < b.frontmatter.publishedAt ? 1 : -1;
 				})
 				.slice(0, 5)
 				.map((post) => (
 					<Link
 						key={post.slug}
-						className="flex flex-col space-y-1 mb-4"
+						className="mb-4 flex flex-col space-y-1"
 						href={`/blog/${post.slug}`}
 					>
-						<div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
-							<p className="text-neutral-600 dark:text-neutral-400 w-[100px] tabular-nums">
-								{formatDate(post.metadata.publishedAt, false)}
+						<div className="flex w-full flex-col space-x-0 md:flex-row md:space-x-2">
+							<p className="tabular-nums text-neutral-600 dark:text-neutral-400">
+								{formatDate(post.frontmatter.publishedAt, true)}
 							</p>
-							<p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
-								{post.metadata.title}
+							<p className="tracking-tight text-neutral-900 dark:text-neutral-100">
+								{post.frontmatter.title}
 							</p>
 						</div>
 					</Link>

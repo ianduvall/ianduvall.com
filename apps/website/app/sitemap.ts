@@ -1,11 +1,11 @@
-import { getBlogPosts } from "app/blog/utils";
+import { getAllBlogPostData } from "./blog/helpers";
 
-export const baseUrl = "https://portfolio-blog-starter.vercel.app";
+export const baseUrl = "https://www.ianduvall.com";
 
 export default async function sitemap() {
-	let blogs = (await getBlogPosts()).map((post) => ({
+	let blogs = (await getAllBlogPostData()).map((post) => ({
 		url: `${baseUrl}/blog/${post.slug}`,
-		lastModified: post.metadata.publishedAt,
+		lastModified: post.frontmatter.publishedAt,
 	}));
 
 	let routes = ["", "/blog"].map((route) => ({

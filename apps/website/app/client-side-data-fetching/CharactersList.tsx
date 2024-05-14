@@ -1,8 +1,8 @@
 "use client";
 
 import { use, useState, useTransition, Suspense } from "react";
-import { Button } from "./Button";
 import { characterResource, charactersResource } from "./resource";
+import { Button } from "app/components/button";
 
 export const CharactersList = () => {
 	const [isPending, startTransition] = useTransition();

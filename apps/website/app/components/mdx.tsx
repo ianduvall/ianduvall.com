@@ -1,19 +1,11 @@
 import React from "react";
-import fs from "node:fs/promises";
-import type { PathLike } from "node:fs";
 import Link from "next/link";
 import Image from "next/image";
-import {
-	MDXRemote,
-	compileMDX,
-	type CompileMDXResult,
-} from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
-import remarkGfm from "remark-gfm";
-import { BlogPostFrontmatter } from "app/blog/utils";
+import type { MDXRemoteProps } from "next-mdx-remote/rsc";
 
 interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {}
-function CustomLink(props: LinkProps) {
+function MDXLink(props: LinkProps) {
 	let href = props.href;
 
 	if (href?.startsWith("/")) {
@@ -81,7 +73,14 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
 	return Heading;
 }
 
-const baseComponents = {
+const Blockquote = (props: React.ComponentPropsWithoutRef<"blockquote">) => (
+	<blockquote className="my-4 border-l-4 border-gray-300 pl-4" {...props} />
+);
+
+export const mdxComponents = {
+	a: MDXLink,
+	blockquote: Blockquote,
+	code: Code,
 	h1: createHeading(1),
 	h2: createHeading(2),
 	h3: createHeading(3),
@@ -89,49 +88,4 @@ const baseComponents = {
 	h5: createHeading(5),
 	h6: createHeading(6),
 	Image: RoundedImage,
-	a: CustomLink,
-	code: Code,
-	blockquote: (props: React.ComponentPropsWithoutRef<"blockquote">) => (
-		<blockquote className="border-l-4 border-gray-300 pl-4 my-4" {...props} />
-	),
 } as const satisfies MDXRemoteProps["components"];
-
-type MDXRemoteProps = React.ComponentPropsWithoutRef<typeof MDXRemote>;
-export async function CustomMDX(props: MDXRemoteProps) {
-	const components: MDXRemoteProps["components"] = props.components
-		? { ...baseComponents, ...props.components }
-		: baseComponents;
-
-	return (
-		<MDXRemote
-			{...props}
-			components={components}
-			options={{
-				mdxOptions: {
-					remarkPlugins: [remarkGfm],
-				},
-			}}
-		/>
-	);
-}
-
-export async function compileMDXFile(filePath: PathLike | fs.FileHandle) {
-	const rawContent = await fs.readFile(filePath, "utf-8");
-	const compiledMDX = await compileMDX<BlogPostFrontmatter>({
-		source: rawContent,
-		components: baseComponents,
-		options: {
-			parseFrontmatter: true,
-			mdxOptions: {
-				remarkPlugins: [remarkGfm],
-			},
-		},
-	});
-
-	return compiledMDX;
-}
-
-export const compileMDXSlug = async ({ slug }: { slug: string }) => {
-	const filePath = `app/blog/posts/${slug}.mdx`;
-	return compileMDXFile(filePath);
-};
