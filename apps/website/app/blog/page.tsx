@@ -13,7 +13,7 @@ export default function Page() {
 				Notes, thoughts, and ...
 			</h1>
 			<Suspense fallback={<div>Loading...</div>}>
-				<BlogPosts />
+				<BlogPosts recent={5} />
 			</Suspense>
 		</section>
 	);
