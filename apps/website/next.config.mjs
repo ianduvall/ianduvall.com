@@ -6,6 +6,7 @@
 const nextConfig = {
 	experimental: {
 		ppr: true,
+		reactCompiler: true,
 	},
 	poweredByHeader: false,
 	typescript: {
