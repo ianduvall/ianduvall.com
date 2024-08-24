@@ -102,8 +102,8 @@ export default async function Blog({ params }: { params: PostParams }) {
 			<h1 className="title text-2xl font-semibold tracking-tighter">
 				{post.frontmatter.title}
 			</h1>
-			<div className="mt-2 mb-8 flex items-center justify-between text-sm">
-				<p className="text-sm text-neutral-600 dark:text-neutral-400">
+			<div className="mb-8 mt-2 flex items-center justify-between text-sm">
+				<p className="text-sm text-gray-600 dark:text-gray-400">
 					{formatDate(post.frontmatter.publishedAt)}
 				</p>
 			</div>

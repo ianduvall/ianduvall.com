@@ -12,7 +12,7 @@ export default function Page() {
 			</p>
 
 			<section>
-				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
+				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
 					About
 				</h2>
 				<p>
@@ -21,7 +21,7 @@ export default function Page() {
 					<a href="https://sproutsocial.com/">Sprout Social</a> on the{" "}
 					<a href="https://sproutsocial.com/features/social-media-analytics/">
 						Analytics
-					</a>
+					</a>{" "}
 					team. I work on the frontend with React and Typescript and the backend
 					with Django and Python. My goldilocks zone is between solving hard
 					technical problems and working with product and design to craft
@@ -30,7 +30,7 @@ export default function Page() {
 			</section>
 
 			<section>
-				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
+				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
 					Education
 				</h2>
 				<p>
@@ -39,7 +39,7 @@ export default function Page() {
 				</p>
 			</section>
 			<section>
-				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
+				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
 					Recent writing
 				</h2>
 			</section>

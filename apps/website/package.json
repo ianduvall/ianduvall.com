@@ -18,17 +18,17 @@
 		"react": "19.0.0-rc-eb3ad065-20240822",
 		"react-dom": "19.0.0-rc-eb3ad065-20240822",
 		"rickmortyapi": "^2.3.0",
-		"sugar-high": "^0.6.1"
+		"sugar-high": "^0.7.0"
 	},
 	"devDependencies": {
-		"@tailwindcss/postcss": "4.0.0-alpha.14",
+		"@tailwindcss/postcss": "4.0.0-alpha.20",
 		"@types/node": "^20.16.1",
 		"@types/react": "npm:types-react@rc",
 		"@types/react-dom": "npm:types-react-dom@rc",
 		"postcss": "^8.4.41",
 		"prettier-plugin-tailwindcss": "^0.6.6",
 		"remark-gfm": "^4.0.0",
-		"tailwindcss": "4.0.0-alpha.14",
+		"tailwindcss": "4.0.0-alpha.20",
 		"tsconfig": "workspace:*"
 	},
 	"overrides": {

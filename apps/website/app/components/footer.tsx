@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function Footer() {
 	return (
 		<footer className="mt-auto">
-			<ul className="font-sm mt-8 flex flex-col space-y-2 space-x-0 text-neutral-600 md:flex-row md:space-y-0 md:space-x-4 dark:text-neutral-300">
+			<ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 text-gray-600 md:flex-row md:space-x-4 md:space-y-0 dark:text-gray-300">
 				<li>
 					<Link
-						className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
 						rel="noopener noreferrer"
 						target="_blank"
 						href="/rss"
@@ -16,7 +16,7 @@ export default function Footer() {
 				</li>
 				<li>
 					<Link
-						className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
 						rel="noopener noreferrer"
 						target="_blank"
 						href="https://github.com/ianduvall"
@@ -26,7 +26,7 @@ export default function Footer() {
 				</li>
 				<li>
 					<Link
-						className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
 						rel="noopener noreferrer"
 						target="_blank"
 						href="https://github.com/ianduvall/ianduvall.com"
