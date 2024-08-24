@@ -47,7 +47,7 @@ export default function RootLayout({
 			className={`${GeistSans.variable} ${GeistMono.variable} bg-white text-black dark:bg-black dark:text-white`}
 		>
 			<body className="mx-auto max-w-xl antialiased">
-				<main className="flex min-h-svh min-w-0 flex-auto flex-col px-4 py-8">
+				<main className="flex min-h-svh min-w-0 flex-auto flex-col py-8 px-4">
 					<Navbar />
 					{children}
 					<Footer />

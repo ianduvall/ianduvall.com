@@ -12,7 +12,7 @@ export default function Page() {
 			</p>
 
 			<section>
-				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
+				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
 					About
 				</h2>
 				<p>
@@ -30,7 +30,7 @@ export default function Page() {
 			</section>
 
 			<section>
-				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
+				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
 					Education
 				</h2>
 				<p>
@@ -39,7 +39,7 @@ export default function Page() {
 				</p>
 			</section>
 			<section>
-				<h2 className="mb-3 mt-6 text-2xl font-semibold tracking-tighter">
+				<h2 className="mt-6 mb-3 text-2xl font-semibold tracking-tighter">
 					Recent writing
 				</h2>
 			</section>

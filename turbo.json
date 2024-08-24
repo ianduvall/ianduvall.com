@@ -1,10 +1,9 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"pipeline": {
+	"tasks": {
 		"topo": {
 			"dependsOn": ["^topo"]
 		},
-
 		"build": {
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**"]

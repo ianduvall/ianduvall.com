@@ -2,4 +2,6 @@
 
 ## local development
 
-`turbo run dev`
+```sh
+turbo run dev
+```

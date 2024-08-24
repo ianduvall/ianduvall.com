@@ -13,7 +13,7 @@ const navItems = [
 
 export function Navbar() {
 	return (
-		<header className="-ml-[8px] mb-4 tracking-tight">
+		<header className="mb-4 -ml-[8px] tracking-tight">
 			<nav
 				className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
 				id="nav"
@@ -24,7 +24,7 @@ export function Navbar() {
 							<Link
 								key={path}
 								href={path}
-								className="relative m-1 flex px-2 py-1 align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200"
+								className="relative m-1 flex py-1 px-2 align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200"
 							>
 								{name}
 							</Link>
