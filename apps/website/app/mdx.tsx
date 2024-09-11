@@ -1,8 +1,10 @@
-import React, { type ComponentPropsWithoutRef } from "react";
+import React, { type ComponentProps } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { highlight } from "sugar-high";
-import type { MDXRemoteProps } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+import { evaluate, type EvaluateOptions } from "@mdx-js/mdx";
+import * as jsxRuntime from "react/jsx-runtime";
 
 const slugify = (input: React.ReactNode): string => {
 	if (!input) return "";
@@ -17,12 +19,12 @@ const slugify = (input: React.ReactNode): string => {
 };
 
 const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
-	const Heading = ({ children }: ComponentPropsWithoutRef<"h1">) => {
+	const Heading = ({ children, ...props }: ComponentProps<"h1">) => {
 		const slug = slugify(children);
 		const HeadingTag = `h${level}` satisfies keyof JSX.IntrinsicElements;
 		return (
-			<HeadingTag id={slug}>
-				<a href={`#${slug}`} className="anchor" key={`link-${slug}`}>
+			<HeadingTag id={slug} {...props}>
+				<a href={`#${slug}`} className="anchor">
 					{children}
 				</a>
 			</HeadingTag>
@@ -32,8 +34,8 @@ const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
 	return Heading;
 };
 
-export const mdxComponents = {
-	a: function MDXLink(props) {
+const mdxComponents = {
+	a: (props: ComponentProps<"a">) => {
 		let href = props.href;
 
 		if (href?.startsWith("/")) {
@@ -46,10 +48,10 @@ export const mdxComponents = {
 
 		return <a target="_blank" rel="noopener noreferrer" {...props} />;
 	},
-	blockquote: (props) => (
+	blockquote: (props: ComponentProps<"blockquote">) => (
 		<blockquote className="my-4 border-l-4 border-gray-300 pl-4" {...props} />
 	),
-	code: function Code({ children, ...props }) {
+	code: ({ children, ...props }: ComponentProps<"code">) => {
 		if (typeof children !== "string") {
 			return <code {...props}>{children}</code>;
 		}
@@ -74,4 +76,35 @@ export const mdxComponents = {
 			<Image className={`rounded-lg ${props.className ?? ""}`} {...props} />
 		);
 	},
-} as const satisfies MDXRemoteProps["components"];
+} as const;
+
+export interface BlogPostMetadata {
+	title: string;
+	publishedAt: string;
+	summary: string;
+	image?: string;
+	draft?: true;
+}
+
+export const evaluateBlogPostMDX = async ({
+	content,
+}: {
+	content: string;
+}): Promise<readonly [JSX.Element, BlogPostMetadata]> => {
+	// @ts-expect-error - jsx runtime types are currently broken
+	const options: EvaluateOptions = {
+		...jsxRuntime,
+	};
+	const { default: MDXContent, metadata } = await evaluate(content, {
+		...options,
+		remarkPlugins: [remarkGfm],
+	});
+
+	return [
+		MDXContent({
+			// @ts-expect-error - React 19 types break this
+			components: mdxComponents,
+		}),
+		metadata as BlogPostMetadata,
+	] as const;
+};

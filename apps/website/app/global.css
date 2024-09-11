@@ -35,8 +35,6 @@
 	}
 
 	.prose .anchor {
-		@apply invisible absolute no-underline;
-
 		margin-left: -1ch;
 		padding-right: 0.5em;
 		width: 80%;
@@ -44,17 +42,24 @@
 		cursor: pointer;
 	}
 
-	.anchor:hover {
-		@apply visible;
+	.prose h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		.anchor {
+			@apply no-underline;
+		}
 	}
 
 	.prose .anchor::after {
-		@apply text-gray-300 dark:text-gray-700;
+		@apply ml-1 text-gray-300 opacity-0 transition-opacity duration-200 ease-in-out dark:text-gray-700;
 		content: "#";
 	}
 
-	.prose *:hover > .anchor {
-		@apply visible;
+	.prose *:hover > .anchor::after {
+		@apply opacity-100;
 	}
 
 	.prose pre {

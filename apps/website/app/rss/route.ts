@@ -8,16 +8,16 @@ export async function GET() {
 	const blogPosts = await getAllBlogPostData();
 	const itemsXml = blogPosts
 		.sort((a, b) => {
-			return a.frontmatter.publishedAt < b.frontmatter.publishedAt ? 1 : -1;
+			return a.metadata.publishedAt < b.metadata.publishedAt ? 1 : -1;
 		})
 		.map(
 			(post) =>
 				`<item>
-          <title>${post.frontmatter.title}</title>
+          <title>${post.metadata.title}</title>
           <link>${baseUrl}/blog/${post.slug}</link>
-          <description>${post.frontmatter.summary || ""}</description>
+          <description>${post.metadata.summary || ""}</description>
           <pubDate>${new Date(
-						post.frontmatter.publishedAt,
+						post.metadata.publishedAt,
 					).toUTCString()}</pubDate>
         </item>`,
 		)

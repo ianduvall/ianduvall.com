@@ -1,8 +1,9 @@
----
-title: "Exploring React's `use` hook"
-publishedAt: "2024-04-29"
-summary: "A look at the `use` hook in React 19 and how it can be used for client-side data fetching."
----
+export const metadata = {
+	title: "Exploring React's `use` hook",
+	publishedAt: "2024-04-29",
+	summary:
+		"A look at the `use` hook in React 19 and how it can be used for client-side data fetching.",
+};
 
 A new feature coming in React 19 is the [use function](https://react.dev/blog/2024/04/25/react-19#new-feature-use). The `use` function allows a component to read from a "resource" in render. The stated use cases of a resource (for now) are: reading from context (a replacement for `useContext`) and reading the value from a `Promise`. The benefit of using `use` instead of `useContext` is `use` can be called conditionally whereas `useContext` cannot as it must follow the rules of hooks. While reading from context conditionally seems useful, reading from a promise in render is what _really_ caught my attention. As a heavy user of Tanstack Query, I was curious if this could replace client-side data fetching libraries. Unfortunately, there's a note that reads:
 

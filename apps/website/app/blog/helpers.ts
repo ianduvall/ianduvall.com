@@ -1,16 +1,6 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { compileMDX } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
-import { mdxComponents } from "app/components/mdx";
-
-interface BlogPostFrontmatter {
-	title: string;
-	publishedAt: string;
-	summary: string;
-	image?: string;
-	draft?: true;
-}
+import { evaluateBlogPostMDX } from "app/mdx";
 
 const blogPostsDirPath = path.join(process.cwd(), "app", "blog", "posts");
 
@@ -30,44 +20,31 @@ export const getBlogPostSlugs = async () => {
 	);
 };
 
-const compileBlogPostMDX = async (fileContent: string) => {
-	return compileMDX<BlogPostFrontmatter>({
-		source: fileContent,
-		components: mdxComponents,
-		options: {
-			parseFrontmatter: true,
-			mdxOptions: {
-				remarkPlugins: [remarkGfm],
-			},
-		},
-	});
-};
-
-const readBlogPostFileFromSlug = async (slug: string) => {
+export const readBlogPostFileFromSlug = async (
+	slug: string,
+): Promise<string> => {
 	const filePath = path.join(blogPostsDirPath, `${slug}.mdx`);
 	return fs.readFile(filePath, "utf-8");
 };
 
 export const compileBlogPostMDXFromSlug = async (slug: string) => {
-	console.log("compileBlogPostMDXFromSlug", slug);
-	const fileContent = await readBlogPostFileFromSlug(slug);
-	return compileBlogPostMDX(fileContent);
+	const content = await readBlogPostFileFromSlug(slug);
+	return evaluateBlogPostMDX({ content });
 };
 
 export const getAllBlogPostData = async () => {
 	const slugs = await getBlogPostSlugs();
 	const posts = await Promise.all(
 		slugs.map(async (slug) => {
-			const post = await compileBlogPostMDXFromSlug(slug);
-			// types are messed up
+			const [, metadata] = await compileBlogPostMDXFromSlug(slug);
 			return {
-				frontmatter: post.frontmatter,
+				metadata,
 				slug,
 			};
 		}),
 	);
 
-	return posts.filter((post) => !post.frontmatter.draft);
+	return posts.filter((post) => !post.metadata.draft);
 };
 
 export const formatDate = (date: string, includeRelative = false) => {

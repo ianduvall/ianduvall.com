@@ -8,7 +8,7 @@ export async function BlogPosts({ recent }: { recent?: number }) {
 		<div>
 			{blogPosts
 				.sort((a, b) => {
-					return a.frontmatter.publishedAt < b.frontmatter.publishedAt ? 1 : -1;
+					return a.metadata.publishedAt < b.metadata.publishedAt ? 1 : -1;
 				})
 				.slice(0, recent)
 				.map((post) => (
@@ -18,14 +18,14 @@ export async function BlogPosts({ recent }: { recent?: number }) {
 							href={`/blog/${post.slug}`}
 						>
 							<p className="tracking-tight text-gray-900 dark:text-gray-100">
-								{post.frontmatter.title}
+								{post.metadata.title}
 							</p>
 						</Link>
 						<p
 							className="tabular-nums text-gray-600 dark:text-gray-400"
 							style={{ textDecoration: "none" }}
 						>
-							{formatDate(post.frontmatter.publishedAt, true)}
+							{formatDate(post.metadata.publishedAt, true)}
 						</p>
 					</div>
 				))}

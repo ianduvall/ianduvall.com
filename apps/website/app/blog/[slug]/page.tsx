@@ -2,16 +2,15 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { baseUrl } from "app/sitemap";
 import {
-	compileBlogPostMDXFromSlug,
 	getBlogPostSlugs,
 	formatDate,
+	compileBlogPostMDXFromSlug,
 } from "app/blog/helpers";
 
 interface PostParams {
 	slug: string;
 }
 export const generateStaticParams = async (): Promise<PostParams[]> => {
-	console.log("generateStaticParams for /blog/[slug]/page");
 	const slugs = await getBlogPostSlugs();
 
 	return slugs.map((slug) => ({
@@ -19,10 +18,10 @@ export const generateStaticParams = async (): Promise<PostParams[]> => {
 	}));
 };
 
-const readBlogPostFrontmatter = async (slug: string) => {
+const readBlogPostMetadata = async (slug: string) => {
 	try {
-		const post = await compileBlogPostMDXFromSlug(slug);
-		return post.frontmatter;
+		const [, metadata] = await compileBlogPostMDXFromSlug(slug);
+		return metadata;
 	} catch {
 		throw notFound();
 	}
@@ -33,14 +32,12 @@ export const generateMetadata = async ({
 }: {
 	params: PostParams;
 }): Promise<Metadata> => {
-	console.log("generateMetadata for /blog/[slug]/page", slug);
-
 	const {
 		title,
 		publishedAt: publishedTime,
 		summary: description,
 		image,
-	} = await readBlogPostFrontmatter(slug);
+	} = await readBlogPostMetadata(slug);
 
 	const ogImage = image
 		? image
@@ -71,9 +68,9 @@ export const generateMetadata = async ({
 };
 
 export default async function Blog({ params }: { params: PostParams }) {
-	console.log("render for /blog/[slug]/page");
 	const { slug } = params;
-	const post = await compileBlogPostMDXFromSlug(slug);
+	const [blogPost, { title, publishedAt, summary, image }] =
+		await compileBlogPostMDXFromSlug(slug);
 
 	return (
 		<section>
@@ -84,13 +81,13 @@ export default async function Blog({ params }: { params: PostParams }) {
 					__html: JSON.stringify({
 						"@context": "https://schema.org",
 						"@type": "BlogPosting",
-						headline: post.frontmatter.title,
-						datePublished: post.frontmatter.publishedAt,
-						dateModified: post.frontmatter.publishedAt,
-						description: post.frontmatter.summary,
-						image: post.frontmatter.image
-							? `${baseUrl}${post.frontmatter.image}`
-							: `/og?title=${encodeURIComponent(post.frontmatter.title)}`,
+						headline: title,
+						datePublished: publishedAt,
+						dateModified: publishedAt,
+						description: summary,
+						image: image
+							? `${baseUrl}${image}`
+							: `/og?title=${encodeURIComponent(title)}`,
 						url: `${baseUrl}/blog/${slug}`,
 						author: {
 							"@type": "Ian Duvall",
@@ -99,15 +96,13 @@ export default async function Blog({ params }: { params: PostParams }) {
 					}),
 				}}
 			/>
-			<h1 className="title text-2xl font-semibold tracking-tighter">
-				{post.frontmatter.title}
-			</h1>
+			<h1 className="title text-2xl font-semibold tracking-tighter">{title}</h1>
 			<div className="mb-8 mt-2 flex items-center justify-between text-sm">
 				<p className="text-sm text-gray-600 dark:text-gray-400">
-					{formatDate(post.frontmatter.publishedAt)}
+					{formatDate(publishedAt)}
 				</p>
 			</div>
-			<article className="prose">{post.content}</article>
+			<article className="prose">{blogPost}</article>
 		</section>
 	);
 }
