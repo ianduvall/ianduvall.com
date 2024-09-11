@@ -17,18 +17,18 @@ A zero downtime migration involves three phases: expand, migrate, and contract.
 In the first phase we need to add the new schema or service without removing the old one. Both old and new schemas or services need to coexist to achieve zero downtime while performing the next phase.
 Examples:
 
-- Change API of a Tireswing endpoint
+- Change contract of an API endpoint
   - Add new version of the endpoint while leaving the existing endpoint around
 - Rename the value of a property on a Block
-  _ Expand the Block's schema to accept the old and new values at the same time
-  _ You can either support both values simultaneously or collapse both values down to one.
+  - Expand the Block's schema to accept the old and new values at the same time
+  - You can either support both values simultaneously or collapse both values down to one.
 
 ### Migrate
 
 In the second phase we need to migrate usages from the old schema or service to the new. Use a monitoring tool like Datadog to confirm the migration process is complete before moving on to the next phase.
 Examples:
 
-- Change the API of a Tireswing endpoint
+- Change the contract of an API endpoint
   - Migrate all consumers from the old endpoint version to the new endpoint version
 - Rename the value of a property on a Block \* Migrate all writes of the property value from the old value to the new value. Migrate persisted values in the database from the old value to the new value.
 
@@ -37,7 +37,7 @@ Examples:
 In the third and last phase we need to remove the old schema or service now that it is unused to complete the migration process.
 Examples:
 
-- Change the API of a Tireswing endpoint
+- Change the contract of an API endpoint
   - Decommission the old endpoint
 - Rename the value of a property on a Block
   - Remove the old value from the Block's schema
