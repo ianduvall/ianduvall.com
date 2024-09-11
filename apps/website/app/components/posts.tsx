@@ -12,9 +12,8 @@ export async function BlogPosts({ recent }: { recent?: number }) {
 				})
 				.slice(0, recent)
 				.map((post) => (
-					<div className="mb-4 flex w-full flex-col space-x-0">
+					<div key={post.slug} className="mb-4 flex w-full flex-col space-x-0">
 						<Link
-							key={post.slug}
 							className="flex flex-col space-y-1"
 							href={`/blog/${post.slug}`}
 						>

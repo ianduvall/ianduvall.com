@@ -7,6 +7,7 @@ const nextConfig = {
 	experimental: {
 		ppr: true,
 		reactCompiler: true,
+		dynamicIO: true,
 	},
 	poweredByHeader: false,
 	typescript: {
@@ -15,6 +16,7 @@ const nextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	reactStrictMode: true,
 };
 
 export default nextConfig;
