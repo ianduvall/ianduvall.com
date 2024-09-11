@@ -36,7 +36,7 @@ const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
 
 const mdxComponents = {
 	a: (props: ComponentProps<"a">) => {
-		let href = props.href;
+		const href = props.href;
 
 		if (href?.startsWith("/")) {
 			return <Link href={href} {...props} />;
@@ -73,7 +73,11 @@ const mdxComponents = {
 		props: React.ComponentPropsWithoutRef<typeof Image>,
 	) {
 		return (
-			<Image className={`rounded-lg ${props.className ?? ""}`} {...props} />
+			<Image
+				className={`rounded-lg ${props.className ?? ""}`}
+				{...props}
+				alt={props.alt}
+			/>
 		);
 	},
 } as const;

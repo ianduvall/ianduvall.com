@@ -2,10 +2,10 @@
 	"name": "website",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
 		"build": "next build",
+		"dev": "next dev",
 		"start": "next start",
-		"typecheck": "tsc"
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@mdx-js/mdx": "^3.0.1",
@@ -14,7 +14,7 @@
 		"autoprefixer": "^10.4.20",
 		"babel-plugin-react-compiler": "0.0.0-experimental-48eb8f4-20240822",
 		"geist": "^1.3.1",
-		"next": "canary",
+		"next": "rc",
 		"react": "rc",
 		"react-dom": "rc",
 		"remark-gfm": "^4.0.0",

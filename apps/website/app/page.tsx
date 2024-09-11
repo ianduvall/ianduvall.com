@@ -4,7 +4,7 @@ import { Suspense } from "react";
 export default function Page() {
 	return (
 		<section>
-			<h1 className="my-6 text-3xl font-semibold">👋 I'm Ian Duvall</h1>
+			<h1 className="my-6 text-3xl font-semibold">👋 {"I'm"} Ian Duvall</h1>
 			<p className="my-4">
 				Welcome to my site! I use this site to share my thoughts and as a
 				playground to experiment with new tech. This current iteration is built
@@ -16,8 +16,8 @@ export default function Page() {
 					About
 				</h2>
 				<p>
-					I'm a software engineer focused on building highly interactive apps on
-					the web. I currently work as a Senior Software Engineer at{" "}
+					{"I'm"} a software engineer focused on building highly interactive
+					apps on the web. I currently work as a Senior Software Engineer at{" "}
 					<a href="https://sproutsocial.com/">Sprout Social</a> on the{" "}
 					<a href="https://sproutsocial.com/features/social-media-analytics/">
 						Analytics

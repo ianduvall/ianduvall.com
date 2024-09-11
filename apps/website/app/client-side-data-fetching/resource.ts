@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCharacters, getCharacter } from "rickmortyapi";
 
 type CacheEntryStatus = "fresh" | "stale" | "revalidating";
@@ -77,7 +78,7 @@ function createResource<const TFetcher extends (input: any) => any>({
 			});
 	};
 
-	// @ts-expect-error
+	// @ts-expect-error - could be a different subtype
 	const read: TFetcher = (input) => {
 		const cacheKey = stableStringify(input);
 
