@@ -6,6 +6,7 @@
 const nextConfig = {
 	experimental: {
 		ppr: true,
+		pprFallbacks: true,
 		reactCompiler: true,
 		dynamicIO: true,
 	},
