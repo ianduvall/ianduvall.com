@@ -2,9 +2,6 @@
 	"$schema": "https://turbo.build/schema.json",
 	"ui": "tui",
 	"tasks": {
-		"topo": {
-			"dependsOn": ["^topo"]
-		},
 		"build": {
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**"]
@@ -13,13 +10,14 @@
 			"cache": false,
 			"persistent": true
 		},
+		"lint": {},
 		"start": {
 			"cache": false,
 			"dependsOn": ["build"],
 			"persistent": true
 		},
 		"typecheck": {
-			"dependsOn": ["topo"]
+			"dependsOn": ["^typecheck"]
 		}
 	}
 }

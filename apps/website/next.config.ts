@@ -1,11 +1,7 @@
-// @ts-check
+import type { NextConfig } from "next";
 
-/**
- * @type {import('next').NextConfig}
- */
-const nextConfig = {
+const nextConfig: NextConfig = {
 	experimental: {
-		ppr: true,
 		reactCompiler: true,
 	},
 	poweredByHeader: false,
