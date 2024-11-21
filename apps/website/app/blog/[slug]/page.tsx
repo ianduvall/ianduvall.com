@@ -28,10 +28,11 @@ const readBlogPostMetadata = async (slug: string) => {
 };
 
 export const generateMetadata = async ({
-	params: { slug },
+	params,
 }: {
-	params: PostParams;
+	params: Promise<PostParams>;
 }): Promise<Metadata> => {
+	const { slug } = await params;
 	const {
 		title,
 		publishedAt: publishedTime,
@@ -67,8 +68,12 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function Blog({ params }: { params: PostParams }) {
-	const { slug } = params;
+export default async function Blog({
+	params,
+}: {
+	params: Promise<PostParams>;
+}) {
+	const { slug } = await params;
 	const [blogPost, { title, publishedAt, summary, image }] =
 		await compileBlogPostMDXFromSlug(slug);
 
