@@ -1,4 +1,4 @@
-import { BlogPosts } from "app/components/posts";
+import { BlogPosts } from "src/app/components/posts";
 import { Suspense } from "react";
 
 export default function Page() {

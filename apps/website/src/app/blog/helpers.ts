@@ -1,8 +1,14 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { evaluateBlogPostMDX } from "app/mdx";
+import { evaluateBlogPostMDX } from "src/app/mdx";
 
-const blogPostsDirPath = path.join(process.cwd(), "app", "blog", "posts");
+const blogPostsDirPath = path.join(
+	process.cwd(),
+	"src",
+	"app",
+	"blog",
+	"posts",
+);
 
 const getMdxFilePaths = async (dirPath: string) => {
 	const filePaths = await fs.readdir(dirPath);
