@@ -95,7 +95,6 @@ export const evaluateBlogPostMDX = async ({
 }: {
 	content: string;
 }): Promise<readonly [JSX.Element, BlogPostMetadata]> => {
-	// @ts-expect-error - jsx runtime types are currently broken
 	const options: EvaluateOptions = {
 		...jsxRuntime,
 	};

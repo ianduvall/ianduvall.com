@@ -4,13 +4,13 @@
 	"scripts": {
 		"dev": "turbo run dev",
 		"format-check": "prettier --ignore-unknown --check .",
-		"format-write": "prettier --ignore-unknown --write .",
+		"format": "prettier --ignore-unknown --write .",
 		"start": "turbo run start"
 	},
 	"devDependencies": {
 		"prettier": "^3.3.3",
-		"turbo": "^2.3.0",
+		"turbo": "^2.3.1",
 		"typescript": "~5.6.3"
 	},
-	"packageManager": "pnpm@9.12.2"
+	"packageManager": "pnpm@9.14.2"
 }
