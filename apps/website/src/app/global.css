@@ -1,37 +1,37 @@
 @import "tailwindcss";
 
+@theme {
+	--color-bg-primary: light-dark(var(--color-gray-50), var(--color-gray-950));
+	--color-text-primary: light-dark(var(--color-gray-950), var(--color-gray-50));
+}
+
 @layer base {
 	::selection {
-		background-color: #47a3f3;
-		color: #fefefe;
+		background-color: var(--color-blue-500);
+		color: var(--color-gray-50);
 	}
 
 	:root {
-		--sh-class: #2d5e9d;
-		--sh-identifier: #354150;
-		--sh-sign: #8996a3;
-		--sh-string: #007f7a;
-		--sh-keyword: #e02518;
-		--sh-comment: #a19595;
-		--sh-jsxliterals: #6266d1;
-		--sh-property: #e25a1c;
-		--sh-entity: #e25a1c;
+		/* sugar-high */
+		--sh-class: var(--color-sky-800);
+		--sh-identifier: var(--color-gray-700);
+		--sh-sign: var(--color-gray-400);
+		--sh-property: var(--color-blue-800);
+		--sh-entity: var(--color-teal-600);
+		--sh-jsxliterals: var(--color-indigo-500);
+		--sh-string: var(--color-teal-500);
+		--sh-keyword: var(--color-red-400);
+		--sh-comment: var(--color-stone-400);
 	}
 
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--sh-class: #4c97f8;
-			--sh-identifier: white;
-			--sh-keyword: #f47067;
-			--sh-string: #0fa295;
+			/* sugar-high */
+			--sh-class: var(--color-blue-400);
+			--sh-identifier: var(--color-gray-50);
+			--sh-keyword: var(--color-red-400);
+			--sh-string: var(--color-teal-600);
 		}
-		html {
-			color-scheme: dark;
-		}
-	}
-
-	html {
-		min-width: 360px;
 	}
 
 	.prose .anchor {

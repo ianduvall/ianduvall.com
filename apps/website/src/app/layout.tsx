@@ -44,7 +44,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${GeistSans.variable} ${GeistMono.variable} bg-white text-black dark:bg-black dark:text-white`}
+			className={`${GeistSans.variable} ${GeistMono.variable} min-w-sm scheme-light-dark bg-bg-primary text-text-primary`}
 		>
 			<body className="mx-auto max-w-xl antialiased">
 				<main className="flex min-h-svh min-w-0 flex-auto flex-col px-4 py-8">
