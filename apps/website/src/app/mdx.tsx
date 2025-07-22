@@ -1,4 +1,4 @@
-import React, { type ComponentProps } from "react";
+import React, { type ComponentProps, type JSX } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { highlight } from "sugar-high";
@@ -21,7 +21,7 @@ const slugify = (input: React.ReactNode): string => {
 const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
 	const Heading = ({ children, ...props }: ComponentProps<"h1">) => {
 		const slug = slugify(children);
-		const HeadingTag = `h${level}` satisfies keyof JSX.IntrinsicElements;
+		const HeadingTag = `h${level}` as const;
 		return (
 			<HeadingTag id={slug} {...props}>
 				<a href={`#${slug}`} className="anchor">
@@ -105,7 +105,6 @@ export const evaluateBlogPostMDX = async ({
 
 	return [
 		MDXContent({
-			// @ts-expect-error - React 19 types break this
 			components: mdxComponents,
 		}),
 		metadata as BlogPostMetadata,
