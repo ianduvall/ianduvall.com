@@ -21,10 +21,7 @@ export async function BlogPosts({ recent }: { recent?: number }) {
 								{post.metadata.title}
 							</p>
 						</Link>
-						<p
-							className="tabular-nums text-gray-600 dark:text-gray-400"
-							style={{ textDecoration: "none" }}
-						>
+						<p className="tabular-nums text-gray-600 dark:text-gray-400">
 							{formatDate(post.metadata.publishedAt, true)}
 						</p>
 					</div>
