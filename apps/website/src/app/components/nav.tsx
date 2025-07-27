@@ -1,26 +1,20 @@
 import Link from "next/link";
-import {
-	SignInButton,
-	SignUpButton,
-	SignedIn,
-	SignedOut,
-	UserButton,
-} from "@clerk/nextjs";
+import type { ComponentProps } from "react";
 
 const navItems = [
 	{
-		name: "home",
-		path: "/",
+		children: "home",
+		href: "/",
 	},
 	{
-		name: "blog",
-		path: "/blog",
+		children: "blog",
+		href: "/blog",
 	},
-	{
-		name: "protected",
-		path: "/protected",
-	},
-] as const;
+	// {
+	// 	children: "chat",
+	// 	href: "/chat",
+	// },
+] as const satisfies ComponentProps<typeof Link>[];
 
 export function Nav() {
 	return (
@@ -31,13 +25,13 @@ export function Nav() {
 			>
 				<div className="flex w-full items-center justify-between">
 					<ul className="flex flex-row space-x-0 pr-10 text-2xl">
-						{navItems.map(({ name, path }) => {
+						{navItems.map((props) => {
 							return (
 								<li
-									key={path}
+									key={props.href}
 									className="relative m-1 flex px-2 py-1 align-middle"
 								>
-									<Link href={path}>{name}</Link>
+									<Link {...props} />
 								</li>
 							);
 						})}
