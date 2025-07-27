@@ -30,3 +30,6 @@ next-env.d.ts
 
 # Turborepo
 .turbo
+
+# environment variables
+.env*.local

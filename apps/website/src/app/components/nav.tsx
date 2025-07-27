@@ -1,4 +1,11 @@
 import Link from "next/link";
+import {
+	SignInButton,
+	SignUpButton,
+	SignedIn,
+	SignedOut,
+	UserButton,
+} from "@clerk/nextjs";
 
 const navItems = [
 	{
@@ -9,6 +16,10 @@ const navItems = [
 		name: "blog",
 		path: "/blog",
 	},
+	{
+		name: "protected",
+		path: "/protected",
+	},
 ] as const;
 
 export function Nav() {
@@ -18,18 +29,37 @@ export function Nav() {
 				className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
 				id="nav"
 			>
-				<ul className="flex flex-row space-x-0 pr-10 text-2xl">
-					{navItems.map(({ name, path }) => {
-						return (
-							<li
-								key={path}
-								className="relative m-1 flex px-2 py-1 align-middle"
-							>
-								<Link href={path}>{name}</Link>
-							</li>
-						);
-					})}
-				</ul>
+				<div className="flex w-full items-center justify-between">
+					<ul className="flex flex-row space-x-0 pr-10 text-2xl">
+						{navItems.map(({ name, path }) => {
+							return (
+								<li
+									key={path}
+									className="relative m-1 flex px-2 py-1 align-middle"
+								>
+									<Link href={path}>{name}</Link>
+								</li>
+							);
+						})}
+					</ul>
+					<div className="flex items-center space-x-2">
+						<SignedOut>
+							<SignInButton>
+								<button className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
+									Sign In
+								</button>
+							</SignInButton>
+							<SignUpButton>
+								<button className="rounded bg-green-500 px-3 py-1 text-sm text-white hover:bg-green-600">
+									Sign Up
+								</button>
+							</SignUpButton>
+						</SignedOut>
+						<SignedIn>
+							<UserButton />
+						</SignedIn>
+					</div>
+				</div>
 			</nav>
 		</header>
 	);
