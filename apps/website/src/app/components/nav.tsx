@@ -42,23 +42,7 @@ export function Nav() {
 							);
 						})}
 					</ul>
-					<div className="flex items-center space-x-2">
-						<SignedOut>
-							<SignInButton>
-								<button className="rounded bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
-									Sign In
-								</button>
-							</SignInButton>
-							<SignUpButton>
-								<button className="rounded bg-green-500 px-3 py-1 text-sm text-white hover:bg-green-600">
-									Sign Up
-								</button>
-							</SignUpButton>
-						</SignedOut>
-						<SignedIn>
-							<UserButton />
-						</SignedIn>
-					</div>
+					<div>{/* right */}</div>
 				</div>
 			</nav>
 		</header>

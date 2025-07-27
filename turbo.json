@@ -4,7 +4,11 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"outputs": [".next/**", "!.next/cache/**"],
+			"env": [
+				"POSTGRES_*",
+				"CLERK_*"
+			]
 		},
 		"dev": {
 			"cache": false,
