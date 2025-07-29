@@ -1,8 +1,14 @@
 import { SignOutButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
-export default async function ProtectedPage() {
-	const { userId } = await auth();
+export default async function Chat() {
+	const { userId, isAuthenticated, redirectToSignIn } = await auth();
+
+	if (!isAuthenticated) {
+		await redirectToSignIn({
+			returnBackUrl: "/chat",
+		});
+	}
 
 	return (
 		<div>
