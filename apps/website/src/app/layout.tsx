@@ -2,11 +2,9 @@ import "./global.css";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Nav } from "./components/nav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Footer from "./components/footer";
-import { baseUrl } from "./sitemap";
+import { baseUrl } from "./shared";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(baseUrl),
@@ -47,13 +45,9 @@ export default function RootLayout({
 			className={`${GeistSans.variable} ${GeistMono.variable} min-w-sm scheme-light-dark bg-bg-primary text-text-primary`}
 		>
 			<body className="mx-auto max-w-xl antialiased">
-				<main className="flex min-h-svh min-w-0 flex-auto flex-col px-4 py-8">
-					<Nav />
-					{children}
-					<Footer />
-					<Analytics />
-					<SpeedInsights />
-				</main>
+				{children}
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

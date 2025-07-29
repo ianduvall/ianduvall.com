@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Footer() {
+export function Footer() {
 	return (
 		<footer className="mt-auto">
 			<ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 text-gray-600 md:flex-row md:space-x-4 md:space-y-0 dark:text-gray-300">

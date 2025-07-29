@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { baseUrl } from "src/app/sitemap";
+import { baseUrl } from "src/app/shared";
 import {
 	getBlogPostSlugs,
 	formatDate,
 	compileBlogPostMDXFromSlug,
-} from "src/app/blog/helpers";
+} from "src/app/(unauthenticated)/blog/helpers";
 
 interface PostParams {
 	slug: string;

@@ -2,6 +2,7 @@
 	"name": "ianduvall.com",
 	"private": true,
 	"scripts": {
+		"build": "turbo run build",
 		"dev": "turbo run dev",
 		"format-check": "prettier --ignore-unknown --check .",
 		"format": "prettier --ignore-unknown --write .",
@@ -9,9 +10,10 @@
 	},
 	"devDependencies": {
 		"prettier": "^3",
+		"prettier-plugin-tailwindcss": "^0.6.14",
 		"turbo": "^2",
 		"typescript": "~5.8",
-		"vercel": "^44"
+		"vercel": "^44.6.4"
 	},
 	"packageManager": "pnpm@10.13.1"
 }

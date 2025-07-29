@@ -1,5 +1,5 @@
-import { baseUrl } from "src/app/sitemap";
-import { getAllBlogPostData } from "src/app/blog/helpers";
+import { baseUrl } from "src/app/shared";
+import { getAllBlogPostData } from "src/app/(unauthenticated)/blog/helpers";
 
 const title = "Ian Duvall's Blog";
 const description = "An RSS feed of Ian Duvall's blog posts";

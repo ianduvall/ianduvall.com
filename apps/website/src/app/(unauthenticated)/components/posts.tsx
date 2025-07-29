@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { getAllBlogPostData, formatDate } from "src/app/blog/helpers";
+import {
+	getAllBlogPostData,
+	formatDate,
+} from "src/app/(unauthenticated)/blog/helpers";
 
 export async function BlogPosts({ recent }: { recent?: number }) {
 	const blogPosts = await getAllBlogPostData();

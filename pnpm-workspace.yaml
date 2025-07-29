@@ -3,8 +3,8 @@ packages:
   - packages/*
 
 onlyBuiltDependencies:
-  - '@clerk/shared'
-  - '@vercel/speed-insights'
+  - "@clerk/shared"
+  - "@vercel/speed-insights"
   - esbuild
   - sharp
   - unrs-resolver

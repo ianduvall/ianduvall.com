@@ -1,6 +1,5 @@
+import { baseUrl } from "src/app/shared";
 import { getAllBlogPostData } from "./blog/helpers";
-
-export const baseUrl = "https://www.ianduvall.com";
 
 export default async function sitemap() {
 	const blogs = (await getAllBlogPostData()).map((post) => ({
