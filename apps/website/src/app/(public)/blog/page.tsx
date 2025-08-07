@@ -1,4 +1,4 @@
-import { BlogPosts } from "src/app/(unauthenticated)/components/posts";
+import { BlogPosts } from "src/app/(public)/components/posts";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 

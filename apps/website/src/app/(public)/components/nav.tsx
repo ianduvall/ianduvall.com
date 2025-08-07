@@ -31,12 +31,12 @@ export function Nav() {
 									key={props.href}
 									className="relative m-1 flex px-2 py-1 align-middle"
 								>
-									<Link {...props} />
+									<Link {...props} prefetch />
 								</li>
 							);
 						})}
 					</ul>
-					<div>{/* right */}</div>
+					<div className="flex items-center space-x-4">{/* right */}</div>
 				</div>
 			</nav>
 		</header>

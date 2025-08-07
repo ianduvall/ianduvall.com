@@ -1,4 +1,4 @@
-import { BlogPosts } from "src/app/(unauthenticated)/components/posts";
+import { BlogPosts } from "src/app/(public)/components/posts";
 import { Suspense } from "react";
 
 export default function Page() {
@@ -6,10 +6,11 @@ export default function Page() {
 		<section>
 			<h1 className="my-6 text-3xl font-semibold">👋 {"I'm"} Ian Duvall</h1>
 			<p className="my-4">
-				Welcome to my site! I use this site to share my thoughts and as a
-				playground to experiment with new tech. This current iteration is built
-				with Next.js and React Server Components. Overkill for a personal site?
-				Definitely but {"it's"} more about the learning.
+				Welcome to my site! I use this space to share my thoughts and explore
+				new technologies. This current iteration is built with Next.js and React
+				Server Components. Overkill for a personal site? Absolutely, but{" "}
+				{"it's"}
+				fun to try new things.
 			</p>
 
 			<section>
@@ -17,16 +18,16 @@ export default function Page() {
 					About
 				</h2>
 				<p className="my-2">
-					{"I'm"} a software engineer focused on building highly interactive
-					apps on the web. I currently work at{" "}
+					{"I'm"} a software engineer passionate about building highly
+					interactive web applications. I currently work at{" "}
 					<a href="https://www.summation.com/" target="_blank">
 						Summation AI
 					</a>{" "}
-					as a Senior Product Engineer building AI into the enterprise FP&A
-					space.
+					as a Senior Product Engineer, integrating AI into the enterprise
+					financial planning and analysis (FP&A) space.
 				</p>
 				<p className="my-2">
-					Previously, I worked as a Senior Software Engineer at{" "}
+					Previously, I was a Senior Software Engineer at{" "}
 					<a href="https://sproutsocial.com/" target="_blank">
 						Sprout Social
 					</a>{" "}
@@ -37,10 +38,11 @@ export default function Page() {
 					>
 						Analytics
 					</a>{" "}
-					team. I work on the frontend with React and Typescript and the backend
-					with Django and Python. My goldilocks zone is between solving hard
-					technical problems and working with product and design to craft
-					amazing user experiences.
+					team. I primarily worked on the frontend with React and TypeScript,
+					while also contributing to backend development with Django and Python.
+					My goldilocks zone lies at the intersection of solving complex
+					technical problems and collaborating with Product and Design teams to
+					create exceptional user experiences.
 				</p>
 			</section>
 
@@ -49,8 +51,8 @@ export default function Page() {
 					Education
 				</h2>
 				<p className="my-2">
-					I graduated in 2017 from the University of Michigan with a BSE in
-					Computer Science Engineering.
+					I hold a Bachelor of Science in Engineering (Computer Science) from
+					the University of Michigan, graduating in 2017.
 				</p>
 			</section>
 			<section>

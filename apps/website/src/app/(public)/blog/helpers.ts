@@ -1,12 +1,12 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { evaluateBlogPostMDX } from "src/app/(unauthenticated)/mdx";
+import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
 const blogPostsDirPath = path.join(
 	process.cwd(),
 	"src",
 	"app",
-	"(unauthenticated)",
+	"(public)",
 	"blog",
 	"posts",
 );

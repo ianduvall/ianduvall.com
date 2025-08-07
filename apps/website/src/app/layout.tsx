@@ -44,7 +44,7 @@ export default function RootLayout({
 			lang="en"
 			className={`${GeistSans.variable} ${GeistMono.variable} min-w-sm scheme-light-dark bg-bg-primary text-text-primary`}
 		>
-			<body className="mx-auto max-w-xl antialiased">
+			<body className="antialiased">
 				{children}
 				<Analytics />
 				<SpeedInsights />

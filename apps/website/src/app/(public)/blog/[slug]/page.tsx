@@ -5,7 +5,7 @@ import {
 	getBlogPostSlugs,
 	formatDate,
 	compileBlogPostMDXFromSlug,
-} from "src/app/(unauthenticated)/blog/helpers";
+} from "src/app/(public)/blog/helpers";
 
 interface PostParams {
 	slug: string;
