@@ -10,10 +10,10 @@ const navItems = [
 		children: "blog",
 		href: "/blog",
 	},
-	// {
-	// 	children: "chat",
-	// 	href: "/chat",
-	// },
+	{
+		children: "chat",
+		href: "/chat",
+	},
 ] as const satisfies ComponentProps<typeof Link>[];
 
 export function Nav() {
