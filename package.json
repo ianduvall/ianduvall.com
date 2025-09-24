@@ -11,9 +11,9 @@
 	"devDependencies": {
 		"prettier": "^3",
 		"prettier-plugin-tailwindcss": "^0.6.14",
-		"turbo": "^2",
+		"turbo": "^2.5.8",
 		"typescript": "~5.9.2",
 		"vercel": "^44.7.3"
 	},
-	"packageManager": "pnpm@10.14.0"
+	"packageManager": "pnpm@10.17.1"
 }
