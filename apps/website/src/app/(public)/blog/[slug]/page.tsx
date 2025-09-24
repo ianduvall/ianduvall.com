@@ -35,7 +35,7 @@ export const generateMetadata = async ({
 	const { slug } = await params;
 	const {
 		title,
-		publishedAt: publishedTime,
+		publishedAt,
 		summary: description,
 		image,
 	} = await readBlogPostMetadata(slug);
@@ -51,7 +51,7 @@ export const generateMetadata = async ({
 			title,
 			description,
 			type: "article",
-			publishedTime,
+			publishedTime: publishedAt || undefined,
 			url: `${baseUrl}/blog/${slug}`,
 			images: [
 				{
@@ -78,7 +78,7 @@ export default async function Blog({
 		await compileBlogPostMDXFromSlug(slug);
 
 	return (
-		<section>
+		<article className="prose">
 			<script
 				type="application/ld+json"
 				suppressHydrationWarning
@@ -101,13 +101,17 @@ export default async function Blog({
 					}),
 				}}
 			/>
-			<h1 className="title text-2xl font-semibold tracking-tighter">{title}</h1>
-			<div className="mb-8 mt-2 flex items-center justify-between text-sm">
-				<p className="text-sm text-gray-600 dark:text-gray-400">
-					{formatDate(publishedAt)}
-				</p>
+			<div className="mb-9">
+				<h1 className="text-balance text-2xl font-semibold tracking-tighter">
+					{title}
+				</h1>
+				<div className="text-lg">
+					<p className="text-gray-600 dark:text-gray-400">
+						{formatDate(publishedAt || "")}
+					</p>
+				</div>
 			</div>
-			<article className="prose">{blogPost}</article>
-		</section>
+			{blogPost}
+		</article>
 	);
 }

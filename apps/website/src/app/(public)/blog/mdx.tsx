@@ -3,8 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { highlight } from "sugar-high";
 import remarkGfm from "remark-gfm";
-import { evaluate, type EvaluateOptions } from "@mdx-js/mdx";
+import { evaluate } from "@mdx-js/mdx";
 import * as jsxRuntime from "react/jsx-runtime";
+import { z } from "zod";
 
 const slugify = (input: React.ReactNode): string => {
 	if (!input) return "";
@@ -82,31 +83,41 @@ const mdxComponents = {
 	},
 } as const;
 
-export interface BlogPostMetadata {
-	title: string;
-	publishedAt: string;
-	summary: string;
-	image?: string;
-	draft?: true;
-}
+const BlogPostMetadataSchema = z.object({
+	title: z.string(),
+	publishedAt: z.string().nullable(),
+	summary: z.string(),
+	image: z.string().optional(),
+});
+
+export type BlogPostMetadata = z.infer<typeof BlogPostMetadataSchema>;
 
 export const evaluateBlogPostMDX = async ({
 	content,
 }: {
 	content: string;
 }): Promise<readonly [JSX.Element, BlogPostMetadata]> => {
-	const options: EvaluateOptions = {
-		...jsxRuntime,
-	};
 	const { default: MDXContent, metadata } = await evaluate(content, {
-		...options,
+		...jsxRuntime,
+		format: "mdx",
 		remarkPlugins: [remarkGfm],
 	});
+
+	const metadataResult = BlogPostMetadataSchema.safeParse(metadata);
+
+	if (!metadataResult.success) {
+		throw new Error("Invalid blog post metadata", {
+			cause: {
+				metadata,
+				zodError: metadataResult.error,
+			},
+		});
+	}
 
 	return [
 		MDXContent({
 			components: mdxComponents,
 		}),
-		metadata as BlogPostMetadata,
+		metadataResult.data,
 	] as const;
 };

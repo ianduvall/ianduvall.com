@@ -51,7 +51,7 @@ export const getAllBlogPostData = async () => {
 		}),
 	);
 
-	return posts.filter((post) => !post.metadata.draft);
+	return posts.filter((post) => post.metadata.publishedAt);
 };
 
 export const formatDate = (date: string, includeRelative = false) => {

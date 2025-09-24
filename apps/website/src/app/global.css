@@ -34,32 +34,32 @@
 		}
 	}
 
-	.prose .anchor {
-		margin-left: -1ch;
-		padding-right: 0.5em;
-		width: 80%;
-		max-width: 700px;
-		cursor: pointer;
-	}
+	.prose {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			@apply mx-[-1ch];
 
-	.prose h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		.anchor {
-			@apply no-underline;
+			.anchor {
+				@apply no-underline;
+			}
 		}
-	}
 
-	.prose .anchor::after {
-		@apply ml-1 text-gray-300 opacity-0 transition-opacity duration-200 ease-in-out dark:text-gray-700;
-		content: "#";
-	}
+		.anchor {
+			@apply cursor-pointer;
 
-	.prose *:hover > .anchor::after {
-		@apply opacity-100;
+			&::after {
+				@apply mx-2 text-gray-300 opacity-0 transition-opacity duration-200 ease-out dark:text-gray-700;
+				content: "#";
+			}
+
+			&:hover::after {
+				@apply opacity-100;
+			}
+		}
 	}
 
 	.prose pre {
@@ -145,10 +145,6 @@
 		max-width: fit-content;
 		overflow-x: auto;
 		white-space: nowrap;
-	}
-
-	.title {
-		text-wrap: balance;
 	}
 
 	a {
