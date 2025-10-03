@@ -2,7 +2,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
-import reactCompiler from "eslint-plugin-react-compiler";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 
@@ -17,14 +16,6 @@ const compat = new FlatCompat({
 const config = [
 	{
 		plugins: {
-			"react-compiler": reactCompiler,
-		},
-		rules: {
-			"react-compiler/react-compiler": "error",
-		},
-	},
-	{
-		plugins: {
 			react: reactPlugin,
 		},
 		rules: reactPlugin.configs.recommended.rules,
@@ -37,4 +28,5 @@ const config = [
 	},
 	...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
 ];
+
 export default config;
