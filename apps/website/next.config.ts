@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	experimental: {
-		reactCompiler: true,
-	},
 	poweredByHeader: false,
 	typescript: {
 		ignoreBuildErrors: true,
@@ -11,6 +8,7 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	reactCompiler: true,
 	reactStrictMode: true,
 };
 

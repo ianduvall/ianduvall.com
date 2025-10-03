@@ -1,11 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-	--color-bg-primary: light-dark(var(--color-gray-50), var(--color-gray-950));
-	--color-text-primary: light-dark(var(--color-gray-950), var(--color-gray-50));
+	--color-surface-default: light-dark(
+		var(--color-gray-50),
+		var(--color-gray-950)
+	);
+	--color-foreground-default: light-dark(
+		var(--color-gray-950),
+		var(--color-gray-50)
+	);
 }
 
 @layer base {
+	:root {
+		interpolate-size: allow-keywords;
+	}
+
 	::selection {
 		background-color: var(--color-blue-500);
 		color: var(--color-gray-50);
@@ -41,23 +51,17 @@
 		h4,
 		h5,
 		h6 {
-			@apply mx-[-1ch];
+			a {
+				@apply cursor-pointer no-underline;
 
-			.anchor {
-				@apply no-underline;
-			}
-		}
+				&::after {
+					@apply mx-2 text-gray-300 opacity-0 transition-opacity duration-200 ease-out dark:text-gray-700;
+					content: "#";
+				}
 
-		.anchor {
-			@apply cursor-pointer;
-
-			&::after {
-				@apply mx-2 text-gray-300 opacity-0 transition-opacity duration-200 ease-out dark:text-gray-700;
-				content: "#";
-			}
-
-			&:hover::after {
-				@apply opacity-100;
+				&:hover::after {
+					@apply opacity-100;
+				}
 			}
 		}
 	}
@@ -152,6 +156,16 @@
 
 		&:hover {
 			@apply text-gray-900 underline-offset-[3px] dark:text-gray-50;
+		}
+	}
+}
+
+@layer components {
+	details {
+		> summary {
+			+ * {
+				@apply pt-3;
+			}
 		}
 	}
 }

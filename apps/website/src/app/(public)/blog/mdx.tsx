@@ -24,10 +24,12 @@ const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
 		const slug = slugify(children);
 		const HeadingTag = `h${level}` as const;
 		return (
-			<HeadingTag id={slug} {...props}>
-				<a href={`#${slug}`} className="anchor">
-					{children}
-				</a>
+			<HeadingTag
+				id={slug}
+				{...props}
+				className={[props.className, "md:-mx-6"].join(" ")}
+			>
+				<a href={`#${slug}`}>{children}</a>
 			</HeadingTag>
 		);
 	};
@@ -81,10 +83,20 @@ const mdxComponents = {
 			/>
 		);
 	},
+	Details: (props: ComponentProps<"details">) => (
+		<details
+			{...props}
+			className="details-content:overflow-clip details-content:h-0 [[open]]:details-content:h-auto details-content:duration-150 details-content:transition-discrete details-content:ease-out details-content:transition-[height,content-visibility] my-4 rounded-lg border-l-8 border-blue-500 bg-blue-50 p-4 dark:border-blue-400 dark:bg-blue-900/30 dark:text-blue-100"
+		/>
+	),
+	Summary: (props: ComponentProps<"summary">) => (
+		<summary {...props} className="cursor-pointer select-none font-semibold" />
+	),
 } as const;
 
 const BlogPostMetadataSchema = z.object({
 	title: z.string(),
+	subtitle: z.string().optional(),
 	publishedAt: z.string().nullable(),
 	summary: z.string(),
 	image: z.string().optional(),

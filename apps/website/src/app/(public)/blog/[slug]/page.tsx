@@ -74,7 +74,7 @@ export default async function Blog({
 	params: Promise<PostParams>;
 }) {
 	const { slug } = await params;
-	const [blogPost, { title, publishedAt, summary, image }] =
+	const [blogPost, { title, subtitle, publishedAt, summary, image }] =
 		await compileBlogPostMDXFromSlug(slug);
 
 	return (
@@ -101,16 +101,24 @@ export default async function Blog({
 					}),
 				}}
 			/>
-			<div className="mb-9">
-				<h1 className="text-balance text-2xl font-semibold tracking-tighter">
+
+			<section className="my-6 md:-mx-6">
+				<h1 className="text-balance text-3xl font-semibold tracking-tighter">
 					{title}
 				</h1>
+
 				<div className="text-lg">
-					<p className="text-gray-600 dark:text-gray-400">
-						{formatDate(publishedAt || "")}
-					</p>
+					<div>{subtitle}</div>
+					{publishedAt ? (
+						<time dateTime={publishedAt || undefined}>
+							{formatDate(publishedAt || "")}
+						</time>
+					) : (
+						<div>Unpublished Draft</div>
+					)}
 				</div>
-			</div>
+			</section>
+
 			{blogPost}
 		</article>
 	);

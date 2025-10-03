@@ -1,6 +1,7 @@
 {
 	"name": "website",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "next build --turbopack",
 		"dev": "next dev --turbopack",
