@@ -1,56 +1,23 @@
 import React, { type ComponentProps, type JSX } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { highlight } from "sugar-high";
 import remarkGfm from "remark-gfm";
 import { evaluate } from "@mdx-js/mdx";
 import * as jsxRuntime from "react/jsx-runtime";
 import { z } from "zod";
-
-const slugify = (input: React.ReactNode): string => {
-	if (!input) return "";
-	return input
-		.toString()
-		.toLowerCase()
-		.trim() // Remove whitespace from both ends of a string
-		.replace(/\s+/g, "-") // Replace spaces with -
-		.replace(/&/g, "-and-") // Replace & with 'and'
-		.replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-		.replace(/\-\-+/g, "-"); // Replace multiple - with single -
-};
+import { Heading } from "src/app/components/heading";
+import { Link } from "src/app/components/link";
 
 const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
-	const Heading = ({ children, ...props }: ComponentProps<"h1">) => {
-		const slug = slugify(children);
-		const HeadingTag = `h${level}` as const;
+	return function H(props: ComponentProps<typeof Heading>) {
 		return (
-			<HeadingTag
-				id={slug}
-				{...props}
-				className={[props.className, "md:-mx-6"].join(" ")}
-			>
-				<a href={`#${slug}`}>{children}</a>
-			</HeadingTag>
+			<Heading anchor {...props} className="heading-offset" level={level} />
 		);
 	};
-
-	return Heading;
 };
 
 const mdxComponents = {
-	a: (props: ComponentProps<"a">) => {
-		const href = props.href;
-
-		if (href?.startsWith("/")) {
-			return <Link href={href} {...props} />;
-		}
-
-		if (href?.startsWith("#")) {
-			return <a {...props} />;
-		}
-
-		return <a target="_blank" rel="noopener noreferrer" {...props} />;
-	},
+	a: Link,
 	blockquote: (props: ComponentProps<"blockquote">) => (
 		<blockquote className="my-4 border-l-4 border-gray-300 pl-4" {...props} />
 	),

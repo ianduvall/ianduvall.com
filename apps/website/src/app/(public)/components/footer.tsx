@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/app/components/link";
 
 export function Footer() {
 	return (
@@ -7,7 +7,6 @@ export function Footer() {
 				<li>
 					<Link
 						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
-						rel="noopener noreferrer"
 						target="_blank"
 						href="/rss"
 					>
@@ -17,7 +16,6 @@ export function Footer() {
 				<li>
 					<Link
 						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
-						rel="noopener noreferrer"
 						target="_blank"
 						href="https://github.com/ianduvall"
 					>
@@ -27,7 +25,6 @@ export function Footer() {
 				<li>
 					<Link
 						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
-						rel="noopener noreferrer"
 						target="_blank"
 						href="https://github.com/ianduvall/ianduvall.com"
 					>

@@ -1,10 +1,13 @@
 import { BlogPosts } from "src/app/(public)/components/posts";
 import { Suspense } from "react";
+import { Heading } from "../components/heading";
 
 export default function Page() {
 	return (
 		<section>
-			<h1 className="my-6 text-3xl font-semibold">👋 {"I'm"} Ian Duvall</h1>
+			<Heading level={1} className="heading-offset my-6 text-3xl font-semibold">
+				👋 {"I'm"} Ian Duvall
+			</Heading>
 			<p className="my-4">
 				Welcome to my site! I use this space to share my thoughts and explore
 				new technologies. This current iteration is built with Next.js and React
@@ -14,9 +17,12 @@ export default function Page() {
 			</p>
 
 			<section>
-				<h2 className="mb-3 mt-5 text-2xl font-semibold tracking-tighter">
+				<Heading
+					level={2}
+					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+				>
 					About
-				</h2>
+				</Heading>
 				<p className="my-2">
 					{"I'm"} a software engineer passionate about building highly
 					interactive web applications. I currently work at{" "}
@@ -47,20 +53,26 @@ export default function Page() {
 			</section>
 
 			<section>
-				<h2 className="mb-3 mt-5 text-2xl font-semibold tracking-tighter">
+				<Heading
+					level={2}
+					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+				>
 					Education
-				</h2>
+				</Heading>
 				<p className="my-2">
 					I hold a Bachelor of Science in Engineering (Computer Science) from
 					the University of Michigan, graduating in 2017.
 				</p>
 			</section>
 			<section>
-				<h2 className="mb-3 mt-5 text-2xl font-semibold tracking-tighter">
+				<Heading
+					level={2}
+					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+				>
 					Recent writing
-				</h2>
+				</Heading>
 			</section>
-			<div className="my-3">
+			<div className="my-4 space-y-3">
 				<Suspense fallback={<div>Loading blog posts...</div>}>
 					<BlogPosts recent={3} />
 				</Suspense>

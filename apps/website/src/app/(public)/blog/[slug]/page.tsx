@@ -6,6 +6,7 @@ import {
 	formatDate,
 	compileBlogPostMDXFromSlug,
 } from "src/app/(public)/blog/helpers";
+import { Heading } from "src/app/components/heading";
 
 interface PostParams {
 	slug: string;
@@ -102,16 +103,19 @@ export default async function Blog({
 				}}
 			/>
 
-			<section className="my-6 md:-mx-6">
-				<h1 className="text-balance text-3xl font-semibold tracking-tighter">
+			<section className="heading-offset my-6">
+				<Heading
+					level={1}
+					className="heading-offset text-balance text-4xl font-semibold tracking-tighter md:mx-0"
+				>
 					{title}
-				</h1>
+				</Heading>
 
-				<div className="text-lg">
-					<div>{subtitle}</div>
+				<p className="my-2 text-xl">{subtitle}</p>
+				<div className="text-gray-700 dark:text-gray-300">
 					{publishedAt ? (
 						<time dateTime={publishedAt || undefined}>
-							{formatDate(publishedAt || "")}
+							Published: {formatDate(publishedAt || "")}
 						</time>
 					) : (
 						<div>Unpublished Draft</div>

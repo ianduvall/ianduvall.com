@@ -44,24 +44,20 @@
 		}
 	}
 
-	.prose {
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			a {
-				@apply cursor-pointer no-underline;
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		a {
+			&::after {
+				@apply mx-2 text-gray-300 opacity-0 transition-opacity duration-200 ease-out dark:text-gray-700;
+				content: "#";
+			}
 
-				&::after {
-					@apply mx-2 text-gray-300 opacity-0 transition-opacity duration-200 ease-out dark:text-gray-700;
-					content: "#";
-				}
-
-				&:hover::after {
-					@apply opacity-100;
-				}
+			&:hover::after {
+				@apply opacity-100;
 			}
 		}
 	}
@@ -90,7 +86,7 @@
 	}
 
 	.prose p {
-		@apply my-4 text-gray-800 dark:text-gray-200;
+		@apply my-4 text-gray-900 dark:text-gray-100;
 	}
 
 	.prose h1 {
@@ -151,12 +147,8 @@
 		white-space: nowrap;
 	}
 
-	a {
-		@apply text-gray-700 underline decoration-blue-500 decoration-[0.1em] underline-offset-2 transition-all dark:text-gray-200 dark:decoration-blue-500;
-
-		&:hover {
-			@apply text-gray-900 underline-offset-[3px] dark:text-gray-50;
-		}
+	.heading-offset {
+		@apply md:-mx-6;
 	}
 }
 

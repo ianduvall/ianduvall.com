@@ -39,7 +39,17 @@ export const compileBlogPostMDXFromSlug = async (slug: string) => {
 	return evaluateBlogPostMDX({ content });
 };
 
-export const getAllBlogPostData = async () => {
+interface BlogPostData {
+	metadata: {
+		title: string;
+		publishedAt: string;
+		summary: string;
+		subtitle?: string | undefined;
+		image?: string | undefined;
+	};
+	slug: string;
+}
+export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
 	const slugs = await getBlogPostSlugs();
 	const posts = await Promise.all(
 		slugs.map(async (slug) => {
@@ -51,7 +61,9 @@ export const getAllBlogPostData = async () => {
 		}),
 	);
 
-	return posts.filter((post) => post.metadata.publishedAt);
+	return posts.filter(
+		(post): post is BlogPostData => post.metadata.publishedAt !== null,
+	);
 };
 
 export const formatDate = (date: string, includeRelative = false) => {
