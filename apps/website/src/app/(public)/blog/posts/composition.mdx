@@ -1,0 +1,168 @@
+export const metadata = {
+	title: "Composition",
+	subtitle: "A commentary from the trenches",
+	publishedAt: "2025-09-24",
+	summary:
+		"A commentary on using composition to build flexible components that scale with complexity.",
+};
+
+I recently watched a conference talk at React Universe 2025 by Fernando Rojo titled ["Composition Is All You Need"](https://www.youtube.com/watch?v=4KvbVq3Eg5w). The talk explains how composition provides an alternative balance of trade-offs when building reusable components. Rojo uses the Slack message composer to illustrate different ways one could go about sharing functionality between the different variants of the composer implementation - channels, DM, threads, drafts, etc. I wanted to add some color commentary to the talk based on my own experience learning the value of composition the hard way.
+
+By the end you should have some concrete lessons and rules of thumb for when to apply composition in your own work.
+
+## Buzzwords
+
+Composition is one of those buzzwords that gets thrown around without a clear definition on what it means in practice. Similar to declarative. So to make sure we're on the same page, let's start with a definition.
+
+I like to think of composition as a way to build complex APIs by combining multiple smaller, sub-entities into a cohesive whole. An example of composition from React-land is [compound (or composite) component](https://kentcdodds.com/blog/compound-components-with-react-hooks).
+
+This is a pattern borrowed from HTML itself. Consider a `<select>` or `<table>` element:
+
+```html
+<select>
+	<optgroup label="Numbers">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+	</optgroup>
+	<optgroup label="Letters">
+		<option value="A">A</option>
+		<option value="B">B</option>
+		<option value="C">C</option>
+	</optgroup>
+</select>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>City</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Alice</td>
+			<td>30</td>
+			<td>New York</td>
+		</tr>
+		<tr>
+			<td>Bob</td>
+			<td>25</td>
+			<td>San Francisco</td>
+		</tr>
+	</tbody>
+</table>
+```
+
+These HTML elements are composed of smaller sub-elements that each have their own responsibilities. The select UI is composed of `<select>`, `<optgroup>`, and `<option>` elements. The table UI is composed of `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>` elements. Each sub-element has a clear responsibility and can be combined in different ways to create complex UIs.
+
+This is composition in its simplest form. It's more flexible and scales better than alternative component designs. For example, you may have seen components like this:
+
+```tsx
+<Select
+	options={[
+		{ type: 'group', label: 'Numbers', options: [1, 2, 3] },
+		{ type: 'group', label: 'Letters', options: ['A', 'B', 'C'] }
+	]}
+/>
+<Table
+	columns={[
+		{id: 'name', label: 'Name'},
+		{id: 'age', label: 'Age'},
+		{id: 'city', label: 'City'}
+	]}
+	data={[
+		{ name: 'Alice', age: 30, city: 'New York' },
+		{ name: 'Bob', age: 25, city: 'San Francisco' }
+	]}
+/>
+```
+
+<Details open>
+	<Summary>Tip</Summary>
+	<div>
+		{/* remove the default p container around this text */}
+		{
+			"If you find yourself describing UI with POJOs (plain old javascript objects), this is a sign you should consider applying composition. Prefer describing UI with JSX over POJOs."
+		}
+	</div>
+</Details>
+
+## Overgrowth
+
+Rojo starts by explaining the typical implementation of a reusable component: a single component with many props to customize its behavior. This is the most common anti-pattern I've seen when comes to implementing a reusable component. What might start out as a few boolean props eventually leads to an onslaught of, likely conflicting, props. You might call it an [a-prop-calypse](https://x.com/gurlcode/status/1002110517094371328) 😂. These are the components you're afraid to crack open because all the indentation from branching logic is going to be a complex ball of mud. I've seen these referred to as ["God" components](https://en.wikipedia.org/wiki/God_object) or "iceberg" components. These types of components remind me of a critique of Object Oriented Programming:
+
+> "You wanted a banana but what you got was a gorilla holding the banana and the entire jungle."
+> -- Joe Armstrong
+
+### The Almighty Button
+
+The most common example I've seen of this anti-pattern is the first component everyone implements in their design system: the `<Button>` component. This one component handles all variants of buttons: primary, secondary, tertiary, icon-only, disabled, loading, looks like a link but is a actually button, looks like a button but is actually a link, and on and on.
+
+A common philosophy among many design system components is that they are designed to constrain the API to support only the use cases needed so that product engineers fall into the ["pit of success"](https://blog.codinghorror.com/falling-into-the-pit-of-success/) when implementing with them. This constraint-based component design is the first, albeit well-intentioned, pattern that leads to overgrowth. At first the constrained API is a boost for productivity since it encapsulates all the instances of buttons in the product. But as the product grows and new use cases arise, the component inevitably will, by design, take on more and more responsibilities. That is the nature of a constraint-based API design. Each new use case requires a debate about whether the new use case belongs in the design system. If it does, a new prop is added to handle the new use case. If it doesn't, a new component is created that likely duplicates much of the existing logic of the original component. Either way, the end result is a proliferation of props and components that are difficult to maintain. Once this happens you've lost the initial intent of a design system.
+
+### The Open-Closed Principle
+
+You might be thinking, "but a button is just a single element, how can you decompose it?" You don't decompose the button element itself, you decompose the _responsibilities_ of the button. One approach to this is the ["Base & Variants" pattern](https://www.youtube.com/watch?v=fHQ1WSx41CA) where an internal (not exported for direct use), base component contains the shared logic. This base component is then composed by different variant implementations where each variant implementation has a clear responsibility and can be composed in different ways to create complex buttons. The base component is open for extension but closed for modification. This pattern provides an ideal balance of trade-offs between reusability and flexibility and scales with complexity of the product.
+
+### Another Example
+
+An infamous example of this anti-pattern from my days at Sprout Social was the `<PlotChart>` component. This component contained the D3 logic for rendering charts and was meant to take a dataset and a handful of props to customize the chart it would render. It implemented the D3 logic in an imperative way which was understandable at the time since many D3 examples on the web were written using plain javascript, so it made sense to encapsulate this logic in a React component. Unfortunately, as the product requirements grew, the component took on more and more responsibilities: tooltips, multiple axes, legends, interactivity, and so on.
+
+The rub with these kind of components is that there's not an obvious culprit for the overgrowth. The original author intended to encapsulate some gnarly D3 logic into a component that could be reused. Seems entirely reasonable. Eventually Product and Design wanted an interactive tooltip across all charts so an available engineer adds that functionality into the existing implementation. Eventually another team wants to customize the look of the tooltip content so another engineer adds a `renderTooltip` prop that takes a render function. Now imagine this playing out over 20 more features. Each change seems reasonable in isolation but the cumulative effect is a component that is unwieldy and difficult to maintain. At a certain point the component becomes so complex and fragile that you stop making changes to it. It becomes a "use as is" component and you nickname one of your coworkers the "PlotChart guy (or gal)".
+
+Looking at the `<PlotChart>` component in hindsight, it's clear that composition would have provided a better balance of trade-offs. The D3 logic should be encapsulated in a base chart component that is open for extension but closed for modification. The different responsibilities of the chart (tooltip, axes, legend, etc.) should be separate components that can be composed on top of the base chart component. This way, new features can be added without modifying the base chart component itself. If you remember the [SOLID principles](https://en.wikipedia.org/wiki/SOLID) from one of your CS classes this is the [Open-Closed Principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle) in action.
+
+```tsx
+// violates the Open-Closed Principle
+<PlotChart type={chartType} data={data} renderTooltip={tooltipRenderer} axis={axisProps} secondaryAxis={secondaryAxisProps} legend={legendProps} />
+
+// follows the Open-Closed Principle
+<Tooltip content={tooltipContent}>
+	<PlotChart type={chartType} data={data} />
+	<ChartAxis type='primary' />
+	<ChartAxis type='secondary' />
+	<ChartLegend />
+</Tooltip>
+```
+
+## State Management
+
+Another design decision that contributes to the emergence of iceberg components is state management. When a component needs state, it often needs to pass this state and methods to update the state down to its children. The easy way to do this is to pass props directly which means the component needs to render (or worse, `cloneElement`) its children components. The ease of passing props contributes to the overgrowth of the component because now the component is responsible for rendering its children and managing their state. This leads to a tight coupling between the parent and child components which makes it difficult to change the implementation of either component without affecting the other.
+
+Rojo suggests an alternative solution using React Context. The creator of the component defines a interface for the state and methods to update the state via a provider component and shifts the responsibility of managing the state to the consumer of the component. This allows the consumer to compose different state management solutions without having to change the component's implementation. For example, for ephemeral state the consumer can use `useState` or `useReducer`. For persistent state the consumer can use the URL, local storage, or even the server.
+
+While more flexible, this does add implementation complexity for both the creator and consumer of the component. Designing a flexible state management interface is not trivial especially considering the [new APIs React introduced in React 19.](https://react.dev/blog/2024/12/05/react-19)
+
+## Critique
+
+So you might not be bought in at this point. You might be thinking:
+
+- The original implementation of the `<PlotChart>` component was more convenient for developers because it encapsulated all the chart-related logic into one component.
+- The creators of `<PlotChart>` lose the ability to enforce requirements in code, for example, a chart should always have an associated legend.
+- Composition shifts complexity to the consumer of the component.
+- The benefits of composition seem pretty meta.
+- Do you expect a junior engineer to apply this pattern appropriately?
+- Composition seems like a premature optimization.
+
+All valid points. Composition is not a silver bullet. There are trade-offs to consider when applying composition to a component's design. This is what makes software engineering an art more than a science. Composition is just another tool in your developer toolbox. There are times when decomposition is the right tool for the job.
+
+## Complexity in the Time Dimension
+
+> The best API designers I know don't stop at the “first order” aspects like readability. They dedicate just as much, if not more, effort to what I call the “second order” API design: how code using this API would evolve over time.
+> -- Dan Abramov, [Optimized for Change](https://overreacted.io/optimized-for-change/)
+
+This quote summarizes beautifully a lesson I've learned as I've become more senior in my career: complexity has a time dimension. A simple component may be the right tool for the job today, but as the product grows and new use cases arise, that simple component may become unwieldy and difficult to maintain over time. Great API designers are able to think about how their code will evolve over time; what Dan calls a "second order" aspect of API design.
+
+Composition is an attempt to optimize for change. And like all optimizations they come with trade-offs. What separates a good developer from a great developer is understanding the big picture and using it to influence how they balance these trade-offs.
+
+## The Elephant in the Room
+
+If AI writes the code, does this even matter?
+
+Rojo and I would agree that composition _helps_ with AI-assisted development.
+
+Anecdotally, if you ever tried to get AI to implement a complex feature with AG Grid you know that it gets confused by the different [row models](https://www.ag-grid.com/react-data-grid/row-models/) and the plethora of props (many of which are specific to a given row model). Using composition allows you to break the problem down into smaller, more manageable pieces that are easier for humans and AI alike to understand and implement.
+
+If it's easier for humans to understand, it's easier for AI to understand.
