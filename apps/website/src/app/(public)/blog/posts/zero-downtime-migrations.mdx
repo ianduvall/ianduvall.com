@@ -1,0 +1,42 @@
+export const metadata = {
+	title: "Zero Downtime Migrations",
+	subtitle: "TLDR: expand, migrate, contract.",
+	publishedAt: "2024-05-10",
+	summary: "A guide to making breaking changes without downtime",
+};
+
+A common challenge when evolving a system is making breaking changes without causing downtime. One effective strategy to achieve this is the Expand and Contract pattern. This approach allows you to introduce changes gradually, ensuring that the system remains operational throughout the process. The pattern involves three phases: expand, migrate, and contract.
+
+Let's walk through the phases using an example to illustrate: a breaking change to an API endpoint.
+
+## Expand
+
+In the first phase we need to add support for new functionality without removing support for the old functionality. Both need to coexist to achieve zero downtime while performing the next phase.
+
+Using our API endpoint example, how we implement the Expand phase depends on the nature of the breaking change. If we need to rename a field from "startsWith" to "contains", we can add the new "contains" field while keeping the old "startsWith" field around. If we need to change the schema of the endpoint output, we can add a new version (how you do versioning is up to you and your team) of the endpoint. The key is to ensure that both the old and new versions are available simultaneously.
+
+## Migrate
+
+In the second phase we need to migrate usages from the old functionality to the new. The old functionality should still be kept around during this phase. Use a monitoring tool like Datadog to confirm the migration process is complete before moving on to the next phase.
+
+Using our API endpoint example, we need to update all clients of the API to use the new functionality. For web apps this should be a straightforward code change and deploy. Users will receive the new code the next time they refresh the page.
+
+<Details open>
+	<Summary>Notify users when a new version is available</Summary>
+	<div>
+		{/* remove the default p container around this text */}
+		{
+			"Users of your web app, by default, won't refresh the page. Depending on the type of application you have users will leave the page open for days, weeks, or even months. Consider adding an affordance to notify users when a new version of your web app is available."
+		}
+	</div>
+</Details>
+
+Mobile apps and third-party clients are slightly more complicated because you have no control over when, or if, they upgrade. Do you know someone still rocking their iPhone SE? How you manage this complexity is highly dependent on your specific setup. You could have a support window for old versions. Or you could force users to upgrade on app launch.
+
+## Contract
+
+In the third and last phase we need to remove the old schema or service now that it is unused to complete the migration process.
+
+We can finally remove the old "startsWith" field or the old version of the API endpoint. This should be a straightforward code change and deploy if you've completed the migration phase successfully.
+
+That's it! You've successfully made a breaking change without downtime using the Expand and Contract pattern. This approach allows you to evolve your system gradually, minimizing the risk of disruptions and ensuring a smooth transition for users.
