@@ -4,6 +4,9 @@ node_modules/
 # package manager
 .npmrc
 
+# build output
+dist/
+
 # next.js
 .next/
 out/
@@ -20,6 +23,7 @@ build/
 # env files
 .env
 .env.*
+.env*.local
 
 # vercel
 .vercel
@@ -30,6 +34,3 @@ next-env.d.ts
 
 # Turborepo
 .turbo
-
-# environment variables
-.env*.local

@@ -1,6 +1,7 @@
 import { BlogPosts } from "src/app/(public)/components/posts";
 import { Suspense } from "react";
 import { Heading } from "../components/heading";
+import { Link } from "../components/link";
 
 export default function Page() {
 	return (
@@ -26,24 +27,24 @@ export default function Page() {
 				<p className="my-2">
 					{"I'm"} a software engineer passionate about building highly
 					interactive web applications. I currently work at{" "}
-					<a href="https://www.summation.com/" target="_blank">
+					<Link href="https://www.summation.com/" target="_blank">
 						Summation AI
-					</a>{" "}
+					</Link>{" "}
 					as a Senior Product Engineer, integrating AI into the enterprise
 					financial planning and analysis (FP&A) space.
 				</p>
 				<p className="my-2">
 					Previously, I was a Senior Software Engineer at{" "}
-					<a href="https://sproutsocial.com/" target="_blank">
+					<Link href="https://sproutsocial.com/" target="_blank">
 						Sprout Social
-					</a>{" "}
+					</Link>{" "}
 					on the{" "}
-					<a
+					<Link
 						href="https://sproutsocial.com/features/social-media-analytics/"
 						target="_blank"
 					>
 						Analytics
-					</a>{" "}
+					</Link>{" "}
 					team. I primarily worked on the frontend with React and TypeScript,
 					while also contributing to backend development with Django and Python.
 					My goldilocks zone lies at the intersection of solving complex

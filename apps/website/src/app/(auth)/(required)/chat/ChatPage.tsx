@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { cn } from "src/app/shared";
@@ -91,7 +92,7 @@ export function ChatPage() {
 				{messages.map((m) => {
 					const textParts = m.parts
 						.filter((p) => p.type === "text")
-						.map((p: any) => p.text)
+						.map((p) => p.text)
 						.join("");
 					return (
 						<div key={m.id} className="flex w-full flex-col">

@@ -6,6 +6,8 @@
 		"dev": "turbo run dev",
 		"format-check": "prettier --ignore-unknown --check .",
 		"format": "prettier --ignore-unknown --write .",
+		"typecheck": "turbo run typecheck",
+		"lint": "turbo run lint",
 		"start": "turbo run start"
 	},
 	"devDependencies": {
