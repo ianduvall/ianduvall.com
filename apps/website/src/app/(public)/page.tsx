@@ -13,8 +13,7 @@ export default function Page() {
 				Welcome to my site! I use this space to share my thoughts and explore
 				new technologies. This current iteration is built with Next.js and React
 				Server Components. Overkill for a personal site? Absolutely, but{" "}
-				{"it's"}
-				fun to try new things.
+				{"it's"} fun to try new things.
 			</p>
 
 			<section>
