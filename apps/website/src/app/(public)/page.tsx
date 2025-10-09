@@ -1,4 +1,4 @@
-import { BlogPosts } from "src/app/(public)/components/posts";
+import { BlogPosts } from "src/app/(public)/components/blog-posts";
 import { Suspense } from "react";
 import { Heading } from "../components/heading";
 import { Link } from "../components/link";
@@ -73,9 +73,7 @@ export default function Page() {
 				</Heading>
 			</section>
 			<div className="my-4 space-y-3">
-				<Suspense fallback={<div>Loading blog posts...</div>}>
-					<BlogPosts recent={3} />
-				</Suspense>
+				<BlogPosts recent={3} />
 			</div>
 		</section>
 	);

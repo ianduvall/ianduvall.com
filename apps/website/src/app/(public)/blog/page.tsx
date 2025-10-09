@@ -1,4 +1,4 @@
-import { BlogPosts } from "src/app/(public)/components/posts";
+import { BlogPosts } from "src/app/(public)/components/blog-posts";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Heading } from "src/app/components/heading";
@@ -18,9 +18,7 @@ export default function Page() {
 				Notes, thoughts, and more
 			</Heading>
 			<div className="my-4 space-y-3">
-				<Suspense fallback={<p>Loading recent blog posts...</p>}>
-					<BlogPosts recent={5} />
-				</Suspense>
+				<BlogPosts recent={5} />
 			</div>
 		</section>
 	);

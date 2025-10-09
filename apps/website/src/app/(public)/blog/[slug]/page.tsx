@@ -7,6 +7,7 @@ import {
 	compileBlogPostMDXFromSlug,
 } from "src/app/(public)/blog/helpers";
 import { Heading } from "src/app/components/heading";
+import { ViewTransition } from "react";
 
 interface PostParams {
 	slug: string;
@@ -104,22 +105,27 @@ export default async function Blog({
 			/>
 
 			<section className="heading-offset my-6">
-				<Heading
-					level={1}
-					className="heading-offset text-balance text-4xl font-semibold tracking-tighter md:mx-0"
-				>
-					{title}
-				</Heading>
-
-				<p className="my-2 text-xl">{subtitle}</p>
+				<ViewTransition name={`blog-title-${slug}`}>
+					<Heading
+						level={1}
+						className="heading-offset text-balance text-4xl font-semibold tracking-tighter md:mx-0"
+					>
+						{title}
+					</Heading>
+				</ViewTransition>
 				<div className="text-gray-700 dark:text-gray-300">
-					{publishedAt ? (
-						<time dateTime={publishedAt || undefined}>
-							Published: {formatDate(publishedAt || "")}
-						</time>
-					) : (
-						<div>Unpublished Draft</div>
-					)}
+					<ViewTransition name={`blog-subtitle-${slug}`}>
+						<p className="my-1 text-lg">{subtitle}</p>
+					</ViewTransition>
+					<ViewTransition name={`blog-date-${slug}`}>
+						{publishedAt ? (
+							<time dateTime={publishedAt}>
+								{formatDate(publishedAt, true)}
+							</time>
+						) : (
+							<div>Unpublished Draft</div>
+						)}
+					</ViewTransition>
 				</div>
 			</section>
 
