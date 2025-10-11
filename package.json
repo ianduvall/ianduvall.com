@@ -15,7 +15,7 @@
 		"prettier-plugin-tailwindcss": "^0.6.14",
 		"turbo": "^2.5.8",
 		"typescript": "~5.9.3",
-		"vercel": "^44.7.3"
+		"vercel": "latest"
 	},
-	"packageManager": "pnpm@10.18.0"
+	"packageManager": "pnpm@10.18.2"
 }

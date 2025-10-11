@@ -1,5 +1,4 @@
 import { BlogPosts } from "src/app/(public)/components/blog-posts";
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Heading } from "src/app/components/heading";
 

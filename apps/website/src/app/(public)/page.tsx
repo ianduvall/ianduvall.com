@@ -1,5 +1,4 @@
 import { BlogPosts } from "src/app/(public)/components/blog-posts";
-import { Suspense } from "react";
 import { Heading } from "../components/heading";
 import { Link } from "../components/link";
 

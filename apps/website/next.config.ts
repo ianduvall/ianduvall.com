@@ -5,13 +5,13 @@ const nextConfig: NextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	eslint: {
-		ignoreDuringBuilds: true,
-	},
 	reactCompiler: true,
 	reactStrictMode: true,
+	typedRoutes: true,
+
 	experimental: {
 		viewTransition: true,
+		turbopackFileSystemCacheForDev: true,
 	},
 };
 
