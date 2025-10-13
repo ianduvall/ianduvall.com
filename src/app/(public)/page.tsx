@@ -18,7 +18,7 @@ export default function Page() {
 			<section>
 				<Heading
 					level={2}
-					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+					className="heading-offset mt-5 mb-3 text-2xl font-semibold tracking-tighter"
 				>
 					About
 				</Heading>
@@ -54,7 +54,7 @@ export default function Page() {
 			<section>
 				<Heading
 					level={2}
-					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+					className="heading-offset mt-5 mb-3 text-2xl font-semibold tracking-tighter"
 				>
 					Education
 				</Heading>
@@ -66,7 +66,7 @@ export default function Page() {
 			<section>
 				<Heading
 					level={2}
-					className="heading-offset mb-3 mt-5 text-2xl font-semibold tracking-tighter"
+					className="heading-offset mt-5 mb-3 text-2xl font-semibold tracking-tighter"
 				>
 					Recent writing
 				</Heading>

@@ -18,7 +18,7 @@ const navItems = [
 
 export function Nav() {
 	return (
-		<header className="-ml-[8px] mb-4 tracking-tight">
+		<header className="mb-4 -ml-[8px] tracking-tight">
 			<nav
 				className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
 				id="nav"

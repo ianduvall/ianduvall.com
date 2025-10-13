@@ -108,7 +108,7 @@ export default async function Blog({
 				<ViewTransition name={`blog-title-${slug}`}>
 					<Heading
 						level={1}
-						className="heading-offset text-balance text-4xl font-semibold tracking-tighter md:mx-0"
+						className="heading-offset text-4xl font-semibold tracking-tighter text-balance md:mx-0"
 					>
 						{title}
 					</Heading>

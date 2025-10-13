@@ -42,7 +42,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${GeistSans.variable} ${GeistMono.variable} min-w-sm scheme-light-dark bg-surface-default text-foreground-default`}
+			className={`${GeistSans.variable} ${GeistMono.variable} bg-surface-default text-foreground-default min-w-sm scheme-light-dark`}
 		>
 			<body className="antialiased">
 				{children}

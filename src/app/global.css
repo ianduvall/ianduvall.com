@@ -90,19 +90,19 @@
 	}
 
 	.prose h1 {
-		@apply mb-2 mt-6 text-4xl font-medium tracking-tight;
+		@apply mt-6 mb-2 text-4xl font-medium tracking-tight;
 	}
 
 	.prose h2 {
-		@apply mb-2 mt-6 text-xl font-medium tracking-tight;
+		@apply mt-6 mb-2 text-xl font-medium tracking-tight;
 	}
 
 	.prose h3 {
-		@apply mb-2 mt-6 text-xl font-medium tracking-tight;
+		@apply mt-6 mb-2 text-xl font-medium tracking-tight;
 	}
 
 	.prose h4 {
-		@apply mb-2 mt-6 text-lg font-medium tracking-tight;
+		@apply mt-6 mb-2 text-lg font-medium tracking-tight;
 	}
 
 	.prose strong {

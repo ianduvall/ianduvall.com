@@ -53,11 +53,11 @@ const mdxComponents = {
 	Details: (props: ComponentProps<"details">) => (
 		<details
 			{...props}
-			className="details-content:overflow-clip details-content:h-0 [[open]]:details-content:h-auto details-content:duration-150 details-content:transition-discrete details-content:ease-out details-content:transition-[height,content-visibility] my-4 rounded-lg border-l-8 border-blue-500 bg-blue-50 p-4 dark:border-blue-400 dark:bg-blue-900/30 dark:text-blue-100"
+			className="my-4 rounded-lg border-l-8 border-blue-500 bg-blue-50 p-4 details-content:h-0 details-content:overflow-clip details-content:transition-[height,content-visibility] details-content:transition-discrete details-content:duration-150 details-content:ease-out dark:border-blue-400 dark:bg-blue-900/30 dark:text-blue-100 [[open]]:details-content:h-auto"
 		/>
 	),
 	Summary: (props: ComponentProps<"summary">) => (
-		<summary {...props} className="cursor-pointer select-none font-semibold" />
+		<summary {...props} className="cursor-pointer font-semibold select-none" />
 	),
 } as const;
 

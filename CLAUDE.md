@@ -4,18 +4,12 @@ This file provides guidance to coding agents when working with code in this repo
 
 ## Project Overview
 
-This is a pnpm monorepo for ianduvall.com - a personal website built with Next.js. The site includes:
+This is a personal website built with Next.js. The site includes:
 
 - Public blog with MDX support
 - Authentication via Clerk
 - AI chat interface using Vercel AI SDK
 - React 19 with the React Compiler enabled
-
-## Monorepo Structure
-
-- `apps/website/` - Main Next.js application
-- `packages/tsconfig/` - Shared TypeScript configurations
-- Uses pnpm workspaces with Turbo for builds
 
 ## Development Commands
 
@@ -73,7 +67,7 @@ Build requires:
 
 Environment files:
 
-- `.env.local` (root and `apps/website/`)
+- `.env.local` (root)
 - git ignored
 
 ## Deployment

@@ -7,7 +7,7 @@ export default function UnauthenticatedRootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="mx-auto flex min-h-svh min-w-0 max-w-xl flex-auto flex-col px-4 py-8">
+		<div className="mx-auto flex min-h-svh max-w-xl min-w-0 flex-auto flex-col px-4 py-8">
 			<Nav />
 			{children}
 			<Footer />

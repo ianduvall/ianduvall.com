@@ -1,9 +1,6 @@
-packages:
-  - apps/*
-  - packages/*
-
 onlyBuiltDependencies:
   - "@clerk/shared"
+  - "@tailwindcss/oxide"
   - "@vercel/speed-insights"
   - esbuild
   - sharp

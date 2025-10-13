@@ -28,9 +28,9 @@ build/
 # vercel
 .vercel
 
+# clerk configuration (can include secrets)
+.clerk
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Turborepo
-.turbo
