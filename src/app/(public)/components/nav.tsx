@@ -1,20 +1,5 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps, PropsWithChildren } from "react";
 import { Link } from "src/app/components/link";
-
-const navItems = [
-	{
-		children: "home",
-		href: "/",
-	},
-	{
-		children: "blog",
-		href: "/blog",
-	},
-	{
-		children: "chat",
-		href: "/chat",
-	},
-] as const satisfies ComponentProps<typeof Link>[];
 
 export function Nav() {
 	return (
@@ -25,16 +10,11 @@ export function Nav() {
 			>
 				<div className="flex w-full items-center justify-between">
 					<ul className="flex flex-row space-x-0 pr-10 text-2xl">
-						{navItems.map((props) => {
-							return (
-								<li
-									key={props.href}
-									className="relative m-1 flex px-2 py-1 align-middle"
-								>
-									<Link {...props} prefetch />
-								</li>
-							);
-						})}
+						<NavLinkItem href="/">home</NavLinkItem>
+						<NavLinkItem href="/blog">blog</NavLinkItem>
+						{process.env.NODE_ENV === "development" ? (
+							<NavLinkItem href="/chat">chat</NavLinkItem>
+						) : null}
 					</ul>
 					<div className="flex items-center space-x-4">{/* right */}</div>
 				</div>
@@ -42,3 +22,11 @@ export function Nav() {
 		</header>
 	);
 }
+
+const NavLinkItem = (props: PropsWithChildren<ComponentProps<typeof Link>>) => {
+	return (
+		<li className="relative m-1 flex px-2 py-1 align-middle">
+			<Link {...props} prefetch />
+		</li>
+	);
+};
