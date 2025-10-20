@@ -72,7 +72,7 @@ export default function Page() {
 				</Heading>
 			</section>
 			<div className="my-4 space-y-3">
-				<BlogPosts recent={3} />
+				<BlogPosts recent={3} viewTransitions={false} />
 			</div>
 		</section>
 	);
