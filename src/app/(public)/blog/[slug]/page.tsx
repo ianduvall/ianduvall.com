@@ -75,6 +75,7 @@ export default async function Blog({
 }: {
 	params: Promise<PostParams>;
 }) {
+	"use cache";
 	const { slug } = await params;
 	const [blogPost, { title, subtitle, publishedAt, summary, image }] =
 		await compileBlogPostMDXFromSlug(slug);

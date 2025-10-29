@@ -13,14 +13,14 @@
 		"format": "prettier --ignore-unknown --write ."
 	},
 	"dependencies": {
-		"@ai-sdk/openai": "^2.0.56",
-		"@ai-sdk/react": "^2.0.81",
-		"@clerk/nextjs": "^6.34.0",
-		"@clerk/themes": "^2.4.29",
+		"@ai-sdk/openai": "^2.0.57",
+		"@ai-sdk/react": "^2.0.82",
+		"@clerk/nextjs": "^6.34.1",
+		"@clerk/themes": "^2.4.30",
 		"@mdx-js/mdx": "^3.1.1",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
-		"ai": "^5.0.81",
+		"ai": "^5.0.82",
 		"autoprefixer": "^10.4.21",
 		"geist": "^1.5.1",
 		"next": "canary",
@@ -48,5 +48,5 @@
 		"typescript": "~5.9.3",
 		"vercel": "latest"
 	},
-	"packageManager": "pnpm@10.18.2"
+	"packageManager": "pnpm@10.20.0"
 }

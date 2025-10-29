@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 export default async function AuthLayout({
 	children,
@@ -6,6 +7,8 @@ export default async function AuthLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<ClerkProvider appearance={{ theme: "simple" }}>{children}</ClerkProvider>
+		<Suspense fallback={null}>
+			<ClerkProvider appearance={{ theme: "simple" }}>{children}</ClerkProvider>
+		</Suspense>
 	);
 }
