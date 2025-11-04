@@ -76,6 +76,7 @@ export const evaluateBlogPostMDX = async ({
 }: {
 	content: string;
 }): Promise<readonly [JSX.Element, BlogPostMetadata]> => {
+	"use cache";
 	const { default: MDXContent, metadata } = await evaluate(content, {
 		...jsxRuntime,
 		format: "mdx",
