@@ -21,6 +21,7 @@ export const generateStaticParams = async (): Promise<PostParams[]> => {
 };
 
 const readBlogPostMetadata = async (slug: string) => {
+	"use cache";
 	try {
 		const [, metadata] = await compileBlogPostMDXFromSlug(slug);
 		return metadata;

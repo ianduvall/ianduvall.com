@@ -21,6 +21,7 @@ const getBlogPostFilePaths = () => {
 };
 
 export const getBlogPostSlugs = async () => {
+	"use cache";
 	const blogPostFilePaths = await getBlogPostFilePaths();
 	return blogPostFilePaths.map((name) =>
 		path.basename(name, path.extname(name)),
@@ -50,6 +51,7 @@ interface BlogPostData {
 	slug: string;
 }
 export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
+	"use cache";
 	const slugs = await getBlogPostSlugs();
 	const posts = await Promise.all(
 		slugs.map(async (slug) => {

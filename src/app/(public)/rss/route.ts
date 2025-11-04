@@ -1,10 +1,13 @@
 import { baseUrl } from "src/app/shared";
 import { getAllBlogPostData } from "src/app/(public)/blog/helpers";
+import { cacheLife } from "next/cache";
 
 const title = "Ian Duvall's Blog";
 const description = "An RSS feed of Ian Duvall's blog posts";
 
-export async function GET() {
+async function getRssFeed() {
+	"use cache";
+	cacheLife("hours");
 	const blogPosts = await getAllBlogPostData();
 	const itemsXml = blogPosts
 		.sort((a, b) => {
@@ -33,6 +36,11 @@ export async function GET() {
     </channel>
   </rss>`;
 
+	return rssFeed;
+}
+
+export async function GET() {
+	const rssFeed = await getRssFeed();
 	return new Response(rssFeed, {
 		headers: {
 			"Content-Type": "text/xml",
