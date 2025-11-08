@@ -5,7 +5,6 @@
 This is a personal website built with Next.js. The site includes:
 
 - Public blog with MDX support
-- Authentication via Clerk
 - AI chat interface using Chrome's built-in Prompt API
 - React 19 with the React Compiler enabled
 
@@ -26,15 +25,7 @@ This is a personal website built with Next.js. The site includes:
 The app uses Next.js route groups for organization:
 
 - `(public)/` - Public pages (home, blog, RSS, sitemap, OG images)
-- `(auth)/` - Auth layout
-- `(auth)/(required)/` - Protected pages requiring authentication (chat)
-
-### Authentication
-
-- Clerk is used for authentication
-- `(auth)/layout.tsx` wraps routes
-- `(auth)/(required)/layout.tsx` checks authentication and redirects to sign-in if needed
-- Public routes have their own layout in `(public)/layout.tsx` with Nav and Footer
+- `/chat` - AI chat interface
 
 ### Blog System
 
@@ -46,10 +37,8 @@ The app uses Next.js route groups for organization:
 
 ### AI Chat
 
-- Protected chat interface at `/chat`
-- API route at `/api/chat/route.ts` uses Vercel AI SDK with OpenAI
-- Streaming text responses with `streamText()`
-- Auth check wrapper for API routes
+- Public chat interface at `/chat`
+- Uses Chrome's built-in Prompt API for on-device AI
 
 ### Styling
 
@@ -65,7 +54,6 @@ The app uses Next.js route groups for organization:
 Build requires:
 
 - `POSTGRES_*` - Database credentials
-- `CLERK_*` - Authentication keys
 
 Environment files:
 
