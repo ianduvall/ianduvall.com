@@ -18,6 +18,10 @@ This is a personal website built with Next.js. The site includes:
 - `pnpm format` - format code
 - `pnpm format:check` - check for code formatting violations
 
+## Rules
+
+- Never add inline comments unless explicitly asked to
+
 ## Architecture
 
 ### Route Groups
@@ -51,15 +55,7 @@ The app uses Next.js route groups for organization:
 
 ### Environment Variables
 
-Build requires:
-
-- `POSTGRES_*` - Database credentials
-
 Environment files:
 
 - `.env.local` (root)
 - git ignored
-
-## Deployment
-
-Deployed on Vercel

@@ -1,5 +1,15 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { useLanguageModelSession } from "./use-language-model-session";
+
+const LanguageModelCompatGuard = dynamic(
+	() =>
+		import("./LanguageModelCompatGuard").then(
+			(mod) => mod.LanguageModelCompatGuard,
+		),
+	{ ssr: false },
+);
 
 // patch ReadableStream to support for-await-of
 declare global {
@@ -11,7 +21,46 @@ declare global {
 const languageModelCreateOptions = {
 	expectedInputs: [{ type: "text", languages: ["en"] }],
 	expectedOutputs: [{ type: "text", languages: ["en"] }],
-} as const satisfies LanguageModelCreateCoreOptions;
+	initialPrompts: [
+		{
+			role: "system",
+			content: `You are a helpful assistant. Today is ${new Date().toLocaleDateString()}. Be concise and clear.`,
+		},
+	],
+	tools: [
+		{
+			description: "Retrieve the current time",
+			execute: async () => {
+				return new Date().toLocaleTimeString();
+			},
+			inputSchema: {
+				type: "object",
+				properties: {},
+				required: [],
+			},
+			name: "current time",
+		},
+		{
+			name: "getWeather",
+			description: "Get the weather in a location.",
+			inputSchema: {
+				type: "object",
+				properties: {
+					location: {
+						type: "string",
+						description: "The city to check for the weather condition.",
+					},
+				},
+				required: ["location"],
+			},
+			async execute({ location }) {
+				console.log("weather tool call for location:", location);
+
+				return "71 and sunny";
+			},
+		},
+	],
+} as const satisfies LanguageModelCreateOptions;
 
 interface Message {
 	role: "user" | "assistant";
@@ -19,107 +68,94 @@ interface Message {
 }
 
 export default function ChatPage() {
-	const [availability, setAvailability] = useState<Availability | "tbd">("tbd");
+	return (
+		<LanguageModelCompatGuard createOptions={languageModelCreateOptions}>
+			<ChatInterface />
+		</LanguageModelCompatGuard>
+	);
+}
+
+function ChatInterface() {
 	const [messages, setMessages] = useState<ReadonlyArray<Message>>([]);
 	const [streamingMessage, setStreamingMessage] = useState<string>("");
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const sessionRef = useRef<LanguageModel | null>(null);
+	const { getSession, resetSession, downloadProgress } =
+		useLanguageModelSession(languageModelCreateOptions);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		(async function checkAvailability() {
-			const availability = await LanguageModel.availability(
-				languageModelCreateOptions,
-			);
-			setAvailability(availability);
-		})();
-	}, []);
+	const abortControllerRef = useRef<AbortController | null>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages, streamingMessage]);
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		if (!input.trim() || isLoading || availability !== "available") return;
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+		if (!input.trim() || isLoading) return;
 
 		const userMessage = input.trim();
 		setInput("");
 		setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
 		setIsLoading(true);
+		const abortController = new AbortController();
+		abortControllerRef.current = abortController;
 
 		try {
-			// Create or reuse session
-			if (!sessionRef.current) {
-				sessionRef.current = await LanguageModel.create(
-					languageModelCreateOptions,
-				);
-			}
+			const session = await getSession();
+			const stream = session.promptStreaming(userMessage, {
+				signal: abortController.signal,
+			});
 
-			const stream = sessionRef.current.promptStreaming(userMessage);
-
-			// Initialize streaming message
+			let messageBuffer = "";
+			let newlineBuffer = "";
 			setStreamingMessage("");
-			const chunks: string[] = [];
 
-			// Read from the stream
 			for await (const chunk of stream) {
-				chunks.push(chunk);
-				setStreamingMessage((prev) => prev + chunk);
+				const isOnlyNewlines = /^[\r\n]+$/.test(chunk);
+
+				if (isOnlyNewlines) {
+					newlineBuffer += chunk;
+				} else {
+					if (newlineBuffer) {
+						messageBuffer += newlineBuffer;
+						newlineBuffer = "";
+					}
+					messageBuffer += chunk;
+				}
+
+				setStreamingMessage(messageBuffer);
 			}
 
-			// Add the completed message to the messages array
 			setMessages((prev) => [
 				...prev,
-				{ role: "assistant", content: chunks.join("") },
+				{ role: "assistant", content: messageBuffer },
 			]);
 			setStreamingMessage("");
 		} catch (error) {
+			if (Error.isError(error) && error.name === "AbortError") {
+				return;
+			}
 			console.error("Chat error:", error);
 			setMessages((prev) => [
 				...prev,
 				{
 					role: "assistant",
-					content: "Sorry, an error occurred. Please try again.",
+					content: "Sorry, an error occurred. Please try again later.",
 				},
 			]);
 			setStreamingMessage("");
 		} finally {
 			setIsLoading(false);
+			abortControllerRef.current = null;
 		}
 	};
 
 	const handleReset = () => {
 		setMessages([]);
 		setStreamingMessage("");
-		sessionRef.current = null;
+		resetSession();
 	};
-
-	if (availability === "tbd") {
-		return (
-			<main className="flex min-h-screen items-center justify-center">
-				<div className="text-lg">Checking availability...</div>
-			</main>
-		);
-	}
-
-	if (availability !== "available") {
-		return (
-			<main className="flex min-h-screen items-center justify-center">
-				<div className="max-w-md space-y-4 text-center">
-					<h1 className="text-2xl font-bold">Chat Unavailable</h1>
-					<p className="text-gray-600">
-						Chrome&apos;s built-in AI is not available. Status: {availability}
-					</p>
-					<p className="text-sm text-gray-500">
-						Make sure you&apos;re using Chrome Canary with the Prompt API
-						enabled.
-					</p>
-				</div>
-			</main>
-		);
-	}
 
 	return (
 		<main className="flex h-screen flex-col">
@@ -166,7 +202,7 @@ export default function ChatPage() {
 									</div>
 								</div>
 							))}
-							{isLoading && !streamingMessage && (
+							{isLoading && !streamingMessage && downloadProgress === null && (
 								<div className="flex justify-start">
 									<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
 										<div className="flex items-center gap-2">
@@ -195,15 +231,37 @@ export default function ChatPage() {
 			</div>
 
 			{/* Input */}
-			<div className="border-t px-4 py-4">
+			<div className="relative border-t px-4 py-4">
+				{/* Download Progress Pill */}
+				{downloadProgress !== null && (
+					<div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2">
+						<div className="rounded-full bg-gray-900 px-4 py-2 shadow-lg">
+							<div className="flex items-center gap-3">
+								<span className="text-sm text-white">Downloading model...</span>
+								<div className="flex items-center gap-2">
+									<div className="h-1.5 w-32 overflow-hidden rounded-full bg-gray-700">
+										<div
+											className="h-full bg-blue-500 transition-all duration-300"
+											style={{ width: `${downloadProgress * 100}%` }}
+										/>
+									</div>
+									<span className="text-sm font-medium text-white">
+										{Math.round(downloadProgress * 100)}%
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
 				<form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
 					<div className="flex gap-2">
 						<input
+							ref={inputRef}
 							type="text"
 							value={input}
 							onChange={(e) => setInput(e.currentTarget.value)}
 							placeholder="Type your message..."
-							disabled={isLoading}
+							autoFocus={true}
 							className="flex-1 rounded-lg border px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:outline-none disabled:bg-gray-100"
 						/>
 						<button

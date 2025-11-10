@@ -3,7 +3,7 @@ import { Link } from "src/app/components/link";
 
 export function Nav() {
 	return (
-		<header className="mb-4 -ml-[8px] tracking-tight">
+		<header className="mb-4 -ml-2 tracking-tight">
 			<nav
 				className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
 				id="nav"
@@ -12,9 +12,7 @@ export function Nav() {
 					<ul className="flex flex-row space-x-0 pr-10 text-2xl">
 						<NavLinkItem href="/">home</NavLinkItem>
 						<NavLinkItem href="/blog">blog</NavLinkItem>
-						{process.env.NODE_ENV === "development" ? (
-							<NavLinkItem href="/chat">chat</NavLinkItem>
-						) : null}
+						<NavLinkItem href="/chat">chat</NavLinkItem>
 					</ul>
 					<div className="flex items-center space-x-4">{/* right */}</div>
 				</div>
