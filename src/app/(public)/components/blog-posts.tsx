@@ -9,7 +9,6 @@ export async function BlogPosts({
 	recent?: number;
 	viewTransitions?: boolean;
 }) {
-	"use cache";
 	const blogPosts = await getAllBlogPostData();
 
 	const VT = viewTransitions ? ViewTransition : Fragment;
