@@ -1,5 +1,6 @@
 import path from "node:path";
 import fs from "node:fs/promises";
+import { cacheLife, cacheTag } from "next/cache";
 import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
 const blogPostsDirPath = path.join(
@@ -21,6 +22,10 @@ const getBlogPostFilePaths = () => {
 };
 
 export const getBlogPostSlugs = async () => {
+	"use cache";
+	cacheLife("hours");
+	cacheTag("blog-posts");
+
 	const blogPostFilePaths = await getBlogPostFilePaths();
 	return blogPostFilePaths.map((name) =>
 		path.basename(name, path.extname(name)),
@@ -35,6 +40,10 @@ export const readBlogPostFileFromSlug = async (
 };
 
 export const compileBlogPostMDXFromSlug = async (slug: string) => {
+	"use cache";
+	cacheLife("hours");
+	cacheTag("blog-posts");
+
 	const content = await readBlogPostFileFromSlug(slug);
 	return evaluateBlogPostMDX({ content });
 };
@@ -50,6 +59,10 @@ interface BlogPostData {
 	slug: string;
 }
 export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
+	"use cache";
+	cacheLife("hours");
+	cacheTag("blog-posts");
+
 	const slugs = await getBlogPostSlugs();
 	const posts = await Promise.all(
 		slugs.map(async (slug) => {
@@ -64,40 +77,4 @@ export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
 	return posts.filter(
 		(post): post is BlogPostData => post.metadata.publishedAt !== null,
 	);
-};
-
-export const formatDate = (date: string, includeRelative = false) => {
-	const currentDate = new Date();
-	if (!date.includes("T")) {
-		date = `${date}T00:00:00`;
-	}
-	const targetDate = new Date(date);
-
-	const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-	const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-	const daysAgo = currentDate.getDate() - targetDate.getDate();
-
-	let formattedDate = "";
-
-	if (yearsAgo > 0) {
-		formattedDate = `${yearsAgo}y ago`;
-	} else if (monthsAgo > 0) {
-		formattedDate = `${monthsAgo}mo ago`;
-	} else if (daysAgo > 0) {
-		formattedDate = `${daysAgo}d ago`;
-	} else {
-		formattedDate = "Today";
-	}
-
-	const fullDate = targetDate.toLocaleString("en-us", {
-		month: "long",
-		day: "numeric",
-		year: "numeric",
-	});
-
-	if (!includeRelative) {
-		return fullDate;
-	}
-
-	return `${fullDate} (${formattedDate})`;
 };

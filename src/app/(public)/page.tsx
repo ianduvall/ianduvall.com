@@ -1,4 +1,8 @@
-import { BlogPosts } from "src/app/(public)/components/blog-posts";
+import { Suspense } from "react";
+import {
+	BlogPosts,
+	LoadingBlogPost,
+} from "src/app/(public)/components/blog-posts";
 import { Heading } from "../components/heading";
 import { Link } from "../components/link";
 
@@ -72,7 +76,18 @@ export default function Page() {
 				</Heading>
 			</section>
 			<div className="my-4 space-y-3">
-				<BlogPosts recent={3} viewTransitions={false} />
+				<Suspense
+					fallback={
+						<div className="space-y-3">
+							<span className="sr-only">Loading recent blog posts...</span>
+							<LoadingBlogPost />
+							<LoadingBlogPost />
+							<LoadingBlogPost />
+						</div>
+					}
+				>
+					<BlogPosts key="blog-posts" recent={3} viewTransitions={false} />
+				</Suspense>
 			</div>
 		</section>
 	);

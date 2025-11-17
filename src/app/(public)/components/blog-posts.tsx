@@ -1,6 +1,7 @@
-import { getAllBlogPostData, formatDate } from "src/app/(public)/blog/helpers";
+import { getAllBlogPostData } from "src/app/(public)/blog/helpers";
 import { Link } from "src/app/components/link";
 import { Fragment, ViewTransition } from "react";
+import { FormattedDate } from "./formatted-date";
 
 export async function BlogPosts({
 	recent,
@@ -36,16 +37,32 @@ export async function BlogPosts({
 								</VT>
 							) : null}
 							<VT name={`blog-date-${post.slug}`}>
-								<time
-									dateTime={post.metadata.publishedAt}
-									className="text-sm italic"
-								>
-									{formatDate(post.metadata.publishedAt, true)}
-								</time>
+								<span className="text-sm italic">
+									<FormattedDate
+										date={post.metadata.publishedAt}
+										includeRelative
+									/>
+								</span>
 							</VT>
 						</div>
 					</div>
 				))}
 		</>
+	);
+}
+
+export function LoadingBlogPost() {
+	const heading = (
+		<div className="h-6 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+	);
+	const paragraph = (
+		<div className="h-4 w-1/2 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+	);
+	return (
+		<div className="flex flex-col gap-3 opacity-80">
+			{heading}
+			{paragraph}
+			{paragraph}
+		</div>
 	);
 }

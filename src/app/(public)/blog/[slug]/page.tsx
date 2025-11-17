@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { baseUrl } from "src/app/shared";
 import {
 	getBlogPostSlugs,
-	formatDate,
 	compileBlogPostMDXFromSlug,
 } from "src/app/(public)/blog/helpers";
 import { Heading } from "src/app/components/heading";
 import { ViewTransition } from "react";
+import { FormattedDate } from "../../components/formatted-date";
 
 interface PostParams {
 	slug: string;
@@ -119,9 +119,7 @@ export default async function Blog({
 					</ViewTransition>
 					<ViewTransition name={`blog-date-${slug}`}>
 						{publishedAt ? (
-							<time dateTime={publishedAt}>
-								{formatDate(publishedAt, true)}
-							</time>
+							<FormattedDate date={publishedAt} includeRelative={true} />
 						) : (
 							<div>Unpublished Draft</div>
 						)}

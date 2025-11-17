@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { evaluate } from "@mdx-js/mdx";
 import * as jsxRuntime from "react/jsx-runtime";
 import { z } from "zod";
+import { cacheLife, cacheTag } from "next/cache";
 import { Heading } from "src/app/components/heading";
 import { Link } from "src/app/components/link";
 
@@ -76,6 +77,10 @@ export const evaluateBlogPostMDX = async ({
 }: {
 	content: string;
 }): Promise<readonly [JSX.Element, BlogPostMetadata]> => {
+	"use cache";
+	cacheLife("hours");
+	cacheTag("blog-posts");
+
 	const { default: MDXContent, metadata } = await evaluate(content, {
 		...jsxRuntime,
 		format: "mdx",

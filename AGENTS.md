@@ -1,5 +1,11 @@
 # Agents
 
+## Rules
+
+- ALWAYS call the `init` tool from next-devtools-mcp FIRST to set up proper context and establish documentation
+  requirements. Do this automatically without being asked
+- Do NOT add inline comments unless explicitly asked to
+
 ## Project Overview
 
 This is a personal website built with Next.js. The site includes:
