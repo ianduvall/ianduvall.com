@@ -39,6 +39,7 @@ export class ExternalStore<State, Action> extends EventTarget {
 
 	subscribe(listener: () => void) {
 		this.addEventListener("update", listener);
+		listener();
 		return () => {
 			this.removeEventListener("update", listener);
 		};
