@@ -1,6 +1,5 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { cacheLife, cacheTag } from "next/cache";
 import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
 const blogPostsDirPath = path.join(
@@ -22,10 +21,6 @@ const getBlogPostFilePaths = () => {
 };
 
 export const getBlogPostSlugs = async () => {
-	"use cache";
-	cacheLife("hours");
-	cacheTag("blog-posts");
-
 	const blogPostFilePaths = await getBlogPostFilePaths();
 	return blogPostFilePaths.map((name) =>
 		path.basename(name, path.extname(name)),
@@ -40,10 +35,6 @@ export const readBlogPostFileFromSlug = async (
 };
 
 export const compileBlogPostMDXFromSlug = async (slug: string) => {
-	"use cache";
-	cacheLife("hours");
-	cacheTag("blog-posts");
-
 	const content = await readBlogPostFileFromSlug(slug);
 	return evaluateBlogPostMDX({ content });
 };
@@ -59,10 +50,6 @@ interface BlogPostData {
 	slug: string;
 }
 export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
-	"use cache";
-	cacheLife("hours");
-	cacheTag("blog-posts");
-
 	const slugs = await getBlogPostSlugs();
 	const posts = await Promise.all(
 		slugs.map(async (slug) => {

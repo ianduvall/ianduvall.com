@@ -12,6 +12,10 @@ import { FormattedDate } from "../../components/formatted-date";
 interface PostParams {
 	slug: string;
 }
+
+export const dynamicParams = false;
+export const revalidate = false;
+
 export const generateStaticParams = async (): Promise<PostParams[]> => {
 	const slugs = await getBlogPostSlugs();
 
