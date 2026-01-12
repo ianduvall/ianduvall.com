@@ -1,13 +1,11 @@
 import { baseUrl } from "src/app/shared";
 import { getAllBlogPostData } from "src/app/(public)/blog/helpers";
 
-export const dynamic = "force-static";
-export const revalidate = false;
-
 const title = "Ian Duvall's Blog";
 const description = "An RSS feed of Ian Duvall's blog posts";
 
 async function getRssFeed() {
+	"use cache";
 	const blogPosts = await getAllBlogPostData();
 	const itemsXml = blogPosts
 		.sort((a, b) => {

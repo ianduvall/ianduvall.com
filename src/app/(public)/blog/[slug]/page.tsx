@@ -13,9 +13,6 @@ interface PostParams {
 	slug: string;
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
-
 export const generateStaticParams = async (): Promise<PostParams[]> => {
 	const slugs = await getBlogPostSlugs();
 
@@ -79,6 +76,7 @@ export default async function Blog({
 }: {
 	params: Promise<PostParams>;
 }) {
+	"use cache";
 	const { slug } = await params;
 	const [blogPost, { title, subtitle, publishedAt, summary, image }] =
 		await compileBlogPostMDXFromSlug(slug);
