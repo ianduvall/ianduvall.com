@@ -1,4 +1,8 @@
-import React, { type ComponentProps, type JSX } from "react";
+import {
+	type ComponentProps,
+	type ComponentPropsWithoutRef,
+	type JSX,
+} from "react";
 import Image from "next/image";
 import { highlight } from "sugar-high";
 import remarkGfm from "remark-gfm";
@@ -39,9 +43,7 @@ const mdxComponents = {
 	h4: createHeading(4),
 	h5: createHeading(5),
 	h6: createHeading(6),
-	Image: function RoundedImage(
-		props: React.ComponentPropsWithoutRef<typeof Image>,
-	) {
+	Image: function RoundedImage(props: ComponentPropsWithoutRef<typeof Image>) {
 		return (
 			<Image
 				className={`rounded-lg ${props.className ?? ""}`}
@@ -65,7 +67,7 @@ const BlogPostMetadataSchema = z.object({
 	title: z.string(),
 	subtitle: z.string().optional(),
 	publishedAt: z.string().nullable(),
-	summary: z.string(),
+	summary: z.string().optional(),
 	image: z.string().optional(),
 });
 

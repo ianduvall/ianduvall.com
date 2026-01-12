@@ -1,0 +1,64 @@
+export const metadata = {
+	title: "Stand on the Shoulders of Giants",
+	subtitle: "Why leveraging existing tools is an act of wisdom, not laziness",
+	publishedAt: "2026-01-11",
+	summary:
+		"A reflection on the temptation to rebuild existing tools instead of leveraging battle-tested libraries. Explores why we fall into this trap, the hidden costs of reinvention, and how using existing solutions frees us to focus on problems uniquely ours to solve.",
+};
+
+There's a lesson I keep relearning as I become more senior in my software engineering career that stems from the urge to (naively) build from scratch or (knowingly) rebuild what already exists. When faced with a task it's common to default to crafting a solution ourselves. Even when we know there's something that could solve it it's tempting to try anyway. Whether naive or deliberate, this impulse often leads to wasted time, duplicated effort, and missed opportunities to leverage existing solutions.
+
+## The Iceberg of Effort
+
+What we see when we look at a well-established tool is the tip of the iceberg. The clean API, the documentation, the features that just work. What we don't see are the thousands of hours spent on:
+
+- Edge cases discovered through years of production use
+- Security vulnerabilities found and patched
+- Performance optimizations for scenarios we haven't imagined
+- Cross-platform compatibility issues
+- Documentation revisions based on user confusion
+- Bug fixes for problems we'll inevitably encounter ourselves
+
+When we estimate the effort to rebuild, we're estimating the visible tip. The hidden mass beneath the surface is what separates a weekend project from a battle-tested solution.
+
+## The Allure of Reinvention
+
+Why do we keep falling into this trap? A few reasons come to mind:
+
+**Overconfidence in our understanding.** We see the 80% of functionality we need and assume that's 80% of the work. In reality, that last 20% often represents 80% of the effort. The long tail of edge cases, error handling, and polish adds up fast.
+
+**The "Not Invented Here" syndrome.** There's a certain pride in building something yourself. Dependencies feel like a loss of control, a black box that could break at any moment. But this ignores that your own code is also a black box to your future self.
+
+**Underestimating maintenance.** Building version 1.0 is the easy part. Maintaining it, keeping it secure, adapting it as requirements change: that's where the real cost lives. Every library you adopt is one less thing you have to maintain.
+
+**Spending [innovation tokens](https://mcfunley.com/choose-boring-technology) without realizing it.** Every custom solution is a token spent. Every unfamiliar system you maintain is a token spent. These add up fast, and we tend to overestimate how many we have.
+
+## When to Use the Wheel
+
+Before reaching for the keyboard to build your own solution, ask yourself:
+
+1. **Is this a solved problem?** If thousands of developers have used a library for years, they've likely encountered and solved problems you haven't thought of yet.
+
+2. **Is this core to my business?** If authentication isn't your product, why spend months building an auth system when battle-tested solutions exist?
+
+3. **What's the true cost of ownership?** Factor in not just the initial build, but ongoing maintenance, security updates, and the opportunity cost of not working on your actual product.
+
+## When to Build the Wheel
+
+There are legitimate reasons to build from scratch:
+
+- The existing solutions genuinely don't fit your constraints
+- You need deep understanding for educational purposes
+- The problem space is novel enough that no good solutions exist
+- The maintenance burden of adapting an existing solution exceeds building your own
+- This is where you've deliberately chosen to spend an innovation token because it's core to your differentiation
+
+But these cases are rarer than we'd like to admit.
+
+## Standing on Shoulders
+
+Isaac Newton famously wrote, "If I have seen further, it is by standing on the shoulders of giants." The same principle applies to software. Every library we use represents accumulated knowledge, hard-won lessons, and countless hours of refinement.
+
+Using existing tools isn't laziness. It's leverage. It frees us to focus on the problems that are uniquely ours to solve, the ones where we can actually add value.
+
+The next time you're tempted to rebuild something that exists, pause. Consider the iceberg. Then stand on the shoulders of those who came before, and use that vantage point to see further than you could alone.
