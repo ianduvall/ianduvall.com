@@ -39,10 +39,7 @@ export async function BlogPosts({
 							) : null}
 							<VT name={`blog-date-${post.slug}`}>
 								<span className="text-sm italic">
-									<FormattedDate
-										date={post.metadata.publishedAt}
-										includeRelative
-									/>
+									<FormattedDate date={post.metadata.publishedAt} />
 								</span>
 							</VT>
 						</div>

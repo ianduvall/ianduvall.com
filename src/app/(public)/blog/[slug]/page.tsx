@@ -121,7 +121,7 @@ export default async function Blog({
 					</ViewTransition>
 					<ViewTransition name={`blog-date-${slug}`}>
 						{publishedAt ? (
-							<FormattedDate date={publishedAt} includeRelative={true} />
+							<FormattedDate date={publishedAt} />
 						) : (
 							<div>Unpublished Draft</div>
 						)}
