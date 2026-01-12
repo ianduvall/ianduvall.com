@@ -45,7 +45,7 @@ export const generateMetadata = async ({
 
 	const ogImage = image
 		? image
-		: `${baseUrl}/og?title=${encodeURIComponent(title)}`;
+		: `${baseUrl}/og/${encodeURIComponent(title)}`;
 
 	return {
 		title,
@@ -96,7 +96,7 @@ export default async function Blog({
 						description: summary,
 						image: image
 							? `${baseUrl}${image}`
-							: `/og?title=${encodeURIComponent(title)}`,
+							: `/og/${encodeURIComponent(title)}`,
 						url: `${baseUrl}/blog/${slug}`,
 						author: {
 							"@type": "Ian Duvall",
