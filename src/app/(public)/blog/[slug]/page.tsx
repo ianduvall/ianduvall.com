@@ -43,9 +43,7 @@ export const generateMetadata = async ({
 		image,
 	} = await readBlogPostMetadata(slug);
 
-	const ogImage = image
-		? image
-		: `${baseUrl}/og/${encodeURIComponent(title)}`;
+	const ogImage = image ? image : `${baseUrl}/og/${encodeURIComponent(title)}`;
 
 	return {
 		title,
