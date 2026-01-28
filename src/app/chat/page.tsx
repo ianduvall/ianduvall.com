@@ -24,7 +24,7 @@ const languageModelCreateOptions = {
 	initialPrompts: [
 		{
 			role: "system",
-			content: `You are a helpful assistant. Today is ${new Date().toLocaleDateString()}. Be concise and clear.`,
+			content: `You are a helpful assistant. Today is ${new Date().toISOString().split("T")[0]}. Be concise and clear.`,
 		},
 	],
 	tools: [

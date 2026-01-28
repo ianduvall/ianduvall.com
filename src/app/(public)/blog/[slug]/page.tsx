@@ -97,8 +97,8 @@ export default async function Blog({
 							: `/og/${encodeURIComponent(title)}`,
 						url: `${baseUrl}/blog/${slug}`,
 						author: {
-							"@type": "Ian Duvall",
-							name: "My Portfolio",
+							"@type": "Person",
+							name: "Ian Duvall",
 						},
 					}),
 				}}
