@@ -2,9 +2,7 @@
 
 ## Rules
 
-- ALWAYS call the `init` tool from next-devtools-mcp FIRST to set up proper context and establish documentation
-  requirements. Do this automatically without being asked
-- Do NOT add inline comments unless explicitly asked to
+- Use descriptive function and variable names instead of inline comments
 
 ## Project Overview
 
@@ -23,10 +21,6 @@ This is a personal website built with Next.js. The site includes:
 - `pnpm lint:fix` - auto-fix linting issues
 - `pnpm format` - format code
 - `pnpm format:check` - check for code formatting violations
-
-## Rules
-
-- Never add inline comments unless explicitly asked to
 
 ## Architecture
 
@@ -58,10 +52,3 @@ The app uses Next.js route groups for organization:
 ### Build Configuration
 
 - React Compiler enabled in `next.config.ts`
-
-### Environment Variables
-
-Environment files:
-
-- `.env.local` (root)
-- git ignored
