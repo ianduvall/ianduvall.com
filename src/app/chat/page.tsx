@@ -63,8 +63,17 @@ const languageModelCreateOptions = {
 } as const satisfies LanguageModelCreateOptions;
 
 interface Message {
+	id: string;
 	role: "user" | "assistant";
 	content: string;
+}
+
+function createMessage(role: Message["role"], content: string): Message {
+	return {
+		id: crypto.randomUUID(),
+		role,
+		content,
+	};
 }
 
 export default function ChatPage() {
@@ -96,7 +105,7 @@ function ChatInterface() {
 
 		const userMessage = input.trim();
 		setInput("");
-		setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+		setMessages((prev) => [...prev, createMessage("user", userMessage)]);
 		setIsLoading(true);
 		const abortController = new AbortController();
 		abortControllerRef.current = abortController;
@@ -129,7 +138,7 @@ function ChatInterface() {
 
 			setMessages((prev) => [
 				...prev,
-				{ role: "assistant", content: messageBuffer },
+				createMessage("assistant", messageBuffer),
 			]);
 			setStreamingMessage("");
 		} catch (error) {
@@ -139,10 +148,10 @@ function ChatInterface() {
 			console.error("Chat error:", error);
 			setMessages((prev) => [
 				...prev,
-				{
-					role: "assistant",
-					content: "Sorry, an error occurred. Please try again later.",
-				},
+				createMessage(
+					"assistant",
+					"Sorry, an error occurred. Please try again later.",
+				),
 			]);
 			setStreamingMessage("");
 		} finally {
@@ -184,9 +193,9 @@ function ChatInterface() {
 						</div>
 					) : (
 						<>
-							{messages.map((message, index) => (
+							{messages.map((message) => (
 								<div
-									key={index}
+									key={message.id}
 									className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
 								>
 									<div

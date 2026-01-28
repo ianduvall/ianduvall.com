@@ -9,8 +9,9 @@ export function Footer() {
 						className="flex items-center transition-all hover:text-gray-800 dark:hover:text-gray-100"
 						target="_blank"
 						href="/rss"
+						prefetch={false}
 					>
-						<p className="ml-2 h-7">rss</p>
+						<span className="ml-2 h-7">rss</span>
 					</Link>
 				</li>
 				<li>
@@ -19,7 +20,7 @@ export function Footer() {
 						target="_blank"
 						href="https://github.com/ianduvall"
 					>
-						<p className="ml-2 h-7">github</p>
+						<span className="ml-2 h-7">github</span>
 					</Link>
 				</li>
 				<li>
@@ -28,7 +29,7 @@ export function Footer() {
 						target="_blank"
 						href="https://github.com/ianduvall/ianduvall.com"
 					>
-						<p className="ml-2 h-7">view source</p>
+						<span className="ml-2 h-7">view source</span>
 					</Link>
 				</li>
 			</ul>
