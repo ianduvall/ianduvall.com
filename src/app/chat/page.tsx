@@ -27,39 +27,6 @@ const languageModelCreateOptions = {
 			content: `You are a helpful assistant. Today is ${new Date().toISOString().split("T")[0]}. Be concise and clear.`,
 		},
 	],
-	tools: [
-		{
-			description: "Retrieve the current time",
-			execute: async () => {
-				return new Date().toLocaleTimeString();
-			},
-			inputSchema: {
-				type: "object",
-				properties: {},
-				required: [],
-			},
-			name: "current time",
-		},
-		{
-			name: "getWeather",
-			description: "Get the weather in a location.",
-			inputSchema: {
-				type: "object",
-				properties: {
-					location: {
-						type: "string",
-						description: "The city to check for the weather condition.",
-					},
-				},
-				required: ["location"],
-			},
-			async execute({ location }) {
-				console.log("weather tool call for location:", location);
-
-				return "71 and sunny";
-			},
-		},
-	],
 } as const satisfies LanguageModelCreateOptions;
 
 interface Message {
@@ -89,8 +56,9 @@ function ChatInterface() {
 	const [streamingMessage, setStreamingMessage] = useState<string>("");
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const { getSession, resetSession, downloadProgress } =
-		useLanguageModelSession(languageModelCreateOptions);
+	const { getSession, resetSession, downloading } = useLanguageModelSession(
+		languageModelCreateOptions,
+	);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -211,7 +179,7 @@ function ChatInterface() {
 									</div>
 								</div>
 							))}
-							{isLoading && !streamingMessage && downloadProgress === null && (
+							{isLoading && !streamingMessage && !downloading && (
 								<div className="flex justify-start">
 									<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
 										<div className="flex items-center gap-2">
@@ -241,27 +209,7 @@ function ChatInterface() {
 
 			{/* Input */}
 			<div className="relative border-t px-4 py-4">
-				{/* Download Progress Pill */}
-				{downloadProgress !== null && (
-					<div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2">
-						<div className="rounded-full bg-gray-900 px-4 py-2 shadow-lg">
-							<div className="flex items-center gap-3">
-								<span className="text-sm text-white">Downloading model...</span>
-								<div className="flex items-center gap-2">
-									<div className="h-1.5 w-32 overflow-hidden rounded-full bg-gray-700">
-										<div
-											className="h-full bg-blue-500 transition-all duration-300"
-											style={{ width: `${downloadProgress * 100}%` }}
-										/>
-									</div>
-									<span className="text-sm font-medium text-white">
-										{Math.round(downloadProgress * 100)}%
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				)}
+				{downloading ? <DownloadingIndicator /> : null}
 				<form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
 					<div className="flex gap-2">
 						<input
@@ -284,5 +232,24 @@ function ChatInterface() {
 				</form>
 			</div>
 		</main>
+	);
+}
+
+function DownloadingIndicator() {
+	return (
+		<div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2">
+			<div className="rounded-full bg-gray-900/95 px-5 py-2.5 shadow-xl backdrop-blur-sm">
+				<div className="flex items-center gap-3">
+					<div className="flex gap-1">
+						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_infinite] rounded-full bg-blue-400" />
+						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.2s_infinite] rounded-full bg-blue-400" />
+						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.4s_infinite] rounded-full bg-blue-400" />
+					</div>
+					<span className="text-sm tracking-wide text-white/90">
+						Downloading model
+					</span>
+				</div>
+			</div>
+		</div>
 	);
 }

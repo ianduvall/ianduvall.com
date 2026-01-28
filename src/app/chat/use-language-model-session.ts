@@ -4,29 +4,29 @@ export function useLanguageModelSession(
 	createOptions?: LanguageModelCreateOptions,
 ) {
 	const sessionRef = useRef<LanguageModel | null>(null);
-	const [downloadProgress, setDownloadProgress] = useState<number | null>(null);
+	const [downloading, setDownloading] = useState<boolean>(false);
 
 	const getSession = async (): Promise<LanguageModel> => {
 		if (!sessionRef.current) {
 			sessionRef.current = await LanguageModel.create({
 				...createOptions,
-				monitor(m) {
-					createOptions?.monitor?.(m);
+				monitor(createMonitor) {
+					createOptions?.monitor?.(createMonitor);
 
-					m.addEventListener("downloadprogress", (progressEvent) => {
-						setDownloadProgress(progressEvent.loaded);
+					createMonitor.addEventListener("downloadprogress", () => {
+						setDownloading(true);
 					});
 				},
 			});
 			// Clear download progress once model is loaded
-			setDownloadProgress(null);
+			setDownloading(false);
 		}
 		return sessionRef.current;
 	};
 
 	const resetSession = () => {
 		sessionRef.current = null;
-		setDownloadProgress(null);
+		setDownloading(false);
 	};
 
 	useEffect(() => {
@@ -35,5 +35,5 @@ export function useLanguageModelSession(
 		};
 	}, []);
 
-	return { getSession, resetSession, downloadProgress };
+	return { getSession, resetSession, downloading };
 }
