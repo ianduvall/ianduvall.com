@@ -8,7 +8,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
 		"isolatedModules": true,
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"lib": ["DOM", "DOM.Iterable", "DOM.AsyncIterable", "ESNext"],
 		"moduleDetection": "force",
 		"noUncheckedIndexedAccess": true,
 		"resolveJsonModule": true,
@@ -31,12 +31,12 @@
 		"allowJs": true
 	},
 	"include": [
+		".next/dev/types/**/*.ts",
 		".next/types/**/*.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		"next-env.d.ts",
-		"next.config.ts",
-		".next/dev/types/**/*.ts"
+		"next.config.ts"
 	],
 	"exclude": ["**/node_modules", "**/.*/"]
 }

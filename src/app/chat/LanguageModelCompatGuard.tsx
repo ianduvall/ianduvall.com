@@ -1,18 +1,17 @@
 "use client";
-import { use, useState, type PropsWithChildren } from "react";
+import { use, type PropsWithChildren } from "react";
 import { Link } from "../components/link";
+import { languageModelCreateOptions } from "./lm-config";
 
-interface LanguageModelCompatGuardProps extends PropsWithChildren {
-	createOptions: LanguageModelCreateCoreOptions;
-}
+interface LanguageModelCompatGuardProps extends PropsWithChildren {}
+
+const availabilityPromise = LanguageModel.availability(
+	languageModelCreateOptions,
+);
 
 export function LanguageModelCompatGuard({
 	children,
-	createOptions,
 }: LanguageModelCompatGuardProps) {
-	const [availabilityPromise] = useState(() =>
-		LanguageModel.availability(createOptions),
-	);
 	const availability = use(availabilityPromise);
 
 	if (availability === "unavailable") {

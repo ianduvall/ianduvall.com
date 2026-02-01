@@ -2,6 +2,8 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useLanguageModelSession } from "./use-language-model-session";
+import { languageModelCreateOptions } from "./lm-config";
+import { WelcomeDialog } from "./welcome-dialog";
 
 const LanguageModelCompatGuard = dynamic(
 	() =>
@@ -10,24 +12,6 @@ const LanguageModelCompatGuard = dynamic(
 		),
 	{ ssr: false },
 );
-
-// patch ReadableStream to support for-await-of
-declare global {
-	interface ReadableStream<R = any, T = any> {
-		[Symbol.asyncIterator](): AsyncIterableIterator<T>;
-	}
-}
-
-const languageModelCreateOptions = {
-	expectedInputs: [{ type: "text", languages: ["en"] }],
-	expectedOutputs: [{ type: "text", languages: ["en"] }],
-	initialPrompts: [
-		{
-			role: "system",
-			content: `You are a helpful assistant. Today is ${new Date().toISOString().split("T")[0]}. Be concise and clear.`,
-		},
-	],
-} as const satisfies LanguageModelCreateOptions;
 
 interface Message {
 	id: string;
@@ -45,7 +29,7 @@ function createMessage(role: Message["role"], content: string): Message {
 
 export default function ChatPage() {
 	return (
-		<LanguageModelCompatGuard createOptions={languageModelCreateOptions}>
+		<LanguageModelCompatGuard>
 			<ChatInterface />
 		</LanguageModelCompatGuard>
 	);
@@ -56,9 +40,8 @@ function ChatInterface() {
 	const [streamingMessage, setStreamingMessage] = useState<string>("");
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const { getSession, resetSession, downloading } = useLanguageModelSession(
-		languageModelCreateOptions,
-	);
+	const { getSession, resetSession, downloading, quotaInfo, updateQuotaInfo } =
+		useLanguageModelSession(languageModelCreateOptions);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -109,6 +92,7 @@ function ChatInterface() {
 				createMessage("assistant", messageBuffer),
 			]);
 			setStreamingMessage("");
+			updateQuotaInfo();
 		} catch (error) {
 			if (Error.isError(error) && error.name === "AbortError") {
 				return;
@@ -136,10 +120,21 @@ function ChatInterface() {
 
 	return (
 		<main className="flex h-screen flex-col">
+			<WelcomeDialog
+				onClose={() => {
+					void getSession();
+				}}
+			/>
+
 			{/* Header */}
 			<header className="border-b px-4 py-4">
 				<div className="mx-auto flex max-w-4xl items-center justify-between">
 					<h1 className="text-xl font-semibold">Chat</h1>
+					{quotaInfo && (
+						<span className="text-sm text-gray-500">
+							{quotaInfo.inputQuotaLeft.toLocaleString()} tokens left
+						</span>
+					)}
 					{messages.length > 0 && (
 						<button
 							type="button"
