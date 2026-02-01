@@ -6,9 +6,7 @@ export interface QuotaInfo {
 	inputQuotaLeft: number;
 }
 
-export function useLanguageModelSession(
-	createOptions?: LanguageModelCreateOptions,
-) {
+export function useChat(createOptions?: LanguageModelCreateOptions) {
 	const sessionRef = useRef<LanguageModel | null>(null);
 	const [downloading, setDownloading] = useState<boolean>(false);
 	const [quotaInfo, setQuotaInfo] = useState<QuotaInfo | null>(null);

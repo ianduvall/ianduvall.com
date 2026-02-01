@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { useLanguageModelSession } from "./use-language-model-session";
+import { useChat } from "./use-chat";
 import { languageModelCreateOptions } from "./lm-config";
 import { WelcomeDialog } from "./welcome-dialog";
 
@@ -41,7 +41,7 @@ function ChatInterface() {
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const { getSession, resetSession, downloading, quotaInfo, updateQuotaInfo } =
-		useLanguageModelSession(languageModelCreateOptions);
+		useChat(languageModelCreateOptions);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
