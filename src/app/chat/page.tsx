@@ -1,9 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { useChat } from "./use-chat";
+import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import { languageModelCreateOptions } from "./lm-config";
-import { WelcomeDialog } from "./welcome-dialog";
+import { Button } from "../components/button";
 
 const LanguageModelCompatGuard = dynamic(
 	() =>
@@ -29,19 +28,30 @@ function createMessage(role: Message["role"], content: string): Message {
 
 export default function ChatPage() {
 	return (
-		<LanguageModelCompatGuard>
-			<ChatInterface />
-		</LanguageModelCompatGuard>
+		<main className="flex h-screen min-h-screen flex-col">
+			<Suspense fallback={<div className="p-6">Loading chat...</div>}>
+				<LanguageModelCompatGuard>
+					{({ session, downloaded }) => (
+						<ChatInterface initialSession={session} downloaded={downloaded} />
+					)}
+				</LanguageModelCompatGuard>
+			</Suspense>
+		</main>
 	);
 }
 
-function ChatInterface() {
+function ChatInterface({
+	initialSession,
+	downloaded,
+}: {
+	initialSession: LanguageModel;
+	downloaded: boolean;
+}) {
+	const [session, setSession] = useState<LanguageModel | null>(initialSession);
 	const [messages, setMessages] = useState<ReadonlyArray<Message>>([]);
 	const [streamingMessage, setStreamingMessage] = useState<string>("");
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const { getSession, resetSession, downloading, quotaInfo, updateQuotaInfo } =
-		useChat(languageModelCreateOptions);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -50,183 +60,188 @@ function ChatInterface() {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages, streamingMessage]);
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
-		if (!input.trim() || isLoading) return;
+	const header = (
+		<header className="border-b px-4 py-4">
+			<div className="mx-auto flex max-w-4xl items-center justify-between">
+				<h1 className="text-xl font-semibold">Chat</h1>
+				{session && (
+					<span className="text-sm text-gray-500">
+						{(session.inputQuota - session.inputUsage).toLocaleString()} tokens
+						left
+					</span>
+				)}
+				<Button
+					type="button"
+					action={async () => {
+						setMessages([]);
+						setStreamingMessage("");
+						startTransition(async () => {
+							setSession(
+								await LanguageModel.create({
+									...languageModelCreateOptions,
+								}),
+							);
+						});
+						inputRef.current?.focus();
+					}}
+					className="rounded-md px-3 py-1 text-sm hover:bg-gray-100"
+					disabled={!!messages.length}
+				>
+					New Chat
+				</Button>
+			</div>
+		</header>
+	);
 
-		const userMessage = input.trim();
-		setInput("");
-		setMessages((prev) => [...prev, createMessage("user", userMessage)]);
-		setIsLoading(true);
-		const abortController = new AbortController();
-		abortControllerRef.current = abortController;
+	const body = (
+		<div className="flex-1 overflow-y-auto px-4 py-6">
+			<div className="mx-auto max-w-4xl space-y-6">
+				{messages.length === 0 && !streamingMessage ? (
+					<div className="flex h-full items-center justify-center text-gray-500">
+						<p>Start a conversation...</p>
+					</div>
+				) : (
+					<>
+						{messages.map((message) => (
+							<div
+								key={message.id}
+								className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+							>
+								<div
+									className={`max-w-[80%] rounded-lg px-4 py-2 ${
+										message.role === "user"
+											? "bg-blue-600 text-white"
+											: "bg-gray-100 text-gray-900"
+									}`}
+								>
+									<div className="wrap-break-word whitespace-pre-wrap">
+										{message.content}
+									</div>
+								</div>
+							</div>
+						))}
+						{isLoading && !streamingMessage && (
+							<div className="flex justify-start">
+								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
+									<div className="flex items-center gap-2">
+										<div className="flex gap-1">
+											<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]" />
+											<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]" />
+											<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400" />
+										</div>
+									</div>
+								</div>
+							</div>
+						)}
+						{streamingMessage && (
+							<div className="flex justify-start">
+								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
+									<div className="wrap-break-word whitespace-pre-wrap">
+										{streamingMessage}
+									</div>
+								</div>
+							</div>
+						)}
+					</>
+				)}
+				<div ref={messagesEndRef} />
+			</div>
+		</div>
+	);
 
-		try {
-			const session = await getSession();
-			const stream = session.promptStreaming(userMessage, {
-				signal: abortController.signal,
-			});
+	const footer = (
+		<div className="relative border-t px-4 py-4">
+			{downloaded ? null : <DownloadingIndicator />}
+			<form
+				onSubmit={async (event) => {
+					event.preventDefault();
+					if (!session || !input.trim() || isLoading) return;
 
-			let messageBuffer = "";
-			let newlineBuffer = "";
-			setStreamingMessage("");
+					const userMessage = input.trim();
+					setInput("");
+					setMessages((prev) => [...prev, createMessage("user", userMessage)]);
+					setIsLoading(true);
+					const abortController = new AbortController();
+					abortControllerRef.current = abortController;
 
-			for await (const chunk of stream) {
-				const isOnlyNewlines = /^[\r\n]+$/.test(chunk);
+					try {
+						const stream = session.promptStreaming(userMessage, {
+							signal: abortController.signal,
+						});
 
-				if (isOnlyNewlines) {
-					newlineBuffer += chunk;
-				} else {
-					if (newlineBuffer) {
-						messageBuffer += newlineBuffer;
-						newlineBuffer = "";
+						let messageBuffer = "";
+						let newlineBuffer = "";
+						setStreamingMessage("");
+
+						for await (const chunk of stream) {
+							const isOnlyNewlines = /^[\r\n]+$/.test(chunk);
+
+							if (isOnlyNewlines) {
+								newlineBuffer += chunk;
+							} else {
+								if (newlineBuffer) {
+									messageBuffer += newlineBuffer;
+									newlineBuffer = "";
+								}
+								messageBuffer += chunk;
+							}
+
+							setStreamingMessage(messageBuffer);
+						}
+
+						setMessages((prev) => [
+							...prev,
+							createMessage("assistant", messageBuffer),
+						]);
+						setStreamingMessage("");
+					} catch (error) {
+						if (Error.isError(error) && error.name === "AbortError") {
+							return;
+						}
+						console.error("Chat error:", error);
+						setMessages((prev) => [
+							...prev,
+							createMessage(
+								"assistant",
+								"Sorry, an error occurred. Please try again later.",
+							),
+						]);
+						setStreamingMessage("");
+					} finally {
+						setIsLoading(false);
+						abortControllerRef.current = null;
 					}
-					messageBuffer += chunk;
-				}
-
-				setStreamingMessage(messageBuffer);
-			}
-
-			setMessages((prev) => [
-				...prev,
-				createMessage("assistant", messageBuffer),
-			]);
-			setStreamingMessage("");
-			updateQuotaInfo();
-		} catch (error) {
-			if (Error.isError(error) && error.name === "AbortError") {
-				return;
-			}
-			console.error("Chat error:", error);
-			setMessages((prev) => [
-				...prev,
-				createMessage(
-					"assistant",
-					"Sorry, an error occurred. Please try again later.",
-				),
-			]);
-			setStreamingMessage("");
-		} finally {
-			setIsLoading(false);
-			abortControllerRef.current = null;
-		}
-	};
-
-	const handleReset = () => {
-		setMessages([]);
-		setStreamingMessage("");
-		resetSession();
-	};
+				}}
+				className="mx-auto max-w-4xl"
+			>
+				<div className="flex gap-2">
+					<input
+						ref={inputRef}
+						type="text"
+						value={input}
+						onChange={(e) => setInput(e.currentTarget.value)}
+						placeholder="Type your message..."
+						autoFocus={true}
+						className="flex-1 rounded-lg border px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:outline-none disabled:bg-gray-100"
+					/>
+					<button
+						type="submit"
+						disabled={isLoading || !input.trim()}
+						className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+					>
+						{isLoading ? "Sending..." : "Send"}
+					</button>
+				</div>
+			</form>
+		</div>
+	);
 
 	return (
-		<main className="flex h-screen flex-col">
-			<WelcomeDialog
-				onClose={() => {
-					void getSession();
-				}}
-			/>
-
-			{/* Header */}
-			<header className="border-b px-4 py-4">
-				<div className="mx-auto flex max-w-4xl items-center justify-between">
-					<h1 className="text-xl font-semibold">Chat</h1>
-					{quotaInfo && (
-						<span className="text-sm text-gray-500">
-							{quotaInfo.inputQuotaLeft.toLocaleString()} tokens left
-						</span>
-					)}
-					{messages.length > 0 && (
-						<button
-							type="button"
-							onClick={handleReset}
-							className="rounded-md px-3 py-1 text-sm hover:bg-gray-100"
-						>
-							New Chat
-						</button>
-					)}
-				</div>
-			</header>
-
-			{/* Messages */}
-			<div className="flex-1 overflow-y-auto px-4 py-6">
-				<div className="mx-auto max-w-4xl space-y-6">
-					{messages.length === 0 && !streamingMessage ? (
-						<div className="flex h-full items-center justify-center text-gray-500">
-							<p>Start a conversation...</p>
-						</div>
-					) : (
-						<>
-							{messages.map((message) => (
-								<div
-									key={message.id}
-									className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-								>
-									<div
-										className={`max-w-[80%] rounded-lg px-4 py-2 ${
-											message.role === "user"
-												? "bg-blue-600 text-white"
-												: "bg-gray-100 text-gray-900"
-										}`}
-									>
-										<div className="wrap-break-word whitespace-pre-wrap">
-											{message.content}
-										</div>
-									</div>
-								</div>
-							))}
-							{isLoading && !streamingMessage && !downloading && (
-								<div className="flex justify-start">
-									<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
-										<div className="flex items-center gap-2">
-											<div className="flex gap-1">
-												<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]" />
-												<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]" />
-												<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400" />
-											</div>
-										</div>
-									</div>
-								</div>
-							)}
-							{streamingMessage && (
-								<div className="flex justify-start">
-									<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
-										<div className="wrap-break-word whitespace-pre-wrap">
-											{streamingMessage}
-										</div>
-									</div>
-								</div>
-							)}
-						</>
-					)}
-					<div ref={messagesEndRef} />
-				</div>
-			</div>
-
-			{/* Input */}
-			<div className="relative border-t px-4 py-4">
-				{downloading ? <DownloadingIndicator /> : null}
-				<form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
-					<div className="flex gap-2">
-						<input
-							ref={inputRef}
-							type="text"
-							value={input}
-							onChange={(e) => setInput(e.currentTarget.value)}
-							placeholder="Type your message..."
-							autoFocus={true}
-							className="flex-1 rounded-lg border px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:outline-none disabled:bg-gray-100"
-						/>
-						<button
-							type="submit"
-							disabled={isLoading || !input.trim()}
-							className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-						>
-							{isLoading ? "Sending..." : "Send"}
-						</button>
-					</div>
-				</form>
-			</div>
-		</main>
+		<>
+			{header}
+			{body}
+			{footer}
+		</>
 	);
 }
 
