@@ -21,13 +21,11 @@ function createMessage(role: Message["role"], content: string): Message {
 export default function ChatPage() {
 	return (
 		<main className="flex h-screen min-h-screen flex-col">
-			<Suspense fallback={<div className="p-6">Loading chat...</div>}>
-				<LanguageModelCompat>
-					{({ session, downloaded }) => (
-						<ChatInterface initialSession={session} downloaded={downloaded} />
-					)}
-				</LanguageModelCompat>
-			</Suspense>
+			<LanguageModelCompat>
+				{({ session, downloaded }) => (
+					<ChatInterface initialSession={session} downloaded={downloaded} />
+				)}
+			</LanguageModelCompat>
 		</main>
 	);
 }

@@ -4,12 +4,14 @@ import { Link } from "../components/link";
 import { Button } from "../components/button";
 import { languageModelCreateOptions } from "./lm-config";
 
-const availabilityPromise = LanguageModel.availability(
-	languageModelCreateOptions,
-);
+const availabilityPromise =
+	typeof LanguageModel !== "undefined" &&
+	LanguageModel.availability(languageModelCreateOptions);
 
 export default function Message({ action }: { action?: () => void }) {
-	const availability = use(availabilityPromise);
+	const availability = availabilityPromise
+		? use(availabilityPromise)
+		: "unavailable";
 
 	if (availability === "unavailable") {
 		return (
