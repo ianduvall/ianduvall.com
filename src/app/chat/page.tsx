@@ -1,16 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
 import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import { languageModelCreateOptions } from "./lm-config";
 import { Button } from "../components/button";
-
-const LanguageModelCompatGuard = dynamic(
-	() =>
-		import("./LanguageModelCompatGuard").then(
-			(mod) => mod.LanguageModelCompatGuard,
-		),
-	{ ssr: false },
-);
+import { LanguageModelCompat } from "./language-model-compat";
 
 interface Message {
 	id: string;
@@ -30,11 +22,11 @@ export default function ChatPage() {
 	return (
 		<main className="flex h-screen min-h-screen flex-col">
 			<Suspense fallback={<div className="p-6">Loading chat...</div>}>
-				<LanguageModelCompatGuard>
+				<LanguageModelCompat>
 					{({ session, downloaded }) => (
 						<ChatInterface initialSession={session} downloaded={downloaded} />
 					)}
-				</LanguageModelCompatGuard>
+				</LanguageModelCompat>
 			</Suspense>
 		</main>
 	);
