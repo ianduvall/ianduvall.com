@@ -2,6 +2,7 @@
 import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import { languageModelCreateOptions } from "./lm-config";
 import { Button } from "../components/button";
+import { ChatMarkdown } from "./chat-markdown";
 import { LanguageModelCompat } from "./language-model-compat";
 
 interface Message {
@@ -23,14 +24,14 @@ export default function ChatPage() {
 		<main className="flex h-screen min-h-screen flex-col">
 			<LanguageModelCompat>
 				{({ session, downloaded }) => (
-					<ChatInterface initialSession={session} downloaded={downloaded} />
+					<ChatUI initialSession={session} downloaded={downloaded} />
 				)}
 			</LanguageModelCompat>
 		</main>
 	);
 }
 
-function ChatInterface({
+function ChatUI({
 	initialSession,
 	downloaded,
 }: {
@@ -55,7 +56,7 @@ function ChatInterface({
 			<div className="mx-auto flex max-w-4xl items-center justify-between">
 				<h1 className="text-xl font-semibold">Chat</h1>
 				{session && (
-					<span className="text-sm text-gray-500">
+					<span className="text-sm text-gray-400">
 						{(session.inputQuota - session.inputUsage).toLocaleString()} tokens
 						left
 					</span>
@@ -63,19 +64,16 @@ function ChatInterface({
 				<Button
 					type="button"
 					action={async () => {
+						inputRef.current?.focus();
 						setMessages([]);
 						setStreamingMessage("");
-						startTransition(async () => {
-							setSession(
-								await LanguageModel.create({
-									...languageModelCreateOptions,
-								}),
-							);
+						const newSession = await LanguageModel.create({
+							...languageModelCreateOptions,
 						});
-						inputRef.current?.focus();
+						startTransition(() => {
+							setSession(newSession);
+						});
 					}}
-					className="rounded-md px-3 py-1 text-sm hover:bg-gray-100"
-					disabled={!!messages.length}
 				>
 					New Chat
 				</Button>
@@ -87,7 +85,7 @@ function ChatInterface({
 		<div className="flex-1 overflow-y-auto px-4 py-6">
 			<div className="mx-auto max-w-4xl space-y-6">
 				{messages.length === 0 && !streamingMessage ? (
-					<div className="flex h-full items-center justify-center text-gray-500">
+					<div className="flex h-full items-center justify-center text-gray-400">
 						<p>Start a conversation...</p>
 					</div>
 				) : (
@@ -104,9 +102,7 @@ function ChatInterface({
 											: "bg-gray-100 text-gray-900"
 									}`}
 								>
-									<div className="wrap-break-word whitespace-pre-wrap">
-										{message.content}
-									</div>
+									<ChatMarkdown>{message.content}</ChatMarkdown>
 								</div>
 							</div>
 						))}
@@ -126,9 +122,7 @@ function ChatInterface({
 						{streamingMessage && (
 							<div className="flex justify-start">
 								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
-									<div className="wrap-break-word whitespace-pre-wrap">
-										{streamingMessage}
-									</div>
+									<ChatMarkdown isStreaming>{streamingMessage}</ChatMarkdown>
 								</div>
 							</div>
 						)}
