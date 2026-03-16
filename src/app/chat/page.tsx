@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, Suspense, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { languageModelCreateOptions } from "./lm-config";
 import { Button } from "../components/button";
 import { ChatMarkdown } from "./chat-markdown";
