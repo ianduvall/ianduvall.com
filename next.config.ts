@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
 	typedRoutes: true,
 	experimental: {
 		viewTransition: true,
-		turbopackFileSystemCacheForDev: true,
 	},
 	headers() {
 		return [
