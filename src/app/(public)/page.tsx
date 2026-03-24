@@ -23,27 +23,21 @@ export default function Page() {
 					About
 				</Heading>
 				<p className="my-2">
-					{"I'm"} a software engineer passionate about building highly interactive web applications.
-					I currently work at{" "}
-					<Link href="https://www.summation.com/" target="_blank">
-						Summation AI
-					</Link>{" "}
-					as a Senior Product Engineer, integrating AI into the enterprise financial planning and
-					analysis (FP&A) space.
+					{"I'm"} a software engineer who likes building ambitious, highly interactive web
+					applications. The work I enjoy most sits between hard technical problems and close
+					collaboration with Product and Design to make the end result feel coherent, polished, and
+					useful.
 				</p>
 				<p className="my-2">
-					Previously, I was a Senior Software Engineer at{" "}
+					I previously worked at{" "}
+					<Link href="https://www.summation.com/" target="_blank">
+						Summation
+					</Link>{" "}
+					and{" "}
 					<Link href="https://sproutsocial.com/" target="_blank">
 						Sprout Social
-					</Link>{" "}
-					on the{" "}
-					<Link href="https://sproutsocial.com/features/social-media-analytics/" target="_blank">
-						Analytics
-					</Link>{" "}
-					team. I primarily worked on the frontend with React and TypeScript, while also
-					contributing to backend development with Django and Python. My goldilocks zone lies at the
-					intersection of solving complex technical problems and collaborating with Product and
-					Design teams to create exceptional user experiences.
+					</Link>
+					.
 				</p>
 			</section>
 
@@ -55,8 +49,8 @@ export default function Page() {
 					Education
 				</Heading>
 				<p className="my-2">
-					I hold a Bachelor of Science in Engineering (Computer Science) from the University of
-					Michigan, graduating in 2017.
+					I earned a Bachelor of Science in Engineering in Computer Science from the University of
+					Michigan in 2017.
 				</p>
 			</section>
 			<section>
