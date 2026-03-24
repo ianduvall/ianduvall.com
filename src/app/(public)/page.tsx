@@ -1,8 +1,5 @@
 import { Suspense } from "react";
-import {
-	BlogPosts,
-	LoadingBlogPost,
-} from "src/app/(public)/components/blog-posts";
+import { BlogPosts, LoadingBlogPost } from "src/app/(public)/components/blog-posts";
 import { Heading } from "../components/heading";
 import { Link } from "../components/link";
 
@@ -13,10 +10,9 @@ export default function Page() {
 				👋 {"I'm"} Ian Duvall
 			</Heading>
 			<p className="my-4">
-				Welcome to my site! I use this space to share my thoughts and explore
-				new technologies. This current iteration is built with Next.js and React
-				Server Components. Overkill for a personal site? Absolutely, but{" "}
-				{"it's"} fun to try new things.
+				Welcome to my site! I use this space to share my thoughts and explore new technologies. This
+				current iteration is built with Next.js and React Server Components. Overkill for a personal
+				site? Absolutely, but {"it's"} fun to try new things.
 			</p>
 
 			<section>
@@ -27,13 +23,13 @@ export default function Page() {
 					About
 				</Heading>
 				<p className="my-2">
-					{"I'm"} a software engineer passionate about building highly
-					interactive web applications. I currently work at{" "}
+					{"I'm"} a software engineer passionate about building highly interactive web applications.
+					I currently work at{" "}
 					<Link href="https://www.summation.com/" target="_blank">
 						Summation AI
 					</Link>{" "}
-					as a Senior Product Engineer, integrating AI into the enterprise
-					financial planning and analysis (FP&A) space.
+					as a Senior Product Engineer, integrating AI into the enterprise financial planning and
+					analysis (FP&A) space.
 				</p>
 				<p className="my-2">
 					Previously, I was a Senior Software Engineer at{" "}
@@ -41,17 +37,13 @@ export default function Page() {
 						Sprout Social
 					</Link>{" "}
 					on the{" "}
-					<Link
-						href="https://sproutsocial.com/features/social-media-analytics/"
-						target="_blank"
-					>
+					<Link href="https://sproutsocial.com/features/social-media-analytics/" target="_blank">
 						Analytics
 					</Link>{" "}
-					team. I primarily worked on the frontend with React and TypeScript,
-					while also contributing to backend development with Django and Python.
-					My goldilocks zone lies at the intersection of solving complex
-					technical problems and collaborating with Product and Design teams to
-					create exceptional user experiences.
+					team. I primarily worked on the frontend with React and TypeScript, while also
+					contributing to backend development with Django and Python. My goldilocks zone lies at the
+					intersection of solving complex technical problems and collaborating with Product and
+					Design teams to create exceptional user experiences.
 				</p>
 			</section>
 
@@ -63,8 +55,8 @@ export default function Page() {
 					Education
 				</Heading>
 				<p className="my-2">
-					I hold a Bachelor of Science in Engineering (Computer Science) from
-					the University of Michigan, graduating in 2017.
+					I hold a Bachelor of Science in Engineering (Computer Science) from the University of
+					Michigan, graduating in 2017.
 				</p>
 			</section>
 			<section>

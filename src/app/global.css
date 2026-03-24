@@ -4,14 +4,8 @@
 @source "../../node_modules/streamdown/dist/*.js";
 
 @theme {
-	--color-surface-default: light-dark(
-		var(--color-gray-50),
-		var(--color-gray-950)
-	);
-	--color-foreground-default: light-dark(
-		var(--color-gray-950),
-		var(--color-gray-50)
-	);
+	--color-surface-default: light-dark(var(--color-gray-50), var(--color-gray-950));
+	--color-foreground-default: light-dark(var(--color-gray-950), var(--color-gray-50));
 }
 
 @layer base {

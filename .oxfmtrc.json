@@ -1,0 +1,6 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"sortTailwindcss": {},
+	"useTabs": true,
+	"ignorePatterns": [".agents/**", ".claude/**", "skills-lock.json", "pnpm-lock.yaml"]
+}

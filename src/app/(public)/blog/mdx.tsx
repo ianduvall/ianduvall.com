@@ -1,8 +1,4 @@
-import {
-	type ComponentProps,
-	type ComponentPropsWithoutRef,
-	type JSX,
-} from "react";
+import { type ComponentProps, type ComponentPropsWithoutRef, type JSX } from "react";
 import Image from "next/image";
 import { highlight } from "sugar-high";
 import remarkGfm from "remark-gfm";
@@ -14,9 +10,7 @@ import { Link } from "src/app/components/link";
 
 const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
 	return function H(props: ComponentProps<typeof Heading>) {
-		return (
-			<Heading anchor {...props} className="heading-offset" level={level} />
-		);
+		return <Heading anchor {...props} className="heading-offset" level={level} />;
 	};
 };
 
@@ -30,12 +24,7 @@ const mdxComponents = {
 			return <code {...props}>{children}</code>;
 		}
 
-		return (
-			<code
-				dangerouslySetInnerHTML={{ __html: highlight(children) }}
-				{...props}
-			/>
-		);
+		return <code dangerouslySetInnerHTML={{ __html: highlight(children) }} {...props} />;
 	},
 	h1: createHeading(1),
 	h2: createHeading(2),
@@ -44,13 +33,7 @@ const mdxComponents = {
 	h5: createHeading(5),
 	h6: createHeading(6),
 	Image: function RoundedImage(props: ComponentPropsWithoutRef<typeof Image>) {
-		return (
-			<Image
-				className={`rounded-lg ${props.className ?? ""}`}
-				{...props}
-				alt={props.alt}
-			/>
-		);
+		return <Image className={`rounded-lg ${props.className ?? ""}`} {...props} alt={props.alt} />;
 	},
 	Details: (props: ComponentProps<"details">) => (
 		<details

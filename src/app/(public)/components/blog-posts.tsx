@@ -50,9 +50,7 @@ export async function BlogPosts({
 }
 
 export function LoadingBlogPost() {
-	const heading = (
-		<div className="h-6 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
-	);
+	const heading = <div className="h-6 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />;
 	const paragraph = (
 		<div className="h-4 w-1/2 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
 	);

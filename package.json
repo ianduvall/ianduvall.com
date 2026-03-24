@@ -5,12 +5,12 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
-		"lint": "eslint . --max-warnings=0",
-		"lint:fix": "pnpm lint --fix && pnpm format",
+		"lint": "oxlint . --max-warnings=0",
+		"lint:fix": "pnpm lint --fix && pnpm fmt",
 		"start": "next start",
 		"typecheck": "tsc",
-		"format:check": "prettier --ignore-unknown --check .",
-		"format": "prettier --ignore-unknown --write ."
+		"fmt:check": "oxfmt --check",
+		"fmt": "oxfmt"
 	},
 	"dependencies": {
 		"@mdx-js/mdx": "^3.1.1",
@@ -29,21 +29,18 @@
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.5",
-		"@eslint/js": "^9.39.4",
 		"@tailwindcss/postcss": "^4.2.2",
 		"@types/dom-chromium-ai": "^0.0.15",
 		"@types/node": "^25.5.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"babel-plugin-react-compiler": "^1.0.0",
-		"eslint": "^9.39.4",
-		"eslint-config-next": "^16.2.1",
+		"oxfmt": "^0.42.0",
+		"oxlint": "^1.57.0",
+		"oxlint-tsgolint": "^0.17.3",
 		"postcss": "^8.5.8",
-		"prettier": "^3.8.1",
-		"prettier-plugin-tailwindcss": "^0.7.2",
 		"tailwindcss": "^4.2.2",
-		"typescript": "6.0.0-beta",
+		"typescript": "~6.0.0",
 		"vercel": "latest"
 	},
 	"packageManager": "pnpm@10.32.1"

@@ -1,0 +1,28 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error"
+	},
+	"ignorePatterns": [".next/**", "out/**", "build/**", "next-env.d.ts"],
+	"options": {
+		"denyWarnings": true,
+		"reportUnusedDisableDirectives": "error",
+		"typeAware": true
+	},
+	"plugins": [
+		"eslint",
+		"import",
+		"jsx-a11y",
+		"nextjs",
+		"oxc",
+		"promise",
+		"react-perf",
+		"react",
+		"typescript"
+	],
+	"settings": {
+		"react": {
+			"version": "19.2.4"
+		}
+	}
+}

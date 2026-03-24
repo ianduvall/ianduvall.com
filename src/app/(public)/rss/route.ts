@@ -17,9 +17,7 @@ async function getRssFeed() {
           <title>${post.metadata.title}</title>
           <link>${baseUrl}/blog/${post.slug}</link>
           <description>${post.metadata.summary || ""}</description>
-          <pubDate>${new Date(
-						post.metadata.publishedAt,
-					).toUTCString()}</pubDate>
+          <pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>
         </item>`,
 		)
 		.join("\n");

@@ -14,10 +14,7 @@ export const generateStaticParams = async (): Promise<OGParams[]> => {
 	return [{ title: "ianduvall.com" }, ...blogTitles];
 };
 
-export async function GET(
-	_request: Request,
-	{ params }: { params: Promise<OGParams> },
-) {
+export async function GET(_request: Request, { params }: { params: Promise<OGParams> }) {
 	const { title: encodedTitle } = await params;
 	const title = decodeURIComponent(encodedTitle);
 
@@ -29,9 +26,7 @@ export async function GET(
 			}}
 		>
 			<div tw="flex flex-col md:flex-row w-full py-12 px-4 md:items-center justify-between p-8">
-				<h2 tw="flex flex-col text-4xl font-bold tracking-tight text-left">
-					{title}
-				</h2>
+				<h2 tw="flex flex-col text-4xl font-bold tracking-tight text-left">{title}</h2>
 			</div>
 		</div>,
 		{

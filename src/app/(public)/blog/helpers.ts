@@ -2,14 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
-const blogPostsDirPath = path.join(
-	process.cwd(),
-	"src",
-	"app",
-	"(public)",
-	"blog",
-	"posts",
-);
+const blogPostsDirPath = path.join(process.cwd(), "src", "app", "(public)", "blog", "posts");
 
 const getMdxFilePaths = async (dirPath: string) => {
 	const filePaths = await fs.readdir(dirPath);
@@ -22,14 +15,10 @@ const getBlogPostFilePaths = () => {
 
 export const getBlogPostSlugs = async () => {
 	const blogPostFilePaths = await getBlogPostFilePaths();
-	return blogPostFilePaths.map((name) =>
-		path.basename(name, path.extname(name)),
-	);
+	return blogPostFilePaths.map((name) => path.basename(name, path.extname(name)));
 };
 
-export const readBlogPostFileFromSlug = async (
-	slug: string,
-): Promise<string> => {
+export const readBlogPostFileFromSlug = async (slug: string): Promise<string> => {
 	const filePath = path.join(blogPostsDirPath, `${slug}.mdx`);
 	return fs.readFile(filePath, "utf-8");
 };
@@ -61,7 +50,5 @@ export const getAllBlogPostData = async (): Promise<BlogPostData[]> => {
 		}),
 	);
 
-	return posts.filter(
-		(post): post is BlogPostData => post.metadata.publishedAt !== null,
-	);
+	return posts.filter((post): post is BlogPostData => post.metadata.publishedAt !== null);
 };

@@ -13,10 +13,7 @@ const AvailabilityMessage = dynamic(() => import("./availability-message"), {
 });
 
 interface LanguageModelCompatProps {
-	children: (renderProps: {
-		session: LanguageModel;
-		downloaded: boolean;
-	}) => React.ReactNode;
+	children: (renderProps: { session: LanguageModel; downloaded: boolean }) => React.ReactNode;
 }
 
 export function LanguageModelCompat({ children }: LanguageModelCompatProps) {

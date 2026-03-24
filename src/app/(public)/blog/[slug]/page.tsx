@@ -1,10 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { baseUrl } from "src/app/shared";
-import {
-	getBlogPostSlugs,
-	compileBlogPostMDXFromSlug,
-} from "src/app/(public)/blog/helpers";
+import { getBlogPostSlugs, compileBlogPostMDXFromSlug } from "src/app/(public)/blog/helpers";
 import { Heading } from "src/app/components/heading";
 import { ViewTransition } from "react";
 import { FormattedDate } from "../../components/formatted-date";
@@ -36,12 +33,7 @@ export const generateMetadata = async ({
 	params: Promise<PostParams>;
 }): Promise<Metadata> => {
 	const { slug } = await params;
-	const {
-		title,
-		publishedAt,
-		summary: description,
-		image,
-	} = await readBlogPostMetadata(slug);
+	const { title, publishedAt, summary: description, image } = await readBlogPostMetadata(slug);
 
 	const ogImage = image ? image : `${baseUrl}/og/${encodeURIComponent(title)}`;
 
@@ -69,11 +61,7 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function Blog({
-	params,
-}: {
-	params: Promise<PostParams>;
-}) {
+export default async function Blog({ params }: { params: Promise<PostParams> }) {
 	"use cache";
 	const { slug } = await params;
 	const [blogPost, { title, subtitle, publishedAt, summary, image }] =
@@ -92,9 +80,7 @@ export default async function Blog({
 						datePublished: publishedAt,
 						dateModified: publishedAt,
 						description: summary,
-						image: image
-							? `${baseUrl}${image}`
-							: `/og/${encodeURIComponent(title)}`,
+						image: image ? `${baseUrl}${image}` : `/og/${encodeURIComponent(title)}`,
 						url: `${baseUrl}/blog/${slug}`,
 						author: {
 							"@type": "Person",
@@ -118,11 +104,7 @@ export default async function Blog({
 						<p className="my-1 text-lg">{subtitle}</p>
 					</ViewTransition>
 					<ViewTransition name={`blog-date-${slug}`}>
-						{publishedAt ? (
-							<FormattedDate date={publishedAt} />
-						) : (
-							<div>Unpublished Draft</div>
-						)}
+						{publishedAt ? <FormattedDate date={publishedAt} /> : <div>Unpublished Draft</div>}
 					</ViewTransition>
 				</div>
 			</section>

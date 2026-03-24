@@ -23,9 +23,7 @@ export default function ChatPage() {
 	return (
 		<main className="flex h-screen min-h-screen flex-col">
 			<LanguageModelCompat>
-				{({ session, downloaded }) => (
-					<ChatUI initialSession={session} downloaded={downloaded} />
-				)}
+				{({ session, downloaded }) => <ChatUI initialSession={session} downloaded={downloaded} />}
 			</LanguageModelCompat>
 		</main>
 	);
@@ -57,8 +55,7 @@ function ChatUI({
 				<h1 className="text-xl font-semibold">Chat</h1>
 				{session && (
 					<span className="text-sm text-gray-400">
-						{(session.inputQuota - session.inputUsage).toLocaleString()} tokens
-						left
+						{(session.inputQuota - session.inputUsage).toLocaleString()} tokens left
 					</span>
 				)}
 				<Button
@@ -97,9 +94,7 @@ function ChatUI({
 							>
 								<div
 									className={`max-w-[80%] rounded-lg px-4 py-2 ${
-										message.role === "user"
-											? "bg-blue-600 text-white"
-											: "bg-gray-100 text-gray-900"
+										message.role === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
 									}`}
 								>
 									<ChatMarkdown>{message.content}</ChatMarkdown>
@@ -173,10 +168,7 @@ function ChatUI({
 							setStreamingMessage(messageBuffer);
 						}
 
-						setMessages((prev) => [
-							...prev,
-							createMessage("assistant", messageBuffer),
-						]);
+						setMessages((prev) => [...prev, createMessage("assistant", messageBuffer)]);
 						setStreamingMessage("");
 					} catch (error) {
 						if (Error.isError(error) && error.name === "AbortError") {
@@ -185,10 +177,7 @@ function ChatUI({
 						console.error("Chat error:", error);
 						setMessages((prev) => [
 							...prev,
-							createMessage(
-								"assistant",
-								"Sorry, an error occurred. Please try again later.",
-							),
+							createMessage("assistant", "Sorry, an error occurred. Please try again later."),
 						]);
 						setStreamingMessage("");
 					} finally {
@@ -205,7 +194,6 @@ function ChatUI({
 						value={input}
 						onChange={(e) => setInput(e.currentTarget.value)}
 						placeholder="Type your message..."
-						autoFocus={true}
 						className="flex-1 rounded-lg border px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:outline-none disabled:bg-gray-100"
 					/>
 					<button
@@ -239,9 +227,7 @@ function DownloadingIndicator() {
 						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.2s_infinite] rounded-full bg-blue-400" />
 						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.4s_infinite] rounded-full bg-blue-400" />
 					</div>
-					<span className="text-sm tracking-wide text-white/90">
-						Downloading model
-					</span>
+					<span className="text-sm tracking-wide text-white/90">Downloading model</span>
 				</div>
 			</div>
 		</div>

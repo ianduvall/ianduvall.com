@@ -8,16 +8,12 @@ export const Link = (props: ComponentProps<typeof RouterLink>) => {
 		props.className,
 	);
 	const external = isExternalHref(props.href);
-	const extraProps = external
-		? { target: "_blank", rel: "noopener noreferrer" }
-		: {};
+	const extraProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
 	return <RouterLink {...props} {...extraProps} className={className} />;
 };
 
-const isExternalHref = (
-	href: ComponentProps<typeof RouterLink>["href"],
-): boolean => {
+const isExternalHref = (href: ComponentProps<typeof RouterLink>["href"]): boolean => {
 	if (typeof href === "string" && href) {
 		if (href.startsWith("#") || href.startsWith("/")) {
 			return false;
