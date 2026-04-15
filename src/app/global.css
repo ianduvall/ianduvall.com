@@ -11,6 +11,7 @@
 @layer base {
 	:root {
 		interpolate-size: allow-keywords;
+		color-scheme: light dark;
 	}
 
 	@keyframes float {
@@ -159,6 +160,17 @@
 
 	.heading-offset {
 		@apply md:-mx-6;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		::before,
+		::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
+		}
 	}
 }
 

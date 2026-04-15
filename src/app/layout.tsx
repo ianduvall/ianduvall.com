@@ -1,5 +1,6 @@
 import "./global.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/react";
@@ -42,6 +43,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		>
 			<body className="antialiased">
 				{children}
+				<Script id="theme-color-scheme" strategy="beforeInteractive">
+					{`document.documentElement.style.colorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';`}
+				</Script>
 				<Analytics />
 				<SpeedInsights />
 			</body>

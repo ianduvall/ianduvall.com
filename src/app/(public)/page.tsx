@@ -6,10 +6,10 @@ import { Link } from "../components/link";
 export default function Page() {
 	return (
 		<section>
-			<Heading level={1} className="heading-offset my-6 text-3xl font-semibold">
-				👋 {"I'm"} Ian Duvall
+			<Heading level={1} className="heading-offset my-6 text-3xl font-semibold text-balance">
+				<span aria-hidden="true">👋</span> {"I'm"} Ian Duvall
 			</Heading>
-			<p className="my-4">
+			<p className="my-4 text-pretty">
 				Welcome to my site! I use this space to share my thoughts and explore new technologies. This
 				current iteration is built with Next.js and React Server Components. Overkill for a personal
 				site? Absolutely, but {"it's"} fun to try new things.
