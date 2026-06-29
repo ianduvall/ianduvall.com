@@ -1,9 +1,9 @@
 "use client";
 import { startTransition, useEffect, useRef, useState } from "react";
-import { languageModelCreateOptions } from "./lm-config";
 import { Button } from "../components/button";
 import { ChatMarkdown } from "./chat-markdown";
-import { LanguageModelCompat } from "./language-model-compat";
+import { createLanguageModelSession } from "./language-model";
+import { LanguageModelGate } from "./language-model-gate";
 
 interface Message {
 	id: string;
@@ -22,25 +22,18 @@ function createMessage(role: Message["role"], content: string): Message {
 export default function ChatPage() {
 	return (
 		<main className="flex h-screen min-h-screen flex-col">
-			<LanguageModelCompat>
-				{({ session, downloaded }) => <ChatUI initialSession={session} downloaded={downloaded} />}
-			</LanguageModelCompat>
+			<LanguageModelGate>{({ session }) => <ChatUI initialSession={session} />}</LanguageModelGate>
 		</main>
 	);
 }
 
-function ChatUI({
-	initialSession,
-	downloaded,
-}: {
-	initialSession: LanguageModel;
-	downloaded: boolean;
-}) {
+function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 	const [session, setSession] = useState<LanguageModel | null>(initialSession);
 	const [messages, setMessages] = useState<ReadonlyArray<Message>>([]);
 	const [streamingMessage, setStreamingMessage] = useState<string>("");
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [isPreparingModel, setIsPreparingModel] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -49,13 +42,23 @@ function ChatUI({
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages, streamingMessage]);
 
+	useEffect(() => {
+		if (!session) {
+			return;
+		}
+
+		return () => {
+			session.destroy();
+		};
+	}, [session]);
+
 	const header = (
 		<header className="border-b px-4 py-4">
 			<div className="mx-auto flex max-w-4xl items-center justify-between">
 				<h1 className="text-xl font-semibold">Chat</h1>
 				{session && (
 					<span className="text-sm text-gray-400">
-						{(session.inputQuota - session.inputUsage).toLocaleString()} tokens left
+						{(session.contextWindow - session.contextUsage).toLocaleString()} tokens left
 					</span>
 				)}
 				<Button
@@ -64,12 +67,25 @@ function ChatUI({
 						inputRef.current?.focus();
 						setMessages([]);
 						setStreamingMessage("");
-						const newSession = await LanguageModel.create({
-							...languageModelCreateOptions,
-						});
-						startTransition(() => {
-							setSession(newSession);
-						});
+						setIsPreparingModel(true);
+						try {
+							const newSession = await createLanguageModelSession({
+								onDownloadProgress() {
+									startTransition(() => {
+										setIsPreparingModel(true);
+									});
+								},
+							});
+							startTransition(() => {
+								setSession(newSession);
+							});
+						} catch (error) {
+							console.error("New chat session creation failed:", error);
+						} finally {
+							startTransition(() => {
+								setIsPreparingModel(false);
+							});
+						}
 					}}
 				>
 					New Chat
@@ -130,7 +146,7 @@ function ChatUI({
 
 	const footer = (
 		<div className="relative border-t px-4 py-4">
-			{downloaded ? null : <DownloadingIndicator />}
+			{isPreparingModel ? <PreparingModelIndicator /> : null}
 			<form
 				onSubmit={async (event) => {
 					event.preventDefault();
@@ -217,7 +233,7 @@ function ChatUI({
 	);
 }
 
-function DownloadingIndicator() {
+function PreparingModelIndicator() {
 	return (
 		<div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2">
 			<div className="rounded-full bg-gray-900/95 px-5 py-2.5 shadow-xl backdrop-blur-sm">
@@ -227,7 +243,7 @@ function DownloadingIndicator() {
 						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.2s_infinite] rounded-full bg-blue-400" />
 						<span className="h-1.5 w-1.5 animate-[pulse_1.4s_ease-in-out_0.4s_infinite] rounded-full bg-blue-400" />
 					</div>
-					<span className="text-sm tracking-wide text-white/90">Downloading model</span>
+					<span className="text-sm tracking-wide text-white/90">Preparing model</span>
 				</div>
 			</div>
 		</div>
