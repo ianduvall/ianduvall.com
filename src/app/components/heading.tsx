@@ -6,7 +6,7 @@ interface HeadingProps extends ComponentProps<"h1"> {
 	anchor?: boolean;
 }
 
-export const Heading = ({ children, level = 1, anchor, ...props }: HeadingProps) => {
+export const Heading = ({ children, level, anchor, ...props }: HeadingProps) => {
 	const HeadingTag = `h${level}` as const;
 
 	let slug: string | undefined = undefined;

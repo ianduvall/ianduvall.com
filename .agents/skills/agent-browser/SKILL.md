@@ -186,6 +186,21 @@ agent-browser network requests                 # View tracked requests
 agent-browser network requests --filter api    # Filter requests
 ```
 
+### React DevTools introspection
+
+Requires `agent-browser` 0.27 or newer launched with React DevTools enabled.
+
+```bash
+agent-browser --enable react-devtools open http://localhost:3000
+agent-browser react tree                         # List the React component tree
+agent-browser react inspect <fiberId>            # Inspect props, state, hooks, and source
+agent-browser react renders start                # Start profiling re-renders
+agent-browser react renders stop                 # Stop and summarize re-renders
+agent-browser react suspense --only-dynamic --json # Inspect dynamic Suspense blockers
+```
+
+Use these commands during Next.js route verification to confirm the UI rendered through the expected components, Suspense fallbacks resolve, and unexpected re-render sources are not introduced.
+
 ### Tabs & Windows
 
 ```bash

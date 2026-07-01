@@ -19,7 +19,7 @@
 		"@vercel/speed-insights": "^2.0.0",
 		"autoprefixer": "^10.5.2",
 		"geist": "^1.7.2",
-		"next": "^16.2.9",
+		"next": "preview",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
 		"remark-gfm": "^4.0.1",
