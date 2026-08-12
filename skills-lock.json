@@ -6,6 +6,20 @@
       "sourceType": "github",
       "skillPath": "skills/next-cache-components-adoption/SKILL.md",
       "computedHash": "15dcef9cfce611ba5a9ca467ed0d4eeae8de16fadb91b66df892a5ca63c57829"
+    },
+    "next-dev-loop": {
+      "source": "vercel/next.js",
+      "ref": "canary",
+      "sourceType": "github",
+      "skillPath": "skills/next-dev-loop/SKILL.md",
+      "computedHash": "5b567d2e521056db6b8b37c46c6b2b9c72de5192c0daeb351c966d61e0702630"
+    },
+    "next-partial-prefetching-adoption": {
+      "source": "vercel/next.js",
+      "ref": "canary",
+      "sourceType": "github",
+      "skillPath": "skills/next-partial-prefetching-adoption/SKILL.md",
+      "computedHash": "d3d665fb981213406206138afd054261169b2ef511039c6a7dd0406af02dc500"
     }
   }
 }
