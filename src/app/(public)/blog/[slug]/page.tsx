@@ -1,9 +1,14 @@
 import { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { baseUrl } from "src/app/shared";
-import { getBlogPostSlugs, compileBlogPostMDXFromSlug } from "src/app/(public)/blog/helpers";
+import {
+	getBlogPostSlugs,
+	blogPostExistsForSlug,
+	compileBlogPostMDXFromSlug,
+} from "src/app/(public)/blog/helpers";
 import { Heading } from "src/app/components/heading";
-import { ViewTransition } from "react";
+import { Suspense, ViewTransition } from "react";
 import { FormattedDate } from "../../components/formatted-date";
 
 interface PostParams {
@@ -19,11 +24,14 @@ export const generateStaticParams = async (): Promise<PostParams[]> => {
 };
 
 const readBlogPostMetadata = async (slug: string) => {
+	"use cache";
+	cacheLife("max");
+
 	try {
 		const [, metadata] = await compileBlogPostMDXFromSlug(slug);
 		return metadata;
 	} catch {
-		throw notFound();
+		return null;
 	}
 };
 
@@ -33,7 +41,13 @@ export const generateMetadata = async ({
 	params: Promise<PostParams>;
 }): Promise<Metadata> => {
 	const { slug } = await params;
-	const { title, publishedAt, summary: description, image } = await readBlogPostMetadata(slug);
+	const postMetadata = await readBlogPostMetadata(slug);
+
+	if (!postMetadata) {
+		notFound();
+	}
+
+	const { title, publishedAt, summary: description, image } = postMetadata;
 
 	const ogImage = image ? image : `${baseUrl}/og/${encodeURIComponent(title)}`;
 
@@ -61,9 +75,28 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function Blog({ params }: { params: Promise<PostParams> }) {
-	"use cache";
+export default function Blog({ params }: { params: Promise<PostParams> }) {
+	return (
+		<Suspense fallback={<LoadingBlogPost />}>
+			<BlogPostFromParams params={params} />
+		</Suspense>
+	);
+}
+
+async function BlogPostFromParams({ params }: { params: Promise<PostParams> }) {
 	const { slug } = await params;
+
+	if (!blogPostExistsForSlug(slug)) {
+		notFound();
+	}
+
+	return <BlogPost slug={slug} />;
+}
+
+async function BlogPost({ slug }: { slug: string }) {
+	"use cache";
+	cacheLife("max");
+
 	const [blogPost, { title, subtitle, publishedAt, summary, image }] =
 		await compileBlogPostMDXFromSlug(slug);
 
@@ -110,6 +143,27 @@ export default async function Blog({ params }: { params: Promise<PostParams> }) 
 			</section>
 
 			{blogPost}
+		</article>
+	);
+}
+
+function LoadingBlogPost() {
+	const line = <div className="h-4 w-full animate-pulse rounded bg-gray-200 dark:bg-gray-700" />;
+
+	return (
+		<article className="prose">
+			<span className="sr-only">Loading blog post...</span>
+			<section className="heading-offset my-6 space-y-3">
+				<div className="h-10 w-4/5 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+				<div className="h-6 w-3/5 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+				<div className="h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+			</section>
+			<div className="space-y-3">
+				{line}
+				{line}
+				{line}
+				<div className="h-4 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+			</div>
 		</article>
 	);
 }

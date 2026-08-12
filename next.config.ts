@@ -7,11 +7,18 @@ const nextConfig: NextConfig = {
 	reactCompiler: true,
 	reactStrictMode: true,
 	typedRoutes: true,
+	turbopack: {
+		rules: {
+			"*.mdx": {
+				type: "bytes",
+			},
+		},
+	},
 	experimental: {
 		instantInsights: {
 			validationLevel: "warning",
 		},
-		viewTransition: true,
+		turbopackRustReactCompiler: true,
 	},
 };
 

@@ -1,26 +1,44 @@
-import path from "node:path";
-import fs from "node:fs/promises";
 import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
-const blogPostsDirPath = path.join(process.cwd(), "src", "app", "(public)", "blog", "posts");
+const mdxFileExtension = ".mdx";
 
-const getMdxFilePaths = async (dirPath: string) => {
-	const filePaths = await fs.readdir(dirPath);
-	return filePaths.filter((name) => path.extname(name) === ".mdx");
+const blogPostFileBytesByPath = import.meta.glob("./posts/*.mdx", {
+	eager: true,
+	import: "default",
+}) as Record<string, Uint8Array>;
+
+const utf8Decoder = new TextDecoder();
+
+const getSlugFromFilePath = (filePath: string) => {
+	const fileName = filePath.slice(filePath.lastIndexOf("/") + 1);
+	return fileName.slice(0, -mdxFileExtension.length);
 };
 
-const getBlogPostFilePaths = () => {
-	return getMdxFilePaths(blogPostsDirPath);
-};
+const blogPostFileContentsBySlug = new Map(
+	Object.entries(blogPostFileBytesByPath)
+		.map(
+			([filePath, fileBytes]) =>
+				[getSlugFromFilePath(filePath), utf8Decoder.decode(fileBytes)] as const,
+		)
+		.sort(([slugA], [slugB]) => slugA.localeCompare(slugB)),
+);
 
 export const getBlogPostSlugs = async () => {
-	const blogPostFilePaths = await getBlogPostFilePaths();
-	return blogPostFilePaths.map((name) => path.basename(name, path.extname(name)));
+	return [...blogPostFileContentsBySlug.keys()];
+};
+
+export const blogPostExistsForSlug = (slug: string) => {
+	return blogPostFileContentsBySlug.has(slug);
 };
 
 export const readBlogPostFileFromSlug = async (slug: string): Promise<string> => {
-	const filePath = path.join(blogPostsDirPath, `${slug}.mdx`);
-	return fs.readFile(filePath, "utf-8");
+	const fileContents = blogPostFileContentsBySlug.get(slug);
+
+	if (fileContents === undefined) {
+		throw new Error(`No blog post file found for slug "${slug}"`);
+	}
+
+	return fileContents;
 };
 
 export const compileBlogPostMDXFromSlug = async (slug: string) => {

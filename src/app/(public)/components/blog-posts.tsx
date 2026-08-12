@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { getAllBlogPostData } from "src/app/(public)/blog/helpers";
 import { Link } from "src/app/components/link";
 import { Fragment, ViewTransition } from "react";
@@ -11,6 +12,8 @@ export async function BlogPosts({
 	viewTransitions?: boolean;
 }) {
 	"use cache";
+	cacheLife("max");
+
 	const blogPosts = await getAllBlogPostData();
 
 	const VT = viewTransitions ? ViewTransition : Fragment;
@@ -24,7 +27,7 @@ export async function BlogPosts({
 				.slice(0, recent)
 				.map((post) => (
 					<div key={post.slug} className="flex flex-col">
-						<Link href={`/blog/${post.slug}`}>
+						<Link href={`/blog/${post.slug}`} prefetch>
 							<VT name={`blog-title-${post.slug}`}>
 								<p className="text-xl tracking-tight text-gray-900 dark:text-gray-100">
 									{post.metadata.title}

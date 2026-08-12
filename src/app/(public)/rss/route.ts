@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { baseUrl } from "src/app/shared";
 import { getAllBlogPostData } from "src/app/(public)/blog/helpers";
 
@@ -6,6 +7,8 @@ const description = "An RSS feed of Ian Duvall's blog posts";
 
 async function getRssFeed() {
 	"use cache";
+	cacheLife("max");
+
 	const blogPosts = await getAllBlogPostData();
 	const itemsXml = blogPosts
 		.sort((a, b) => {

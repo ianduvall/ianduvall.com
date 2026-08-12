@@ -24,7 +24,7 @@ export function Nav() {
 const NavLinkItem = (props: PropsWithChildren<ComponentProps<typeof Link>>) => {
 	return (
 		<li className="relative m-1 flex px-2 py-1 align-middle">
-			<Link {...props} prefetch />
+			<Link {...props} />
 		</li>
 	);
 };
