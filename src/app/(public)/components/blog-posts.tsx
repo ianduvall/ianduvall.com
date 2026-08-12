@@ -27,7 +27,7 @@ export async function BlogPosts({
 				.slice(0, recent)
 				.map((post) => (
 					<div key={post.slug} className="flex flex-col">
-						<Link href={`/blog/${post.slug}`} prefetch>
+						<Link href={`/blog/${post.slug}`} prefetch={true}>
 							<VT name={`blog-title-${post.slug}`}>
 								<p className="text-xl tracking-tight text-gray-900 dark:text-gray-100">
 									{post.metadata.title}

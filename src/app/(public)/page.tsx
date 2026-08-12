@@ -3,6 +3,8 @@ import { BlogPosts, LoadingBlogPost } from "src/app/(public)/components/blog-pos
 import { Heading } from "../components/heading";
 import { Link } from "../components/link";
 
+export const instant = true;
+
 export default function Page() {
 	return (
 		<section>

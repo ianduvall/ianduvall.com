@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
+		"e2e": "playwright test",
 		"lint": "oxlint . --max-warnings=0",
 		"lint:fix": "pnpm lint --fix && pnpm fmt",
 		"start": "next start",
@@ -29,6 +30,8 @@
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
+		"@next/playwright": "^16.3.0",
+		"@playwright/test": "^1.62.1",
 		"@tailwindcss/postcss": "^4.3.3",
 		"@types/dom-chromium-ai": "^0.0.16",
 		"@types/node": "^25.9.5",

@@ -7,6 +7,12 @@
       "skillPath": "skills/next-cache-components-adoption/SKILL.md",
       "computedHash": "15dcef9cfce611ba5a9ca467ed0d4eeae8de16fadb91b66df892a5ca63c57829"
     },
+    "next-cache-components-optimizer": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "skillPath": "skills/next-cache-components-optimizer/SKILL.md",
+      "computedHash": "d029b9387f3792b03fcce0217e79f096fd9cfa6d4d8771d397bf3efb72cf7333"
+    },
     "next-dev-loop": {
       "source": "vercel/next.js",
       "ref": "canary",

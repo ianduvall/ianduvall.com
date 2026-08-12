@@ -11,6 +11,8 @@ import { Heading } from "src/app/components/heading";
 import { Suspense, ViewTransition } from "react";
 import { FormattedDate } from "../../components/formatted-date";
 
+export const instant = true;
+
 interface PostParams {
 	slug: string;
 }
@@ -113,7 +115,9 @@ async function BlogPost({ slug }: { slug: string }) {
 						datePublished: publishedAt,
 						dateModified: publishedAt,
 						description: summary,
-						image: image ? `${baseUrl}${image}` : `/og/${encodeURIComponent(title)}`,
+						image: image
+							? new URL(image, baseUrl).href
+							: `${baseUrl}/og/${encodeURIComponent(title)}`,
 						url: `${baseUrl}/blog/${slug}`,
 						author: {
 							"@type": "Person",

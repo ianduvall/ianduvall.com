@@ -3,6 +3,8 @@ import { BlogPosts, LoadingBlogPost } from "src/app/(public)/components/blog-pos
 import type { Metadata } from "next";
 import { Heading } from "src/app/components/heading";
 
+export const instant = true;
+
 export const metadata: Metadata = {
 	title: "Blog",
 	description: "Read my blog.",
