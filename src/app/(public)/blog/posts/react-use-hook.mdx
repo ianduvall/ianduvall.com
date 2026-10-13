@@ -29,10 +29,7 @@ Okay, so a `Usable` is a `Thenable` or a `Context`. We are familiar with `Contex
 
 ```ts
 type Thenable<T> =
-	| UntrackedThenable<T>
-	| PendingThenable<T>
-	| FulfilledThenable<T>
-	| RejectedThenable<T>;
+	UntrackedThenable<T> | PendingThenable<T> | FulfilledThenable<T> | RejectedThenable<T>;
 
 interface ThenableImpl<T> {
 	then(
