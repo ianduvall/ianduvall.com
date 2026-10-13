@@ -121,7 +121,9 @@ function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 							>
 								<div
 									className={`max-w-[80%] rounded-lg px-4 py-2 ${
-										message.role === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
+										message.role === "user"
+											? "bg-blue-600 text-white"
+											: "bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100"
 									}`}
 								>
 									<ChatMarkdown>{message.content}</ChatMarkdown>
@@ -130,7 +132,7 @@ function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 						))}
 						{isLoading && !streamingMessage && (
 							<div className="flex justify-start">
-								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
+								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
 									<div className="flex items-center gap-2">
 										<div className="flex gap-1">
 											<div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]" />
@@ -143,7 +145,7 @@ function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 						)}
 						{streamingMessage && (
 							<div className="flex justify-start">
-								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900">
+								<div className="max-w-[80%] rounded-lg bg-gray-100 px-4 py-2 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
 									<ChatMarkdown isStreaming>{streamingMessage}</ChatMarkdown>
 								</div>
 							</div>
