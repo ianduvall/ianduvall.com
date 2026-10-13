@@ -1,31 +1,43 @@
 {
   "version": 1,
   "skills": {
+    "next-bundle-optimizer": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "skillPath": "skills/next-bundle-optimizer/SKILL.md",
+      "computedHash": "c6b7c0bcc589582d7c142c20febe4a0501b8e65e2d239abef86b4c59b680b039"
+    },
     "next-cache-components-adoption": {
       "source": "vercel/next.js",
       "sourceType": "github",
       "skillPath": "skills/next-cache-components-adoption/SKILL.md",
-      "computedHash": "15dcef9cfce611ba5a9ca467ed0d4eeae8de16fadb91b66df892a5ca63c57829"
+      "computedHash": "825774334f00624aac9836ec4f29b8d62f1a6d5e31f81133bde0b4db17a3fa67"
     },
     "next-cache-components-optimizer": {
       "source": "vercel/next.js",
       "sourceType": "github",
       "skillPath": "skills/next-cache-components-optimizer/SKILL.md",
-      "computedHash": "d029b9387f3792b03fcce0217e79f096fd9cfa6d4d8771d397bf3efb72cf7333"
+      "computedHash": "7c1e21574ff39a11fc3874e4df2ab8a355154cc7b6bf4897ad570a2dd9e5a5f2"
     },
     "next-dev-loop": {
       "source": "vercel/next.js",
       "ref": "canary",
       "sourceType": "github",
       "skillPath": "skills/next-dev-loop/SKILL.md",
-      "computedHash": "5b567d2e521056db6b8b37c46c6b2b9c72de5192c0daeb351c966d61e0702630"
+      "computedHash": "c305c83b726212e0284930c65cded2c4a4ab85f9bfccfa83b62274247fe3580e"
     },
     "next-partial-prefetching-adoption": {
       "source": "vercel/next.js",
       "ref": "canary",
       "sourceType": "github",
       "skillPath": "skills/next-partial-prefetching-adoption/SKILL.md",
-      "computedHash": "d3d665fb981213406206138afd054261169b2ef511039c6a7dd0406af02dc500"
+      "computedHash": "e523f1aec1789b3a1f4ca881898d99416427f9d853b3b1841f0e13657bc38f77"
+    },
+    "next-partial-prefetching-optimizer": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "skillPath": "skills/next-partial-prefetching-optimizer/SKILL.md",
+      "computedHash": "97b935496e9f821417229fd4afe153dc57732911991b48144371b15b11716fbe"
     }
   }
 }

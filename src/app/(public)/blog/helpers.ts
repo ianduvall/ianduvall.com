@@ -2,10 +2,13 @@ import { evaluateBlogPostMDX } from "src/app/(public)/blog/mdx";
 
 const mdxFileExtension = ".mdx";
 
-const blogPostFileBytesByPath = import.meta.glob("./posts/*.mdx", {
+// Reads `.default` off the module namespace instead of passing `import: "default"`:
+// in Next 16.4 production builds Turbopack mangles the export name of a glob
+// `import:` target while the glob still reads `.default`, yielding `undefined`.
+// A namespace object that escapes keeps its original export names.
+const blogPostFileModulesByPath = import.meta.glob("./posts/*.mdx", {
 	eager: true,
-	import: "default",
-}) as Record<string, Uint8Array>;
+}) as Record<string, { default: Uint8Array }>;
 
 const utf8Decoder = new TextDecoder();
 
@@ -15,10 +18,10 @@ const getSlugFromFilePath = (filePath: string) => {
 };
 
 const blogPostFileContentsBySlug = new Map(
-	Object.entries(blogPostFileBytesByPath)
+	Object.entries(blogPostFileModulesByPath)
 		.map(
-			([filePath, fileBytes]) =>
-				[getSlugFromFilePath(filePath), utf8Decoder.decode(fileBytes)] as const,
+			([filePath, fileModule]) =>
+				[getSlugFromFilePath(filePath), utf8Decoder.decode(fileModule.default)] as const,
 		)
 		.sort(([slugA], [slugB]) => slugA.localeCompare(slugB)),
 );
