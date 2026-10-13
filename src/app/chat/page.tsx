@@ -1,9 +1,20 @@
 "use client";
-import { startTransition, useEffect, useRef, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
-import { ChatMarkdown } from "./chat-markdown";
 import { createLanguageModelSession } from "./language-model";
 import { LanguageModelGate } from "./language-model-gate";
+
+const LazyChatMarkdown = lazy(() =>
+	import("./chat-markdown").then((module) => ({ default: module.ChatMarkdown })),
+);
+
+function ChatMarkdown({ children, isStreaming }: { children: string; isStreaming?: boolean }) {
+	return (
+		<Suspense fallback={<p className="whitespace-pre-wrap">{children}</p>}>
+			<LazyChatMarkdown isStreaming={isStreaming}>{children}</LazyChatMarkdown>
+		</Suspense>
+	);
+}
 
 interface Message {
 	id: string;
