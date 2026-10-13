@@ -1,5 +1,5 @@
 "use client";
-import { lazy, startTransition, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { createLanguageModelSession } from "./language-model";
 import { LanguageModelGate } from "./language-model-gate";
@@ -53,15 +53,21 @@ function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages, streamingMessage]);
 
-	useEffect(() => {
-		if (!session) {
-			return;
+	async function startNewChat() {
+		inputRef.current?.focus();
+		setMessages([]);
+		setStreamingMessage("");
+		setIsPreparingModel(true);
+		session?.destroy();
+		setSession(null);
+		try {
+			setSession(await createLanguageModelSession());
+		} catch (error) {
+			console.error("New chat session creation failed:", error);
+		} finally {
+			setIsPreparingModel(false);
 		}
-
-		return () => {
-			session.destroy();
-		};
-	}, [session]);
+	}
 
 	const header = (
 		<header className="border-b px-4 py-4">
@@ -72,33 +78,7 @@ function ChatUI({ initialSession }: { initialSession: LanguageModel }) {
 						{(session.contextWindow - session.contextUsage).toLocaleString()} tokens left
 					</span>
 				)}
-				<Button
-					type="button"
-					action={async () => {
-						inputRef.current?.focus();
-						setMessages([]);
-						setStreamingMessage("");
-						setIsPreparingModel(true);
-						try {
-							const newSession = await createLanguageModelSession({
-								onDownloadProgress() {
-									startTransition(() => {
-										setIsPreparingModel(true);
-									});
-								},
-							});
-							startTransition(() => {
-								setSession(newSession);
-							});
-						} catch (error) {
-							console.error("New chat session creation failed:", error);
-						} finally {
-							startTransition(() => {
-								setIsPreparingModel(false);
-							});
-						}
-					}}
-				>
+				<Button type="button" disabled={isPreparingModel} onClick={() => void startNewChat()}>
 					New Chat
 				</Button>
 			</div>

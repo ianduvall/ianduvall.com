@@ -63,30 +63,22 @@ export function LanguageModelGate({ children }: LanguageModelGateProps) {
 	}
 
 	async function startSession() {
-		startTransition(() => {
-			setGateState({ status: "creating", isModelDownloading: false });
-		});
+		setGateState({ status: "creating", isModelDownloading: false });
 
 		try {
 			const newSession = await createLanguageModelSession({
 				onDownloadProgress(event) {
-					startTransition(() => {
-						setGateState({ status: "creating", isModelDownloading: event.loaded < 1 });
-					});
+					setGateState({ status: "creating", isModelDownloading: event.loaded < 1 });
 				},
 			});
 
-			startTransition(() => {
-				setSession(newSession);
-				setGateState({ status: "ready" });
-			});
+			setSession(newSession);
+			setGateState({ status: "ready" });
 		} catch (error) {
 			console.error("Language model session creation failed:", error);
-			startTransition(() => {
-				setGateState({
-					status: "error",
-					message: "Chrome's built-in AI could not start. Please try again.",
-				});
+			setGateState({
+				status: "error",
+				message: "Chrome's built-in AI could not start. Please try again.",
 			});
 		}
 	}
@@ -136,7 +128,7 @@ function LanguageModelGateContent({
 				<p>{gateState.message}</p>
 				<Button
 					type="button"
-					action={startSession}
+					onClick={() => void startSession()}
 					className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-2"
 				>
 					Try Again
@@ -162,7 +154,7 @@ function LanguageModelGateContent({
 			</div>
 			<Button
 				type="button"
-				action={startSession}
+				onClick={() => void startSession()}
 				disabled={gateState.status === "creating"}
 				className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-2"
 			>
